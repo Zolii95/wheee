@@ -3,9 +3,6 @@ var Country = "";
 var City = "";
 var Event_Place = "";
 
-
-
-
 angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
 
@@ -202,7 +199,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     };
     $scope.getEvents();
   })
-
+//Szia tamás
   .controller('autoCompleteController', function ($timeout, $log, $http, $q) {
     var self = this;
     self.showCity = false;
