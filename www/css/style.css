@@ -1,0 +1,179 @@
+/* Empty. Add your own CSS if you like */
+
+.body {
+    background-color: #E0E0E0 !important;
+}
+
+#home h1{
+    padding-top: 50px;
+    text-align: center;
+}
+
+h2 {
+    font-family: "Roboto", Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+
+#topEvents img{
+    height: 250px;
+    position: relative;
+}
+
+.newEvents img {
+    width: 100%;   
+    position: relative;
+}
+
+
+@media (max-width: 300px) {
+ .newEvents img {
+     height: 19.824vh;
+ }
+}
+@media (min-width: 301px) and (max-width: 350px) {
+  .newEvents img{  height: 23.216vh;
+  }
+}
+@media (min-width: 351px) and (max-width: 400px) {
+    .newEvents img{ height: 26.43vh;
+  } 
+}
+@media (min-width: 401px) and (max-width: 450px) {
+    .newEvents img{ height: 29.822vh;
+  }
+}
+@media (min-width: 451px) {
+    .newEvents img{  height: 39.643vh;
+  } 
+}
+
+
+#search {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #E0E0E0 !important;
+    
+}
+
+
+.myButton {
+    background-color: #19D19A;
+    color: white;
+    margin-left: 10px;
+   
+    width: 50% !important;
+}
+
+.menu-navbar{
+    background-color: black !important;
+    height: 55px !important;
+}
+
+.logo{
+    padding-top: 100px;
+    z-index: 100;
+}
+
+.menu-button{
+    color:black !important;
+    background-color:white !important;
+    width: 45px;
+    height: 35px;
+    margin-top: 3px;
+    
+}
+
+.title{
+    color: white !important;
+    text-align: left  !important;
+}
+
+
+#topEvents{
+    text-align: center;
+    position: relative;
+    width:100%;
+    overflow: hidden;
+    
+}
+
+.item {
+    padding: 15px 0 15px 0 !important;
+}
+
+.newEvents{
+    width: 100%;
+}
+
+.newEvents img {
+    width: 100%;
+}
+
+.title-container{
+    position: relative;
+    margin-top: -10px;
+    width: auto;
+    height: 40px;
+    background-color: black;
+}
+.title-container h1{
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 1em;
+}
+
+
+.contactsLink a {
+    padding-top: 5px;
+    left: 10px;
+    color: #9c9c9c;
+    position: absolute;
+}
+.contactsLink{
+    position: relative;
+    height: 35px;
+    background-color: black;
+}
+
+.contacts .item {
+    padding-left: 10px;
+}
+
+
+
+.text_t {
+    position: absolute;
+    top: 0px;
+    color:white;
+    font-size: 1.5em;
+    left: 5%;
+    font-weight: bold;
+    background-color: black;
+    padding: 5px;
+    border-radius: 3px;
+    opacity: 0.60;
+}
+.text_l{
+    font-size: 1.5em;
+    position: absolute;
+    top: 55%;
+    color:white;
+    right: 5%;
+    font-weight: bold;
+    background-color: black;
+    padding: 5px;
+    border-radius: 3px;
+    opacity: 0.60;
+}
+
+#topEvents button{
+    bottom: 4%;
+    position: absolute;
+    z-index: 100;
+}
+
+input {
+    padding-left: 20px !important;
+}
