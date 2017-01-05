@@ -6,7 +6,7 @@ var Event_Place = "";
 angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB) {
+  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -15,11 +15,22 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     //$scope.$on('$ionicView.enter', function(e) {
     //});
     $scope.fbLogin = function () {
-      ngFB.login({ scope: 'email,read_stream,publish_actions' }).then(
+      ngFB.login({ scope: 'email' }).then(
         function (response) {
           if (response.status === 'connected') {
-            console.log('Facebook login succeeded');
-            $scope.closeLogin();
+
+            $http.get('http://www.wheee.eu/api/user/get_user_id.php?email=tamas.bajnok@yahoo.co.uk')
+              .success(function (response) {
+                angular.forEach(response.response, function (user) {
+                  localStorage.setItem("logged", user);
+                });
+
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+              }).error(function (err) {
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+              });
+
+
           } else {
             alert('Facebook login failed');
           }
@@ -159,19 +170,35 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
   })
 
 
-  //FB
-  .controller('ProfileCtrl', function ($scope, ngFB) {
-    ngFB.api({
-      path: '/me',
-      params: { fields: 'id,name' }
-    }).then(
-      function (user) {
-        $scope.user = user;
-      },
-      function (error) {
-        alert('Facebook error: ' + error.error_description);
-      });
+  //Profile
+  .controller('ProfileCtrl', function ($scope, $http) {
+
+    $scope.signIn = function (form) {
+      
+    };
+    $scope.userData = [];
+    $scope.getUser = function () {
+      $http.get('http://www.wheee.eu/api/user/profile_datas.php?id=' + localStorage.getItem("logged"))
+        .success(function (response) {
+          // angular.forEach(response.response, function (user) {
+          //   $scope.userData.push(user);
+          //   console.log(user);
+          // });
+          $scope.userData.push({
+            id: response.response[0].id,
+            email: response.response[0].email,
+            firstname: response.response[0].firstname,
+            lastname: response.response[0].lastname,
+            gender: response.response[0].gender,
+            fb_picture: response.response[0].fb_picture,
+            newsletter: response.response[0].newsletter
+          });
+          //console.log(response.response[0].id);
+        });
+    };
+    $scope.getUser();
   })
+
 
   .controller('TopEvents', function ($scope, $http) {
 
@@ -199,7 +226,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     };
     $scope.getEvents();
   })
-//Szia tamás
+
   .controller('autoCompleteController', function ($timeout, $log, $http, $q) {
     var self = this;
     self.showCity = false;
@@ -261,14 +288,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     }
 
     self.searchTextChangeCountry = searchTextChangeCountry;
- 
+
     self.searchTextChangeCity = searchTextChangeCity;
     self.countryChange = countryChange;
     self.cityChange = cityChange;
     self.eventChange = eventChange;
 
     function searchTextChangeCity(text) {
-     
+
       self.showEvent = false;
     }
     function searchTextChangeCountry(text) {

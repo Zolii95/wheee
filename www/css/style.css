@@ -177,3 +177,36 @@ h2 {
 input {
     padding-left: 20px !important;
 }
+
+.container-padding {
+    padding: 15px;
+}
+
+.form-input {
+    border: 1px solid #f1f1f1 !important;
+    width: 100%;
+    padding: 10px;
+    padding-top: 10px !important;
+    padding-left: 10px !important;
+    height: auto;
+}
+
+.img-thumbnail {
+    padding: 4px;
+    background-color: #fff;
+    border-radius: 0px;
+    border: 1px solid #f6f6f6;
+    height: auto;
+}
+
+.align-center {
+    text-align: center;
+}
+
+span.newsletter {
+    float: left;
+}
+
+.form-check-input {
+    margin-top: 12px !important;
+}
