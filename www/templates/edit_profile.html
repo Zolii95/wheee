@@ -2,7 +2,7 @@
     <ion-content ng-repeat="user in userData" class="container-padding">
             <h1>My Profile</h1>
 
-            <form name="authorizationForm" novalidate="" ng-submit="signIn(authorizationForm)"> 
+            <form name="authorizationForm" novalidate="" ng-submit="saveData(authorizationForm)"> 
          
                 <div class="list">
 
@@ -16,7 +16,7 @@
                     
                     <!--</label>-->
                     <span class="input-label">E-mail</span>
-                    <input type="text" disabled class="form-input" placeholder="E-mail *" ng-model="user.email">
+                    <input type="text" disabled class="form-input" placeholder="E-mail *" ng-model="user.email" name="email">
                     
                     <div class="error-container" ng-show="authorizationForm.username.$error" ng-messages="authorizationForm.username.$error">
                     <div ng-messages-include="error-list.html"></div>

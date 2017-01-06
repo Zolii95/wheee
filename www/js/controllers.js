@@ -173,6 +173,19 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
   //Profile
   .controller('ProfileCtrl', function ($scope, $http) {
 
+    $scope.saveData = function(user) {
+
+        $http.post('http://www.wheee.eu/api/user/save_profile_datas.php?user_id=' + localStorage.getItem("logged") 
+            + '&firstname=' + user.firstname.$modelValue 
+            + '&lastname=' + user.lastname.$modelValue 
+            + '&gender=' + user.gender.$modelValue
+            + '&newsletter=' + user.newsletter.$modelValue)
+            .success(function (response) {
+            console.log(response);
+            window.location.reload();
+        });
+    };
+
     $scope.signIn = function (form) {
       
     };

@@ -210,3 +210,8 @@ span.newsletter {
 .form-check-input {
     margin-top: 12px !important;
 }
+
+.check {
+    border: none;
+    margin-top: 5px;
+}
