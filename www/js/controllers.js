@@ -179,9 +179,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
             + '&firstname=' + user.firstname.$modelValue 
             + '&lastname=' + user.lastname.$modelValue 
             + '&gender=' + user.gender.$modelValue
-            + '&newsletter=' + user.newsletter.$modelValue)
+            + '&newsletter=' + user.newsletter.$viewValue)
             .success(function (response) {
-            console.log(response);
+            console.log(user.newsletter.$viewValue);
             window.location.reload();
         });
     };
@@ -193,10 +193,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     $scope.getUser = function () {
       $http.get('http://www.wheee.eu/api/user/profile_datas.php?id=' + localStorage.getItem("logged"))
         .success(function (response) {
-          // angular.forEach(response.response, function (user) {
-          //   $scope.userData.push(user);
-          //   console.log(user);
-          // });
           $scope.userData.push({
             id: response.response[0].id,
             email: response.response[0].email,
@@ -206,7 +202,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
             fb_picture: response.response[0].fb_picture,
             newsletter: response.response[0].newsletter
           });
-          //console.log(response.response[0].id);
         });
     };
     $scope.getUser();

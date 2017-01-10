@@ -212,6 +212,7 @@ span.newsletter {
 }
 
 .check {
-    border: none;
-    margin-top: 5px;
+    float: left;
+    width: 26px;
+    margin: 13px !important;
 }
