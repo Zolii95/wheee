@@ -2,6 +2,9 @@
 var Country = "";
 var City = "";
 var Event_Place = "";
+var CountryId = "";
+var CityId = "";
+var Event_PlaceName = "";
 
 angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
@@ -39,33 +42,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     // Form data for the login modal
     $scope.loginData = {};
     $scope.navTitle = '<img class="title-image" src="http://www.wheee.eu/assets/images/logo-160x160-10.png" />';
-    // Create the login modal that we will use later
-    /*$ionicModal.fromTemplateUrl('templates/login.html', {
-      scope: $scope
-    }).then(function (modal) {
-      $scope.modal = modal;
-    });
-
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function () {
-      $scope.modal.hide();
-    };
-
-    // Open the login modal
-    $scope.login = function () {
-      $scope.modal.show();
-    };
-
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function () {
-      console.log('Doing login', $scope.loginData);
-
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
-      $timeout(function () {
-        $scope.closeLogin();
-      }, 1000);
-    };*/
 
     //Menüpontok kilépő állapotban
     $scope.groupLO = [];
@@ -235,7 +211,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     $scope.getEvents();
   })
 
-  .controller('autoCompleteController', function ($timeout, $log, $http, $q) {
+  .controller('autoCompleteController', function ($scope, $timeout, $log, $http, $q) {
     var self = this;
     self.showCity = false;
     self.showEvent = false;
@@ -313,20 +289,47 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     function countryChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       Country = item.id;
+      CountryId = item.value;
       self.showCity = true;
     }
     function cityChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       City = item.id;
+      CityId = item.value;
+      localStorage.setItem("last_searched", City);
       self.showEvent = true;
     }
     function eventChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       Event_Place = item.id;
+      Event_PlaceName = item.value;
     }
 
-    //build list of states as map of key-value pairs
+    String.prototype.replaceAt = function(index, character) {
+      return this.substr(0, index) + character + this.substr(index+character.length);
+    }
 
+    //When clicked on search button
+    $scope.search = function(){
+      $log.info('Search city: ' + City + ' Event pl: ' + Event_PlaceName + ' Country: ' + Country);
+      $scope.searchedLocation = [];
+      while(Event_PlaceName.indexOf(" ") != -1){
+        Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
+      }
+      $log.info(Event_PlaceName);
+      $scope.getSearch = function () {
+      $http.get("http://www.wheee.eu/api/event_search/events.php?last_searched_location="+ City +"&searched_local_name="+ Event_PlaceName +"&current_page=1")
+        .success(function (response) {
+          $log.info(response.response);
+          /*angular.forEach(response.response, function (event) {
+            $scope.topEvents.push(event);*/
+          });
+        };
+      
+      $scope.getSearch();
+      };
+
+    
     //filter function for search query
     function createFilterFor(query) {
       var lowercaseQuery = angular.lowercase(query);
