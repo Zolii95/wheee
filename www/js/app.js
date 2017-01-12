@@ -90,7 +90,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       url: '/my_applications',
       views: {
         'menuContent': {
-          templateUrl: 'templates/my_applications.html'
+          templateUrl: 'templates/my_applications.html',
+          controller: "MyApplicationsCtrl"
         }
       }
     })
@@ -98,7 +99,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       url: '/my_bookmarks',
       views: {
         'menuContent': {
-          templateUrl: 'templates/my_bookmarks.html'
+          templateUrl: 'templates/my_bookmarks.html',
+          controller: "MyBookmarksCtrl"
         }
       }
     })
@@ -106,7 +108,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       url: '/my_dashboard',
       views: {
         'menuContent': {
-          templateUrl: 'templates/my_dashboard.html'
+          templateUrl: 'templates/my_dashboard.html',
+          controller: "MyDashboardCtrl"
         }
       }
     })

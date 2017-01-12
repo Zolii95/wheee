@@ -216,3 +216,56 @@ span.newsletter {
     width: 26px;
     margin: 13px !important;
 }
+
+.header .col {
+    border-bottom: 2px solid #ccc;
+}
+
+.col {
+    border-bottom: solid 1px grey;
+}
+
+.coming {
+    color: #19D19A;
+}
+
+.now {
+    color: #FFD20A;
+}
+
+.past {
+    color: #ccc;
+}
+
+.button-100 {
+    width: 94% !important;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.padt-10 {
+    padding-top: 10px;
+}
+
+.padt-13 {
+    padding-top: 13px;
+}
+
+.padt-15 {
+    padding-top: 15px;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.account-status-list div {
+    width: 100%;
+    height: 25px;
+}

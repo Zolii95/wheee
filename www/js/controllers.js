@@ -145,6 +145,70 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     };
   })
 
+  //MyApplications
+
+  .controller('MyApplicationsCtrl', function ($scope, $http) {
+
+      $scope.getMyApplications = function () {
+        
+      $scope.myApplications = [];
+      $http.get('http://www.wheee.eu/api/user/get_my_applications.php?user_id=' + localStorage.getItem("logged"))
+        .success(function (response) {
+          angular.forEach(response.response, function (event) {
+            $scope.myApplications.push(event);
+          });
+        })
+    };
+    $scope.getMyApplications();
+
+  })
+
+  //MyBookmarks
+
+  .controller('MyBookmarksCtrl', function ($scope, $http) {
+
+      $scope.getMyBookmarks = function () {
+        
+      $scope.myBookmarks = [];
+      $http.get('http://www.wheee.eu/api/user/get_my_bookmarks.php?user_id=' + localStorage.getItem("logged"))
+        .success(function (response) {
+          angular.forEach(response.response, function (event) {
+            $scope.myBookmarks.push(event);
+          });
+        })
+    };
+    $scope.getMyBookmarks();
+
+  })
+
+  //MyDashboard
+
+  .controller('MyDashboardCtrl', function ($scope, $http) {
+
+      $scope.getMyDashboard = function () {
+        
+      $scope.myDashboard = [];
+      $http.get('http://www.wheee.eu/api/user/profile_datas.php?dashboard=1&id=' + localStorage.getItem("logged"))
+        .success(function (response) {
+          $scope.myDashboard.push({
+            id: response.response[0].id,
+            email: response.response[0].email,
+            firstname: response.response[0].firstname,
+            lastname: response.response[0].lastname,
+            gender: response.response[0].gender,
+            fb_picture: response.response[0].fb_picture,
+            birth_year: response.response[0].birth_year,
+            country: response.response[0].country,
+            county: response.response[0].county,
+            location: response.response[0].location,
+            created_at: response.response[0].created_at,
+            updated_at: response.response[0].updated_at,
+          });
+        })
+    };
+    $scope.getMyDashboard();
+
+  })
 
   //Profile
   .controller('ProfileCtrl', function ($scope, $http) {

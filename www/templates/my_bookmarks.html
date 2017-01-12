@@ -1,5 +1,23 @@
 <ion-view view-title="My Bookmarks">
-  <ion-content>
+  <ion-content class="container-padding">
     <h1>My Bookmarks</h1>
+
+        <div class="row header" nf-if="data">
+          <div class="col">Event Title</div>
+          <div class="col">Place</div>
+          <div class="col">Date</div>
+          <div class="col">Status</div>
+        </div>
+        <div class="row mb-20" ng-repeat="data in myBookmarks">
+          <div class="col padt-13">{{data.event_title}}</div>
+          <div class="col padt-13">{{data.local_name}}</div>
+          <div class="col">{{data.event_start}}</div>
+          <div class="col {{data.class}} padt-13">{{data.status}}</div>
+        </div>
+
+
+        <p>Apply and participate on events with Wheee! and win!</p>
+        <a href="" class="button myButton button-100 mb-20">Start Searching Now!</a>
+
   </ion-content>
 </ion-view>

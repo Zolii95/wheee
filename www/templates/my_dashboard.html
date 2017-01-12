@@ -1,5 +1,27 @@
 <ion-view view-title="My Dashboard">
-  <ion-content>
+  <ion-content class="container-padding">
     <h1>My Dashboard</h1>
+
+    <a href="" class="button myButton button-100 mb-20">Event Search</a>
+    <a href="" class="button myButton button-100 mb-20">Edit Profile</a>
+    <a href="" class="button myButton button-100 mb-20">My Bookmarks</a>
+    <a href="" class="button myButton button-100 mb-20">My Applications</a>
+
+    <p><b>Account Status</b></p>
+
+    <div class="account-status-list">
+      <div><span class="left">Status</span><span class="right coming">Active</span></div>
+      <div><span class="left">Creation date</span><span class="right">{{myDashboard[0].created_at}}</span></div>
+      <div><span class="left">Last updated</span><span class="right">{{myDashboard[0].updated_at}}</span></div>
+      <div><span class="left">First name</span><span class="right">{{myDashboard[0].firstname}}</span></div>
+      <div><span class="left">Last name</span><span class="right">{{myDashboard[0].lastname}}</span></div>
+      <div><span class="left">Gender</span><span class="right">{{myDashboard[0].gender}}</span></div>
+      <div><span class="left">E-mail</span><span class="right">{{myDashboard[0].email}}</span></div>
+      <div><span class="left">Birth year</span><span class="right">{{myDashboard[0].birth_year}}</span></div>
+      <div><span class="left">Country</span><span class="right">{{myDashboard[0].country}}</span></div>
+      <div><span class="left">County</span><span class="right">{{myDashboard[0].county}}</span></div>
+      <div><span class="left">Location</span><span class="right">{{myDashboard[0].location}}</span></div>
+    </div>
+
   </ion-content>
 </ion-view>

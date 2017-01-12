@@ -1,54 +1,57 @@
-<ion-view view-title="My Profile" >
+<ion-view view-title="My Profile">
     <ion-content ng-repeat="user in userData" class="container-padding">
-            <h1>My Profile</h1>
+        <h1>My Profile</h1>
 
-            <form name="authorizationForm" novalidate="" ng-submit="saveData(authorizationForm)"> 
-         
-                <div class="list">
+        <form name="authorizationForm" novalidate="" ng-submit="saveData(authorizationForm)">
 
-                    <div class="align-center">
-                        <img src="{{user.fb_picture}}" class="img-thumbnail"/>
-                    </div>
-                    <p>Your Wheee! profile picture with every login is syncronyzed with your Facebook profile picture.</p>
-                
-                    <!--<label class="item item-input" ng-class="{ 'has-errors' : authorizationForm.username.$invalid, 'no-errors' : authorizationForm.username.$valid}">-->
-                    
-                    
-                    <!--</label>-->
-                    <span class="input-label">E-mail</span>
-                    <input type="text" disabled class="form-input" placeholder="E-mail *" ng-model="user.email" name="email">
-                    
-                    <div class="error-container" ng-show="authorizationForm.username.$error" ng-messages="authorizationForm.username.$error">
+            <div class="list">
+
+                <div class="align-center">
+                    <img src="{{user.fb_picture}}" class="img-thumbnail" />
+                </div>
+                <p>Your Wheee! profile picture with every login is syncronyzed with your Facebook profile picture.</p>
+
+                <!--<label class="item item-input" ng-class="{ 'has-errors' : authorizationForm.username.$invalid, 'no-errors' : authorizationForm.username.$valid}">-->
+
+
+                <!--</label>-->
+                <span class="input-label">E-mail</span>
+                <input type="text" disabled class="form-input" placeholder="E-mail *" ng-model="user.email" name="email">
+
+                <div class="error-container" ng-show="authorizationForm.username.$error" ng-messages="authorizationForm.username.$error">
                     <div ng-messages-include="error-list.html"></div>
-                    </div>
-                    
-                    <!--<label class="item item-input" ng-class="{ 'has-errors' : authorizationForm.password.$invalid && authorizationForm.$submitted, 'no-errors' : authorizationForm.password.$valid  && authorizationForm.$submitted}">
+                </div>
+
+                <!--<label class="item item-input" ng-class="{ 'has-errors' : authorizationForm.password.$invalid && authorizationForm.$submitted, 'no-errors' : authorizationForm.password.$valid  && authorizationForm.$submitted}">
                     
                     
                     </label>-->
-                    <span class="input-label">First name *</span>
-                    <input type="text" name="firstname" placeholder="First name *" ng-model="user.firstname" required class="form-input">
+                <span class="input-label">First name *</span>
+                <input type="text" name="firstname" placeholder="First name *" ng-model="user.firstname" required class="form-input">
 
-                    <span class="input-label">Last name *</span>
-                    <input type="text" name="lastname" placeholder="Last name *" ng-model="user.lastname" required class="form-input">
+                <span class="input-label">Last name *</span>
+                <input type="text" name="lastname" placeholder="Last name *" ng-model="user.lastname" required class="form-input">
 
-                    <span class="input-label">Gender *</span>
-                    <input type="text" name="gender" placeholder="Gender *" ng-model="user.gender" required class="form-input">
+                <span class="input-label">Gender *</span>
+                <input type="text" name="gender" placeholder="Gender *" ng-model="user.gender" required class="form-input">
 
-                    <span class="input-label newsletter">Newsletter</span>
+                <span class="input-label newsletter">Newsletter</span>
 
-                    <input type="checkbox" name="newsletter" ng-if="user.newsletter == 1" ng-checked="true" ng-model="user.newsletter" ng-true-value="1" ng-false-value="0" class="form-input check">
-                    <input type="checkbox" name="newsletter" ng-if="user.newsletter == 0" ng-checked="false" ng-model="user.newsletter" ng-true-value="1" ng-false-value="0" class="form-input check">
-                    
-                    <div class="error-container last-error-container" ng-show="authorizationForm.password.$error && authorizationForm.$submitted" ng-messages="authorizationForm.password.$error">
-                        <div ng-messages-include="error-list.html"></div> 
-                    </div>          
-                    
-                </div>     
-                
-                <button class="button button-full button-positive" type="submit">Save Datas</button>
-                
-            </form>
+                <input type="checkbox" name="newsletter" ng-if="user.newsletter == 1" ng-checked="true" ng-model="user.newsletter" ng-true-value="1"
+                    ng-false-value="0" class="form-input check">
+                <input type="checkbox" name="newsletter" ng-if="user.newsletter == 0" ng-checked="false" ng-model="user.newsletter" ng-true-value="1"
+                    ng-false-value="0" class="form-input check">
+
+                <div class="error-container last-error-container" ng-show="authorizationForm.password.$error && authorizationForm.$submitted"
+                    ng-messages="authorizationForm.password.$error">
+                    <div ng-messages-include="error-list.html"></div>
+                </div>
+
+            </div>
+
+            <button class="button myButton button-100" type="submit">Save Datas</button>
+
+        </form>
 
     </ion-content>
 </ion-view>
