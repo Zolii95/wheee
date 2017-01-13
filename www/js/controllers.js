@@ -2,9 +2,10 @@
 var Country = "";
 var City = "";
 var Event_Place = "";
-var CountryId = "";
-var CityId = "";
+var CountryName = "";
+var CityName = "";
 var Event_PlaceName = "";
+var searced_location;
 
 angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
@@ -149,8 +150,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
   .controller('MyApplicationsCtrl', function ($scope, $http) {
 
-      $scope.getMyApplications = function () {
-        
+    $scope.getMyApplications = function () {
+
       $scope.myApplications = [];
       $http.get('http://www.wheee.eu/api/user/get_my_applications.php?user_id=' + localStorage.getItem("logged"))
         .success(function (response) {
@@ -167,8 +168,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
   .controller('MyBookmarksCtrl', function ($scope, $http) {
 
-      $scope.getMyBookmarks = function () {
-        
+    $scope.getMyBookmarks = function () {
+
       $scope.myBookmarks = [];
       $http.get('http://www.wheee.eu/api/user/get_my_bookmarks.php?user_id=' + localStorage.getItem("logged"))
         .success(function (response) {
@@ -185,8 +186,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
   .controller('MyDashboardCtrl', function ($scope, $http) {
 
-      $scope.getMyDashboard = function () {
-        
+    $scope.getMyDashboard = function () {
+
       $scope.myDashboard = [];
       $http.get('http://www.wheee.eu/api/user/profile_datas.php?dashboard=1&id=' + localStorage.getItem("logged"))
         .success(function (response) {
@@ -213,21 +214,21 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
   //Profile
   .controller('ProfileCtrl', function ($scope, $http) {
 
-    $scope.saveData = function(user) {
+    $scope.saveData = function (user) {
 
-        $http.post('http://www.wheee.eu/api/user/save_profile_datas.php?user_id=' + localStorage.getItem("logged") 
-            + '&firstname=' + user.firstname.$modelValue 
-            + '&lastname=' + user.lastname.$modelValue 
-            + '&gender=' + user.gender.$modelValue
-            + '&newsletter=' + user.newsletter.$viewValue)
-            .success(function (response) {
-            console.log(user.newsletter.$viewValue);
-            window.location.reload();
+      $http.post('http://www.wheee.eu/api/user/save_profile_datas.php?user_id=' + localStorage.getItem("logged")
+        + '&firstname=' + user.firstname.$modelValue
+        + '&lastname=' + user.lastname.$modelValue
+        + '&gender=' + user.gender.$modelValue
+        + '&newsletter=' + user.newsletter.$viewValue)
+        .success(function (response) {
+          console.log(user.newsletter.$viewValue);
+          window.location.reload();
         });
     };
 
     $scope.signIn = function (form) {
-      
+
     };
     $scope.userData = [];
     $scope.getUser = function () {
@@ -281,6 +282,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     self.showEvent = false;
     self.simulateQuery = true;
     self.isDisabled = false;
+
+    //http://www.wheee.eu/api/event_search/events.php?event_id=37
 
     self.queryCountrySearch = function (query) {
       return $http.get("http://www.wheee.eu/api/event_autocomplete/countries.php")
@@ -342,6 +345,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     self.cityChange = cityChange;
     self.eventChange = eventChange;
 
+    
+
     function searchTextChangeCity(text) {
 
       self.showEvent = false;
@@ -353,14 +358,17 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     function countryChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       Country = item.id;
-      CountryId = item.value;
+      CountryName = item.value;
+      localStorage.setItem("last_searchedCountryId", Country);
+      localStorage.setItem("last_searchedCountryName", CountryName);
       self.showCity = true;
     }
     function cityChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       City = item.id;
-      CityId = item.value;
-      localStorage.setItem("last_searched", City);
+      CityName = item.value;
+      localStorage.setItem("last_searchedCityId", City);
+      localStorage.setItem("last_searchedCityName", CityName);
       self.showEvent = true;
     }
     function eventChange(item) {
@@ -369,31 +377,47 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
       Event_PlaceName = item.value;
     }
 
-    String.prototype.replaceAt = function(index, character) {
-      return this.substr(0, index) + character + this.substr(index+character.length);
+    String.prototype.replaceAt = function (index, character) {
+      return this.substr(0, index) + character + this.substr(index + character.length);
     }
 
     //When clicked on search button
-    $scope.search = function(){
-      $log.info('Search city: ' + City + ' Event pl: ' + Event_PlaceName + ' Country: ' + Country);
+    $scope.search = function () {
+      //$log.info('Search city: ' + City + ' Event pl: ' + Event_PlaceName + ' Country: ' + Country);
       $scope.searchedLocation = [];
-      while(Event_PlaceName.indexOf(" ") != -1){
+      while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
-      $log.info(Event_PlaceName);
+
       $scope.getSearch = function () {
-      $http.get("http://www.wheee.eu/api/event_search/events.php?last_searched_location="+ City +"&searched_local_name="+ Event_PlaceName +"&current_page=1")
-        .success(function (response) {
-          $log.info(response.response);
-          /*angular.forEach(response.response, function (event) {
-            $scope.topEvents.push(event);*/
+        $http.get("http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1")
+          .success(function (response) {
+            $log.info(response.response);
+            if (response.response.length == 0) {
+              $http.get("http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place)
+                .success(function (response2) {
+
+                  searced_location = response2.response[Object.keys(response2.response)[0]];
+                  $log.info(searced_location.county);
+                  
+                });
+            }
+            /*angular.forEach(response.response, function (event) {
+              $scope.topEvents.push(event);*/
           });
-        };
-      
-      $scope.getSearch();
+        location.href = '#/app/event_detail';
       };
 
-    
+      $scope.getSearch();
+      /*starter.controllers.factory('EventService', function () {
+                    return {
+                      name: searced_location.name
+                    };
+                  });*/
+    };
+
+
+
     //filter function for search query
     function createFilterFor(query) {
       var lowercaseQuery = angular.lowercase(query);
@@ -403,6 +427,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     }
   })
 
+  .controller('DetailPage', function($scope, $log){
+    $log.info("ServiceTest: " + searced_location);
+  })
 
   .controller('NewEvents', function ($scope, $http) {
     $scope.page = 0;

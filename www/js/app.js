@@ -44,6 +44,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       }
     })
 
+    .state('app.event_detail', {
+      url: '/event_detail',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/event_detail.html'
+        }
+      }
+    })
+
     .state('app.profile', {
     url: "/edit_profile",
     views: {
