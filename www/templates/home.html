@@ -28,10 +28,12 @@
             <h2>Find Your Events</h2>
             <div ng-controller="autoCompleteController as ctrl" layout="column" ng-cloak>
                 <md-content class="md-padding">
-                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCountryItem" 
-                        md-search-text="ctrl.searchCountryText" md-search-text-change="ctrl.searchTextChangeCountry(ctrl.searchText)" md-selected-item-change="ctrl.countryChange(item)" md-items="item in ctrl.queryCountrySearch(ctrl.searchCountryText)"
-                        md-item-text="item.display" md-min-length="0" placeholder="Country?">
+                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCountryItem" md-search-text="ctrl.searchCountryText"
+                        md-search-text-change="ctrl.searchTextChangeCountry(ctrl.searchText)" md-selected-item-change="ctrl.countryChange(item)"
+                        md-items="item in ctrl.queryCountrySearch(ctrl.searchCountryText)" md-item-text="item.display" md-min-length="0"
+                        placeholder="Country?">
                         <md-item-template>
+                            <!--ng-init="message='test'"-->
                             <span md-highlight-text="ctrl.searchCountryText" md-highlight-flags="^i">{{item.display}}</span>
                         </md-item-template>
                         <md-not-found>
@@ -40,9 +42,10 @@
                     </md-autocomplete>
                 </md-content>
                 <md-content class="md-padding" ng-show="ctrl.showCity">
-                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCityItem"
-                        md-search-text="ctrl.searchCityText" md-search-text-change="ctrl.searchTextChangeCity(ctrl.searchText)" md-selected-item-change="ctrl.cityChange(item)" md-items="item in ctrl.queryCitySearch(ctrl.searchCityText)"
-                        md-item-text="item.display" md-min-length="0" placeholder="Location?">
+                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCityItem" md-search-text="ctrl.searchCityText"
+                        md-search-text-change="ctrl.searchTextChangeCity(ctrl.searchText)" md-selected-item-change="ctrl.cityChange(item)"
+                        md-items="item in ctrl.queryCitySearch(ctrl.searchCityText)" md-item-text="item.display" md-min-length="0"
+                        placeholder="Location?">
                         <md-item-template>
                             <span md-highlight-text="ctrl.searchCityText" md-highlight-flags="^i">{{item.display}}</span>
                         </md-item-template>
@@ -52,8 +55,8 @@
                     </md-autocomplete>
                 </md-content>
                 <md-content class="md-padding" ng-show="ctrl.showEvent">
-                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedEventItem"
-                        md-search-text="ctrl.searchEventText" md-selected-item-change="ctrl.eventChange(item)" md-items="item in ctrl.queryEventSearch(ctrl.searchEventText)"
+                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedEventItem" md-search-text="ctrl.searchEventText"
+                        md-selected-item-change="ctrl.eventChange(item)" md-items="item in ctrl.queryEventSearch(ctrl.searchEventText)"
                         md-item-text="item.display" md-min-length="0" placeholder="Event / Event place?">
                         <md-item-template>
                             <span md-highlight-text="ctrl.searchEventText" md-highlight-flags="^i">{{item.display}}</span>
@@ -63,13 +66,13 @@
                         </md-not-found>
                     </md-autocomplete>
                 </md-content>
-                
+                <button ng-click="search()" class="button button-block myButton" >
+                    <span id="searchButton" >Wheee! SEARCH!</span>
+                </button>
             </div>
 
-    
-            <button class="button button-block myButton">
-            <span id="searchButton">Wheee! SEARCH!</span>
-          </button>
+
+ 
         </div>
 
 
