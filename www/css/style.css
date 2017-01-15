@@ -47,6 +47,25 @@ h2 {
   } 
 }
 
+.eventHeader {
+    width: 100%;
+    border-bottom: 1px solid #CCC;
+    margin: 0;
+    padding: 0;
+}
+
+.action-line {
+    width: 100%;
+    height: 75px;
+    background: #19D19A;
+    margin-top: -5px;
+}
+
+.action-button {
+    width: 25%;
+    height: 75px;
+    float: left;
+}
 
 #search {
     padding-top: 20px;
@@ -268,4 +287,61 @@ span.newsletter {
 .account-status-list div {
     width: 100%;
     height: 25px;
+}
+
+.action-button img {
+    margin-top: 10px;
+}
+
+.data-line {
+    height: 50px;
+    background: #2c2c2c;
+}
+.data-block{
+    width: 33.33%;
+    float: left;
+    padding: 7px;
+}
+
+.data-block img {
+    width: 15px;
+    margin-top: 10px;
+    float: left;
+}
+
+.data-block.back {
+    background: #3C3C3C;
+    height: 50px;
+}
+
+.data-block p {
+    color: #fff;
+    float: left;
+    margin: 9px 0 0 7px;
+}
+
+p.detail-local {
+    color: #CCC;
+    margin-bottom: 0;
+}
+
+h1.event-title {
+    margin: -5px 0 4px 0;
+}
+
+.loc-block {
+    width: 100%;
+    height: 20px;
+    margin-bottom: 15px;
+}
+
+img.location-icon {
+    float: left;
+}
+
+span.location-spec {
+    float: left;
+    margin-left: 5px;
+    font-weight: bold;
+    color: #CCC;
 }

@@ -5,7 +5,7 @@ var Event_Place = "";
 var CountryName = "";
 var CityName = "";
 var Event_PlaceName = "";
-var searced_location;
+var searched_location;
 
 angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
@@ -426,9 +426,82 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
       };
     }
   })
+  
 
-  .controller('DetailPage', function($scope, $log){
-    $log.info("ServiceTest: " + searced_location);
+  .controller('DetailPage', function($scope, $log, $http, $sce, $ionicModal){
+    //$log.info("ServiceTest: " + searched_location);
+    $scope.isLogged = localStorage.getItem("logged");
+
+    $scope.getEvent = function () {
+      $scope.eventData = [];
+      $http.get('http://www.wheee.eu/api/event_search/events.php?event_id=38')
+        .success(function (response) {
+          $scope.eventData.push({
+            event_title: response.response[1].event_title,
+            event_start_date: response.response[1].event_start_date,
+            event_start_hour: response.response[1].event_start_hour,
+            local_name: response.response[1].local_name,
+            location: response.response[1].location,
+            county: response.response[1].county,
+            header_image: 'http://www.wheee.eu/upload/headers/' + response.response[1].header_image,
+            is_active: response.response[1].is_active
+          });
+          $scope.eventDescription = $sce.trustAsHtml(response.response[1].description);
+        });
+    };
+    $scope.getEvent();
+
+    if($scope.isLogged) {
+      $scope.eventStatus = [];
+      $http.get('http://www.wheee.eu/api/event_search/get_event_status.php?event_id=38&user_id=' + $scope.isLogged)
+        .success(function (response) {
+          $scope.eventStatus.push({
+            is_joined: response.response.is_joined,
+            is_bookmarked: response.response.is_bookmarked
+          });
+        });
+    }
+
+    $scope.changeJoinedStatus = function() {
+      $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?joined=1&event_id=38&user_id=' + localStorage.getItem("logged"))
+        .success(function (response) {
+          window.location.reload();
+        });
+    }
+    
+    $scope.changeBookmarkedStatus = function() {
+      $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?bookmark=1&event_id=38&user_id=' + localStorage.getItem("logged"))
+        .success(function (response) {
+          window.location.reload();
+        });
+    }
+
+    $scope.openLoginModal = function() {
+      $ionicModal.fromTemplateUrl('login-modal.html', {
+        scope: $scope,
+        animation: 'splat'
+      }).then(function(modal) {
+        $scope.modal = modal;
+        $scope.modal.show();
+      });
+    }
+
+    $scope.closeLoginModal = function() {
+      $scope.modal.hide();
+    };
+    // Cleanup the modal when we're done with it!
+    $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+    });
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function() {
+      // Execute action
+    });
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function() {
+      // Execute action
+    });
+    
   })
 
   .controller('NewEvents', function ($scope, $http) {
