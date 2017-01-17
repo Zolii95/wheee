@@ -48,7 +48,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       url: '/event_detail',
       views: {
         'menuContent': {
-          templateUrl: 'templates/event_detail.html'
+          templateUrl: 'templates/event_detail.html',
+          controller: "DetailPage"
         }
       }
     })

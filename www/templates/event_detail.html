@@ -1,8 +1,67 @@
 <ion-view view-title="Event Details">
-  <ion-content class="container-padding">
-    <div ng-controller="DetailPage as Ctrl">
-        
-    <h2>{{Ctrl.input.name}}</h2>
+  <ion-content>
+    <img ng-src="{{eventData[0].header_image}}" class="eventHeader"/>
+    <div class="action-line">
+      <div class="action-button align-center" ng-if="!isLogged" ng-controller="DetailPage" ng-click="openLoginModal()">
+        <img ng-src="../img/plus.png"/>
+        <p><b>Wheee! Join!</b></p>
+      </div>
+      <div class="action-button align-center" ng-if="isLogged && !eventStatus[0].is_joined" ng-controller="DetailPage" ng-click="changeJoinedStatus()">
+        <img ng-src="../img/plus.png"/>
+        <p><b>Join! Wheee!</b></p>
+      </div>
+      <div class="action-button align-center" ng-if="isLogged && eventStatus[0].is_joined" ng-controller="DetailPage" ng-click="changeJoinedStatus()">
+        <img ng-src="../img/minus.png"/>
+        <p><b>Leave</b></p>
+      </div>
+      <div class="action-button align-center" ng-if="!isLogged" ng-controller="DetailPage" ng-click="openLoginModal()">
+        <img ng-src="../img/bookmark_unbookmarked.png"/>
+        <p><b>Bookmark</b></p>
+      </div>
+      <div class="action-button align-center" ng-if="isLogged && !eventStatus[0].is_bookmarked" ng-controller="DetailPage" ng-click="changeBookmarkedStatus()">
+        <img ng-src="../img/bookmark_unbookmarked.png"/>
+        <p><b>Bookmark</b></p>
+      </div>
+      <div class="action-button align-center" ng-if="isLogged && eventStatus[0].is_bookmarked" ng-controller="DetailPage" ng-click="changeBookmarkedStatus()">
+        <img ng-src="../img/bookmark_bookmarked.png"/>
+        <p><b>Unbookmark</b></p>
+      </div>
+      <div class="action-button align-center">
+        <img ng-src="../img/invite.png"/>
+        <p><b>Invite</b></p>
+      </div>
+      <div class="action-button align-center">
+        <img ng-src="../img/facebook.png"/>
+        <p><b>Share</b></p>
+      </div>
+    </div>
+    <div class="data-line">
+      <a href="#/app/future_events">
+        <div class="data-block back" >
+          <img ng-src="../img/back.png"/>
+          <p>Back</p>
+        </div>
+      </a>
+      <div class="data-block">
+        <img ng-src="../img/calendar.png"/>
+        <p>{{eventData[0].event_start_date}}</p>
+      </div>
+      <div class="data-block">
+        <img ng-src="../img/clock.png"/>
+        <p>{{eventData[0].event_start_hour}}</p>
+      </div>
+    </div>
+    <div ng-controller="DetailPage as Ctrl" class="container-padding">
+
+    <p class="detail-local"><b>{{eventData[0].local_name}}</b></p>  
+    <h1 class="event-title">{{eventData[0].event_title}}</h1>
+    <div class="loc-block">
+      <img ng-src="../img/location_big.png" class="location-icon"/> 
+      <span class="location-spec">{{eventData[0].location}}, {{eventData[0].county}}</span>
+    </div>
+    <div ng-bind-html="eventDescription"></div>
+
+    <h3>Leave a comment!</h3>
     </div>
 
   </ion-content>
