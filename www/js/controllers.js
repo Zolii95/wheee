@@ -9,6 +9,19 @@ var searched_location;
 
 angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
+  .factory('EventDetail', function () {
+ 
+    var eventdetail = {};
+ 
+    return {
+        getEvObject: function () {
+            return eventdetail;
+        },
+        setEvObject: function (evObject) {
+            eventdetail = evObject;
+        }
+    };
+  })
 
   .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http) {
 
@@ -276,7 +289,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     $scope.getEvents();
   })
 
-  .controller('autoCompleteController', function ($scope, $timeout, $log, $http, $q) {
+  .controller('autoCompleteController', function ($scope, $timeout, $log, $http, $q, EventDetail) {
     var self = this;
     self.showCity = false;
     self.showEvent = false;
@@ -392,14 +405,16 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
       $scope.getSearch = function () {
         $http.get("http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1")
           .success(function (response) {
-            $log.info(response.response);
+            //$log.info(response.response);
             if (response.response.length == 0) {
               $http.get("http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place)
                 .success(function (response2) {
 
-                  searced_location = response2.response[Object.keys(response2.response)[0]];
-                  $log.info(searced_location.county);
+                  //searced_location = response2.response[Object.keys(response2.response)[0]];
+                  $log.info("Search controller");
+                  EventDetail.setEvObject(response2.response[Object.keys(response2.response)[0]]);
                   
+
                 });
             }
             /*angular.forEach(response.response, function (event) {
@@ -428,7 +443,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
   })
   
 
-  .controller('DetailPage', function($scope, $log, $http, $sce, $ionicModal){
+  .controller('DetailPage', function($scope, $log, $http, $sce, $ionicModal, EventDetail){
     //$log.info("ServiceTest: " + searched_location);
     $scope.isLogged = localStorage.getItem("logged");
 
@@ -450,7 +465,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
         });
     };
     $scope.getEvent();
-
+    $log.info(EventDetail.getEvObject());
     if($scope.isLogged) {
       $scope.eventStatus = [];
       $http.get('http://www.wheee.eu/api/event_search/get_event_status.php?event_id=38&user_id=' + $scope.isLogged)
