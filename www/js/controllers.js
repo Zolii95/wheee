@@ -235,7 +235,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
         + '&gender=' + user.gender.$modelValue
         + '&newsletter=' + user.newsletter.$viewValue)
         .success(function (response) {
-          console.log(user.newsletter.$viewValue);
           window.location.reload();
         });
     };
@@ -288,6 +287,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     };
     $scope.getEvents();
   })
+
 
   .controller('autoCompleteController', function ($scope, $timeout, $log, $http, $q, EventDetail) {
     var self = this;
@@ -410,6 +410,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
               $http.get("http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place)
                 .success(function (response2) {
 
+
                   //searced_location = response2.response[Object.keys(response2.response)[0]];
                   $log.info("Search controller");
                   EventDetail.setEvObject(response2.response[Object.keys(response2.response)[0]]);
@@ -443,9 +444,22 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
   })
   
 
+
   .controller('DetailPage', function($scope, $log, $http, $sce, $ionicModal, EventDetail){
-    //$log.info("ServiceTest: " + searched_location);
+
     $scope.isLogged = localStorage.getItem("logged");
+
+    $scope.saveComment = function (commentForm) {
+
+      if(!$scope.isMessageAdded && commentForm.$$success.parse[0].$modelValue) {
+        var message = commentForm.$$success.parse[0].$modelValue;
+        $http.get('http://www.wheee.eu/api/event_detail/save_comment.php?event_id=38&user_id=' + $scope.isLogged + '&message=' + message)
+        .success(function (response) {
+          window.location.reload();
+        });
+        $scope.isMessageAdded = 1;
+      }
+    }
 
     $scope.getEvent = function () {
       $scope.eventData = [];
@@ -463,8 +477,24 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
           });
           $scope.eventDescription = $sce.trustAsHtml(response.response[1].description);
         });
+
+      $scope.comments = [];
+      $http.get('http://www.wheee.eu/api/event_detail/get_comments.php?event_id=38&comment_limit=10')
+        .success(function (response) {
+          angular.forEach(response.response, function (comment) {
+            $scope.comments.push(comment);
+          });
+        });
+
+      $scope.images = [];
+      $http.get('http://www.wheee.eu/api/event_detail/get_images.php?event_id=38&image_limit=10')
+        .success(function (response) {
+          angular.forEach(response.response, function (image) {
+            $scope.images.push(image);
+          });
+        });
     };
-    $scope.getEvent();
+    $scope.getEvent(); 
     $log.info(EventDetail.getEvObject());
     if($scope.isLogged) {
       $scope.eventStatus = [];
@@ -491,6 +521,17 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
         });
     }
 
+    // $scope.shareViaFacebook = function() {
+    //   var message = 'Test';
+    //   var logo = 'test';
+    //   var url = 'http://test.com'
+    //     $cordovaSocialSharing.canShareVia("facebook", message, logo, url).then(function(result) {
+    //         $cordovaSocialSharing.shareViaFacebook(message, logo, url);
+    //     }, function(error) {
+    //         alert(error)
+    //     });
+    // }
+
     $scope.openLoginModal = function() {
       $ionicModal.fromTemplateUrl('login-modal.html', {
         scope: $scope,
@@ -505,9 +546,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
       $scope.modal.hide();
     };
     // Cleanup the modal when we're done with it!
-    $scope.$on('$destroy', function() {
-      $scope.modal.remove();
-    });
+    // $scope.$on('$destroy', function() {
+    //   $scope.modal.remove();
+    // });
     // Execute action on hide modal
     $scope.$on('modal.hidden', function() {
       // Execute action

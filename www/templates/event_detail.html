@@ -2,27 +2,27 @@
   <ion-content>
     <img ng-src="{{eventData[0].header_image}}" class="eventHeader"/>
     <div class="action-line">
-      <div class="action-button align-center" ng-if="!isLogged" ng-controller="DetailPage" ng-click="openLoginModal()">
+      <div class="action-button align-center" ng-if="!isLogged" ng-click="openLoginModal()">
         <img ng-src="../img/plus.png"/>
         <p><b>Wheee! Join!</b></p>
       </div>
-      <div class="action-button align-center" ng-if="isLogged && !eventStatus[0].is_joined" ng-controller="DetailPage" ng-click="changeJoinedStatus()">
+      <div class="action-button align-center" ng-if="isLogged && !eventStatus[0].is_joined" ng-click="changeJoinedStatus()">
         <img ng-src="../img/plus.png"/>
         <p><b>Join! Wheee!</b></p>
       </div>
-      <div class="action-button align-center" ng-if="isLogged && eventStatus[0].is_joined" ng-controller="DetailPage" ng-click="changeJoinedStatus()">
+      <div class="action-button align-center" ng-if="isLogged && eventStatus[0].is_joined" ng-click="changeJoinedStatus()">
         <img ng-src="../img/minus.png"/>
         <p><b>Leave</b></p>
       </div>
-      <div class="action-button align-center" ng-if="!isLogged" ng-controller="DetailPage" ng-click="openLoginModal()">
+      <div class="action-button align-center" ng-if="!isLogged" ng-click="openLoginModal()">
         <img ng-src="../img/bookmark_unbookmarked.png"/>
         <p><b>Bookmark</b></p>
       </div>
-      <div class="action-button align-center" ng-if="isLogged && !eventStatus[0].is_bookmarked" ng-controller="DetailPage" ng-click="changeBookmarkedStatus()">
+      <div class="action-button align-center" ng-if="isLogged && !eventStatus[0].is_bookmarked" ng-click="changeBookmarkedStatus()">
         <img ng-src="../img/bookmark_unbookmarked.png"/>
         <p><b>Bookmark</b></p>
       </div>
-      <div class="action-button align-center" ng-if="isLogged && eventStatus[0].is_bookmarked" ng-controller="DetailPage" ng-click="changeBookmarkedStatus()">
+      <div class="action-button align-center" ng-if="isLogged && eventStatus[0].is_bookmarked" ng-click="changeBookmarkedStatus()">
         <img ng-src="../img/bookmark_bookmarked.png"/>
         <p><b>Unbookmark</b></p>
       </div>
@@ -30,7 +30,7 @@
         <img ng-src="../img/invite.png"/>
         <p><b>Invite</b></p>
       </div>
-      <div class="action-button align-center">
+      <div class="action-button align-center" ng-click="shareViaFacebook()">
         <img ng-src="../img/facebook.png"/>
         <p><b>Share</b></p>
       </div>
@@ -51,7 +51,7 @@
         <p>{{eventData[0].event_start_hour}}</p>
       </div>
     </div>
-    <div ng-controller="DetailPage as Ctrl" class="container-padding">
+    <div class="container-padding">
 
     <p class="detail-local"><b>{{eventData[0].local_name}}</b></p>  
     <h1 class="event-title">{{eventData[0].event_title}}</h1>
@@ -62,6 +62,41 @@
     <div ng-bind-html="eventDescription"></div>
 
     <h3>Leave a comment!</h3>
+    <div ng-if="!isLogged" class="align-center">
+      <p>To add a comment for this event, please log in!</p>
+      <a href="#/app/login" ng-click="closeLoginModal()" class="button button-full button-positive">Log In</a>
+    </div>
+    <div ng-if="isLogged">
+      <div class="add-comment">
+        <form name="commentForm" ng-submit="saveComment(commentForm)">
+          <textarea type="text" class="form-input message-input" placeholder="Message" ng-model="message" name="message"></textarea>
+
+          <button class="button myButton submit-100 mb-20" type="submit">Add comment</button>
+        </form>
+      </div>
+    </div>
+    <div ng-repeat="comment in comments" class="comment">
+      <div class="comment-row">
+        <img ng-src="{{comment.image}}" />
+        <p>{{comment.comment}}</p>
+      </div>
+      <small>- {{comment.firstname}} {{comment.lastname}}, {{comment.comment_date}}</small>
+    </div>
+    
+
+    <h3>Upload a photo!</h3>
+    <div ng-if="isLogged">
+      <input class="bottom-marg-15" type="file" name="file" file="file">
+      <button class="button button-small button-full button-positive" ng-disabled="file.size&amp;&amp;false || uploadProgress&gt;0" ng-click="upload()" ng-cloak="">Upload</button>
+    </div>
+    <div ng-repeat="image in images" class="image">
+      <img ng-src="http://www.wheee.eu/upload/uimg/{{image.image}}" />
+      <div class="img-details">
+        <p ng-if="image.description">{{image.description}}</p>
+        <p>{{image.firstname}} {{image.lastname}} - <small>{{image.date_added}}</small></p>        
+      </div>
+    </div>
+
     </div>
 
   </ion-content>
