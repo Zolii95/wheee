@@ -5,10 +5,24 @@ var Event_Place = "";
 var CountryName = "";
 var CityName = "";
 var Event_PlaceName = "";
-var searced_location;
+
 
 angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
+  .factory('SearchedEvent', function(){
+    var searchedevent = {};
+ 
+    return {
+        getEvObject: function () {
+            return searchedevent;
+        },
+        setEvObject: function (evObject) {
+            searchedevent = evObject;
+        }
+    };
+    //searchedevent = {};
+    //return searchedevent;
+  })
 
   .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http) {
 
@@ -276,12 +290,13 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     $scope.getEvents();
   })
 
-  .controller('autoCompleteController', function ($scope, $timeout, $log, $http, $q) {
+  .controller('autoCompleteController', function ($scope, $timeout, $log, $http, $q, SearchedEvent) {
     var self = this;
     self.showCity = false;
     self.showEvent = false;
     self.simulateQuery = true;
     self.isDisabled = false;
+    $scope.input = {};
 
     //http://www.wheee.eu/api/event_search/events.php?event_id=37
 
@@ -384,7 +399,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     //When clicked on search button
     $scope.search = function () {
       //$log.info('Search city: ' + City + ' Event pl: ' + Event_PlaceName + ' Country: ' + Country);
-      $scope.searchedLocation = [];
+      //$scope.searchedLocation = [];
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
@@ -397,26 +412,20 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
               $http.get("http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place)
                 .success(function (response2) {
 
-                  searced_location = response2.response[Object.keys(response2.response)[0]];
-                  $log.info(searced_location.county);
-                  
+                  //searched_location = response2.response[Object.keys(response2.response)[0]];
+                  //$log.info(searched_location.county);
+                  SearchedEvent.setEvObject(response2.response[Object.keys(response2.response)[0]]);
+                  $log.info(SearchedEvent.getEvObject());
+                  //$scope.input.searchedevent = response2.response[Object.keys(response2.response)[0]];
                 });
             }
-            /*angular.forEach(response.response, function (event) {
-              $scope.topEvents.push(event);*/
+            
           });
         location.href = '#/app/event_detail';
       };
 
       $scope.getSearch();
-      /*starter.controllers.factory('EventService', function () {
-                    return {
-                      name: searced_location.name
-                    };
-                  });*/
     };
-
-
 
     //filter function for search query
     function createFilterFor(query) {
@@ -427,8 +436,10 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     }
   })
 
-  .controller('DetailPage', function($scope, $log){
-    $log.info("ServiceTest: " + searced_location);
+  .controller('DetailPage', function($scope, $log, SearchedEvent){
+    $scope.input = {"Id": "df"};
+    $scope.input = SearchedEvent.getEvObject();
+    $log.info("ServiceTest: " + $scope.input);
   })
 
   .controller('NewEvents', function ($scope, $http) {
