@@ -406,3 +406,8 @@ span.location-spec {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
+
+.link {
+    text-decoration: none !important;
+    color: inherit;
+}

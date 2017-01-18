@@ -86,8 +86,9 @@
 
     <h3>Upload a photo!</h3>
     <div ng-if="isLogged">
-      <input class="bottom-marg-15" type="file" name="file" file="file">
-      <button class="button button-small button-full button-positive" ng-disabled="file.size&amp;&amp;false || uploadProgress&gt;0" ng-click="upload()" ng-cloak="">Upload</button>
+    
+       <button class="button" ng-click="upload()">Upload From Assets</button>
+
     </div>
     <div ng-repeat="image in images" class="image">
       <img ng-src="http://www.wheee.eu/upload/uimg/{{image.image}}" />
