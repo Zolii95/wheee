@@ -12,19 +12,19 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
   .factory('EventDetail', function () {
 
     var eventdetail = {};
-    eventdetail.cityId = "";
-    eventdetail.placeName = "";
-    eventdetail.placeId = "";
+    //eventdetail.cityId = "";
+    //eventdetail.placeName = "";
+    //eventdetail.placeId = "";
 
-    return eventdetail;
-    /*return {
+    //return eventdetail;
+    return {
           getEvObject: function () {
                 return eventdetail;
           },
           setEvObject: function (evObject) {
                 eventdetail = evObject;
           }
-    };*/
+    };
   })
 
   .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http) {
@@ -425,7 +425,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
     $http.get("http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1")
       .success(function (response) {
-        //$log.info(response.response);
         if (response.response.length == 0) {
           $http.get("http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place)
             .success(function (response2) {
@@ -547,14 +546,20 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
 
             });
+        }else{
+          EventDetail.setEvObject(response.response);
+          location.href = '#/app/future_events';          
         }
 
       });
 
     //------------***********--------------*********------------------------
 
-
     //$state.reload();
+  })
+
+  .controller('SearchEvents', function($scope, $log, EventDetail){
+    $log.info(EventDetail.getEvObject());
   })
 
   .controller('NewEvents', function ($scope, $http) {
