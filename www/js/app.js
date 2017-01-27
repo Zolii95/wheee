@@ -142,6 +142,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       }
     })
 
+    .state('app.logout', {
+      url: '/logout',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/logout.html',
+          controller: "Logout"
+        }
+      }
+    })
+
 
 ;
   // if none of the above states are matched, use this as the fallback

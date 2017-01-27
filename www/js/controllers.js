@@ -29,6 +29,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
   .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http) {
 
+    $scope.logged = localStorage.getItem("logged");
+
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -44,6 +46,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
               .success(function (response) {
                 angular.forEach(response.response, function (user) {
                   localStorage.setItem("logged", user);
+                  location.href = '#/app/home';
                 });
 
                 $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -76,7 +79,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     };
 
     $scope.groupLO[2] = {
-      name: "LogIn",
+      name: "Log In",
       items: [],
       link: "#/app/login"
     };
@@ -117,7 +120,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     $scope.groupLI[3] = {
       name: "Log Out",
       items: [],
-      link: "logout()"
+      link: "#/app/logout"
     };
     //Lenyilo menü a Search-höz
     $scope.groupLI[1].items[0] = {
@@ -161,6 +164,17 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     $scope.isGroupShown = function (group) {
       return $scope.shownGroup === group;
     };
+  })
+
+  //LOGOUT
+
+  .controller('Logout', function ($scope) {
+
+    $scope.logout = function () {
+      localStorage.setItem("logged", 0);
+      location.href = '#/app/home'; 
+    };
+    $scope.logout();
   })
 
   //MyApplications
