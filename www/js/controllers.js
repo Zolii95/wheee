@@ -27,7 +27,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     };
   })
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http) {
+  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state) {
 
     $scope.logged = localStorage.getItem("logged");
 
@@ -46,7 +46,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
               .success(function (response) {
                 angular.forEach(response.response, function (user) {
                   localStorage.setItem("logged", user);
-                  location.href = '#/app/home';
+                  $scope.logged = localStorage.getItem("logged");
+                  $state.go('app.home');
                 });
 
                 $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -155,26 +156,22 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
 
     $scope.toggleGroup = function (group) {
-      if ($scope.isGroupShown(group)) {
-        $scope.shownGroup = null;
-      } else {
-        $scope.shownGroup = group;
+      if(group.link != '#/app/logout') {
+        if ($scope.isGroupShown(group)) {
+          $scope.shownGroup = null;
+        } else {
+          $scope.shownGroup = group;
+        }
+      }
+      else {
+        localStorage.setItem("logged", 0);
+        $scope.logged = localStorage.getItem("logged");
+        window.location.reload();
       }
     };
     $scope.isGroupShown = function (group) {
       return $scope.shownGroup === group;
     };
-  })
-
-  //LOGOUT
-
-  .controller('Logout', function ($scope) {
-
-    $scope.logout = function () {
-      localStorage.setItem("logged", 0);
-      location.href = '#/app/home'; 
-    };
-    $scope.logout();
   })
 
   //MyApplications
