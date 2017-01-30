@@ -16,7 +16,7 @@
 			<span class="title">Wheee!</span>
 		</ion-header-bar>
 		<ion-content>
-			<ion-list ng-if="logged == 0">
+			<ion-list ng-if="!logged || logged == 0">
 				<div ng-repeat="group in groupLO">
 					<ion-item ng-if="group.name!='Search'" menu-close class="item-stable" ng-click="toggleGroup(group)" ng-href="{{group.link}}" ng-class="{active: isGroupShown(group)}">
 						<i  ng-class="group.name=='Search' ? (isGroupShown(group) ? 'ion-minus' : 'ion-plus') : ''"></i> 
