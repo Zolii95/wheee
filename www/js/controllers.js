@@ -27,7 +27,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     };
   })
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state, $q, $ionicLoading, $cordovaFacebook, $ionicSideMenuDelegate) {
+  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state, $q, $ionicLoading, $ionicSideMenuDelegate) {
     $scope.logged = localStorage.getItem("logged");
 
     if($scope.logged && $scope.logged > 0) {
@@ -67,12 +67,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
           localStorage.setItem("logged", user);
           $scope.logged = localStorage.getItem("logged");
           $ionicLoading.hide();
-          if($state.current.name == 'app.login') {
-            location.reload();
-          }
-          else {
-            $state.go('app.home');
-          }
+          $state.go('app.home');
+          
         });
 
         $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -161,12 +157,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
                 localStorage.setItem("logged", user);
                 $scope.logged = localStorage.getItem("logged");
                 $ionicLoading.hide();
-                if($state.current.name == 'app.login') {
-                  location.reload();
-                }
-                else {
-                  $state.go('app.home');
-                }
+                $state.go('app.home');
+                
               });
 
               $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -738,37 +730,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     $scope.getEvents();
   })
 
-
-// .controller('HomeCtrl', function($scope, UserService, $ionicActionSheet, $state, $ionicLoading){
-
-// 	$scope.user = UserService.getUser();
-
-// 	$scope.showLogOutMenu = function() {
-// 		var hideSheet = $ionicActionSheet.show({
-// 			destructiveText: 'Logout',
-// 			titleText: 'Are you sure you want to logout? This app is awsome so I recommend you to stay.',
-// 			cancelText: 'Cancel',
-// 			cancel: function() {},
-// 			buttonClicked: function(index) {
-// 				return true;
-// 			},
-// 			destructiveButtonClicked: function(){
-// 				$ionicLoading.show({
-// 					template: 'Logging out...'
-// 				});
-
-//         //facebook logout
-//         facebookConnectPlugin.logout(function(){
-//           $ionicLoading.hide();
-//           $state.go('welcome');
-//         },
-//         function(fail){
-//           $ionicLoading.hide();
-//         });
-// 			}
-// 		});
-// 	};
-// })
 
 ;
 
