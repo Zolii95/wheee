@@ -1,8 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="true" >
 	<ion-side-menu-content>
 		<ion-nav-bar class="bar-stable menu-navbar">
-			<ion-nav-back-button>
-			</ion-nav-back-button>
 				<ion-nav-buttons side="right">
 				<button class="button button-icon button-clear ion-navicon menu-button" menu-toggle="right">
         </button>
@@ -31,7 +29,7 @@
 					</ion-item>
 				</div>
 			</ion-list>
-			<ion-list ng-if="logged == 1">
+			<ion-list ng-if="logged > 0">
 				<div ng-repeat="group in groupLI" >
 					<ion-item ng-if="group.name!='Search' && group.name!='My Profile'" menu-close class="item-stable" ng-click="toggleGroup(group)" ng-href="{{group.link}}" ng-class="{active: isGroupShown(group)}">
 						

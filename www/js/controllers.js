@@ -18,49 +18,197 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
     //return eventdetail;
     return {
-          getEvObject: function () {
-                return eventdetail;
-          },
-          setEvObject: function (evObject) {
-                eventdetail = evObject;
-          }
+      getEvObject: function () {
+        return eventdetail;
+      },
+      setEvObject: function (evObject) {
+        eventdetail = evObject;
+      }
     };
   })
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state) {
-
+  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state, $q, $ionicLoading, $cordovaFacebook, $ionicSideMenuDelegate) {
     $scope.logged = localStorage.getItem("logged");
 
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
-    $scope.fbLogin = function () {
-      ngFB.login({ scope: 'email' }).then(
-        function (response) {
-          if (response.status === 'connected') {
+    if($scope.logged && $scope.logged > 0) {
+      $state.go('app.home');
+    }
 
-            $http.get('http://www.wheee.eu/api/user/get_user_id.php?email=tamas.bajnok@yahoo.co.uk')
-              .success(function (response) {
-                angular.forEach(response.response, function (user) {
-                  localStorage.setItem("logged", user);
-                  $scope.logged = localStorage.getItem("logged");
-                  $state.go('app.home');
-                });
+    // login
 
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-              }).error(function (err) {
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-              });
+  //This is the success callback from the login method
+  var fbLoginSuccess = function(response) {
+    if (!response.authResponse){
+      fbLoginError("Cannot find the authResponse");
+      return;
+    }
 
+    var authResponse = response.authResponse;
 
-          } else {
-            alert('Facebook login failed');
+    getFacebookProfileInfo(authResponse)
+    .then(function(profileInfo) {
+      //for the purpose of this example I will store user data on local storage
+      
+      $http.get('http://www.wheee.eu/api/user/get_user_id.php?email=' + profileInfo.email + 
+                                                                  '&first_name=' + profileInfo.first_name + 
+                                                                  '&last_name=' + profileInfo.last_name + 
+                                                                  '&gender=' + profileInfo.gender + 
+                                                                  '&age=' + profileInfo.age_range.min + 
+                                                                  '&link=' + profileInfo.link + 
+                                                                  '&picture=' + profileInfo.picture.data.url + 
+                                                                  '&updated=' + profileInfo.updated_time )
+      .success(function (response) {
+        angular.forEach(response.response, function (user) {
+
+          $ionicLoading.show({
+            template: 'Logging in...'
+          });
+
+          localStorage.setItem("logged", user);
+          $scope.logged = localStorage.getItem("logged");
+          $ionicLoading.hide();
+          if($state.current.name == 'app.login') {
+            location.reload();
+          }
+          else {
+            $state.go('app.home');
           }
         });
-    };
+
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+      }).error(function (err) {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+      });
+
+      $ionicLoading.hide();
+      if($state.current.name == 'app.login') {
+        location.reload();
+      }
+      else {
+        $state.go('app.home');
+      }
+
+    }, function(fail){
+      //fail get profile info
+      console.log('profile info fail', fail);
+    });
+  };
+
+
+  //This is the fail callback from the login method
+  var fbLoginError = function(error){
+    console.log('fbLoginError', error);
+    $ionicLoading.hide();
+  };
+
+  //this method is to get the user profile info from the facebook api
+  var getFacebookProfileInfo = function (authResponse) {
+    var info = $q.defer();
+
+    facebookConnectPlugin.api('/me?fields=first_name,last_name,gender,locale,age_range,link,picture,updated_time,email&access_token=' + authResponse.accessToken, null,
+      function (response) {
+				console.log(response);
+        info.resolve(response);
+      },
+      function (response) {
+				console.log(response);
+        info.reject(response);
+      }
+    );
+    return info.promise;
+  };
+
+  //This method is executed when the user press the "Login with facebook" button
+  $scope.facebookSignIn = function() {
+
+    // FOR BROWSER LOGIN
+
+    // localStorage.setItem("logged", 1);
+    // $scope.logged = localStorage.getItem("logged");
+    // if($state.current.name == 'app.login') {
+    //   location.reload();
+    // }
+    // else {
+    //   $state.go('app.home');
+    // }
+
+    // FOR BROWSER LOGIN
+
+    facebookConnectPlugin.getLoginStatus(function(success){
+     if(success.status === 'connected'){
+        // the user is logged in and has authenticated your app, and response.authResponse supplies
+        // the user's ID, a valid access token, a signed request, and the time the access token
+        // and signed request each expire
+        console.log('getLoginStatus', success.status);
+
+				//check if we have our user saved
+
+				if(!$scope.logged || $scope.logged == 0)
+				{
+					getFacebookProfileInfo(success.authResponse)
+					.then(function(profileInfo) {
+
+            $http.get('http://www.wheee.eu/api/user/get_user_id.php?email=' + profileInfo.email + 
+                                                                  '&first_name=' + profileInfo.first_name + 
+                                                                  '&last_name=' + profileInfo.last_name + 
+                                                                  '&gender=' + profileInfo.gender + 
+                                                                  '&age=' + profileInfo.age_range.min + 
+                                                                  '&link=' + profileInfo.link + 
+                                                                  '&picture=' + profileInfo.picture.data.url + 
+                                                                  '&updated=' + profileInfo.updated_time )
+            .success(function (response) {
+              angular.forEach(response.response, function (user) {
+
+                $ionicLoading.show({
+                  template: 'Logging in...'
+                });
+
+                localStorage.setItem("logged", user);
+                $scope.logged = localStorage.getItem("logged");
+                $ionicLoading.hide();
+                if($state.current.name == 'app.login') {
+                  location.reload();
+                }
+                else {
+                  $state.go('app.home');
+                }
+              });
+
+              $scope.$broadcast('scroll.infiniteScrollComplete');
+            }).error(function (err) {
+              $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+
+					}, function(fail){
+						//fail get profile info
+						console.log('profile info fail', fail);
+					});
+				}else{
+					if($state.current.name == 'app.login') {
+            location.reload();
+          }
+          else {
+            $state.go('app.home');
+          }
+				}
+
+     } else {
+        //if (success.status === 'not_authorized') the user is logged in to Facebook, but has not authenticated your app
+        //else The person is not logged into Facebook, so we're not sure if they are logged into this app or not.
+        console.log('getLoginStatus', success.status);
+
+			  $ionicLoading.show({
+          template: 'Logging in...'
+        });
+
+        //ask the permissions you need. You can learn more about FB permissions here: https://developers.facebook.com/docs/facebook-login/permissions/v2.4
+        facebookConnectPlugin.login(['email', 'public_profile'], fbLoginSuccess, fbLoginError);
+      }
+    });
+  };
+
+    // login
+
     // Form data for the login modal
     $scope.loginData = {};
     $scope.navTitle = '<img class="title-image" src="http://www.wheee.eu/assets/images/logo-160x160-10.png" />';
@@ -82,7 +230,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     $scope.groupLO[2] = {
       name: "Log In",
       items: [],
-      link: "#/app/login"
+      link: "#/app/welcome"
     };
     //Lenyilo menü a Search-nek
     $scope.groupLO[1].items[0] = {
@@ -156,7 +304,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
 
     $scope.toggleGroup = function (group) {
-      if(group.link != '#/app/logout') {
+      if (group.link != '#/app/logout') {
         if ($scope.isGroupShown(group)) {
           $scope.shownGroup = null;
         } else {
@@ -166,7 +314,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
       else {
         localStorage.setItem("logged", 0);
         $scope.logged = localStorage.getItem("logged");
-        window.location.reload();
+        $ionicSideMenuDelegate.toggleRight();
+        $state.go('app.welcome');
       }
     };
     $scope.isGroupShown = function (group) {
@@ -441,9 +590,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
             .success(function (response2) {
               EventDetails = response2.response[Object.keys(response2.response)[0]];
               $log.info(EventDetails);
-              
+
               $scope.isLogged = localStorage.getItem("logged");
-              
+
               $scope.saveComment = function (commentForm) {
 
                 if (!$scope.isMessageAdded && commentForm.$$success.parse[0].$modelValue) {
@@ -455,7 +604,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
                   $scope.isMessageAdded = 1;
                 }
               }
-              
+
               $scope.getEvent = function () {
                 $scope.eventData = [];
                 $http.get('http://www.wheee.eu/api/event_search/events.php?event_id=38')
@@ -472,7 +621,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
                     });
                     $scope.eventDescription = $sce.trustAsHtml(response.response[1].description);
                   });
-                  $log.info(EventDetails);
+                $log.info(EventDetails);
                 $scope.comments = [];
                 $http.get('http://www.wheee.eu/api/event_detail/get_comments.php?event_id=38&comment_limit=10')
                   .success(function (response) {
@@ -491,7 +640,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
               };
               $scope.getEvent();
 
-              
+
 
               if ($scope.isLogged) {
                 $scope.eventStatus = [];
@@ -557,9 +706,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
 
             });
-        }else{
+        } else {
           EventDetail.setEvObject(response.response);
-          location.href = '#/app/future_events';          
+          location.href = '#/app/future_events';
         }
 
       });
@@ -569,7 +718,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
     //$state.reload();
   })
 
-  .controller('SearchEvents', function($scope, $log, EventDetail){
+  .controller('SearchEvents', function ($scope, $log, EventDetail) {
     $log.info(EventDetail.getEvObject());
   })
 
@@ -592,7 +741,44 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
     };
     $scope.getEvents();
-  });
+  })
+
+
+// .controller('HomeCtrl', function($scope, UserService, $ionicActionSheet, $state, $ionicLoading){
+
+// 	$scope.user = UserService.getUser();
+
+// 	$scope.showLogOutMenu = function() {
+// 		var hideSheet = $ionicActionSheet.show({
+// 			destructiveText: 'Logout',
+// 			titleText: 'Are you sure you want to logout? This app is awsome so I recommend you to stay.',
+// 			cancelText: 'Cancel',
+// 			cancel: function() {},
+// 			buttonClicked: function(index) {
+// 				return true;
+// 			},
+// 			destructiveButtonClicked: function(){
+// 				$ionicLoading.show({
+// 					template: 'Logging out...'
+// 				});
+
+//         //facebook logout
+//         facebookConnectPlugin.logout(function(){
+//           $ionicLoading.hide();
+//           $state.go('welcome');
+//         },
+//         function(fail){
+//           $ionicLoading.hide();
+//         });
+// 			}
+// 		});
+// 	};
+// })
+
+;
+
+
+
 
 /**
 http://www.wheee.eu/api/event_homepage/newest_events.php?location_id=37&limit=5

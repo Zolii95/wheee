@@ -411,3 +411,41 @@ span.location-spec {
     text-decoration: none !important;
     color: inherit;
 }
+
+.welcome-view {
+    background-image: url('../img/welcome_background.jpg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: center top;
+    background-attachment: fixed;
+
+    color: #fff;
+}
+
+.app-logo {
+    margin-top: 25px;
+}
+
+.white {
+    color: #fff;
+}
+
+.no-border {
+    border: none !important;
+}
+
+.facebook-sign-in {
+    background: #3b5998;
+    color: #fff;
+}
+
+.bottom-content {
+    margin-top: 30% !important;
+}
+
+.skip {
+    text-decoration: none;
+    color: #CCC;
+    padding: 15px;
+    margin-top: 10px;
+}
