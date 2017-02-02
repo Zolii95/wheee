@@ -562,6 +562,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
             });
         }else{
           EventDetail.setEvObject(response.response);
+          $log.info(EventDetail.getEvObject())
           location.href = '#/app/future_events';          
         }
 
@@ -574,6 +575,10 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
   .controller('SearchEvents', function($scope, $log, EventDetail){
     $log.info(EventDetail.getEvObject());
+  })
+
+  .controller('Events', function ($scope, $http, EventDetail) {
+    $scope.newEvents = EventDetail.getEvObject();   
   })
 
   .controller('NewEvents', function ($scope, $http) {
