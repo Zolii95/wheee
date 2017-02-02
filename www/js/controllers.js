@@ -123,14 +123,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial'])
 
     // FOR BROWSER LOGIN
 
-    // localStorage.setItem("logged", 1);
-    // $scope.logged = localStorage.getItem("logged");
-    // if($state.current.name == 'app.login') {
-    //   location.reload();
-    // }
-    // else {
-    //   $state.go('app.home');
-    // }
+    localStorage.setItem("logged", 1);
+    $scope.logged = localStorage.getItem("logged");
+    $state.go('app.home');
 
     // FOR BROWSER LOGIN
 
