@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', 'ngOpenFB', 'ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', 'ngOpenFB', 'ngCordova', 'services'])
 
 .run(function($ionicPlatform,ngFB) {
   ngFB.init({appId: '599219800249231'});
@@ -31,6 +31,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
+  })
+
+  .state('app.welcome', {
+    url: '/welcome',
+    views: {
+        'menuContent': {
+          templateUrl: 'templates/welcome.html'
+        }
+      }
   })
 
   .state('app.home', {
@@ -133,27 +142,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       }
     })
 
-    .state('app.login', {
-      url: '/login',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/login.html'
-        }
-      }
-    })
-
-    .state('app.logout', {
-      url: '/logout',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/logout.html',
-          controller: "Logout"
-        }
-      }
-    })
-
 
 ;
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/home');
+  $urlRouterProvider.otherwise('/app/welcome');
 });
