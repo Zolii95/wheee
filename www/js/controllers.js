@@ -820,12 +820,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             });
         } else {
           EventDetail.setEvObject(response.response);
-<<<<<<< HEAD
           $log.info(EventDetail.getEvObject())
-          location.href = '#/app/future_events';          
-=======
           location.href = '#/app/future_events';
->>>>>>> c8124e00930653a4b9e1f43783815974e5bdceed
         }
 
       });
