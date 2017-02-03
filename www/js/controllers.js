@@ -820,7 +820,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             });
         } else {
           EventDetail.setEvObject(response.response);
+<<<<<<< HEAD
+          $log.info(EventDetail.getEvObject())
+          location.href = '#/app/future_events';          
+=======
           location.href = '#/app/future_events';
+>>>>>>> c8124e00930653a4b9e1f43783815974e5bdceed
         }
 
       });
@@ -832,6 +837,10 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   .controller('SearchEvents', function ($scope, $log, EventDetail) {
     $log.info(EventDetail.getEvObject());
+  })
+
+  .controller('Events', function ($scope, $http, EventDetail) {
+    $scope.newEvents = EventDetail.getEvObject();   
   })
 
   .controller('NewEvents', function ($scope, $http) {
