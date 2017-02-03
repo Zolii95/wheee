@@ -1,5 +1,5 @@
 <ion-view view-title="Event Details">
-  <ion-content>
+  <ion-content delegate-handle="EventDetail">
     <img ng-src="{{eventData[0].header_image}}" class="eventHeader"/>
     <div class="action-line">
       <div class="action-button align-center" ng-if="!isLogged" ng-click="openLoginModal()">
@@ -61,7 +61,7 @@
     </div>
     <div ng-bind-html="eventDescription"></div>
 
-    <h3>Leave a comment!</h3>
+    <h3 id="add-comment">Leave a comment!</h3>
     <div ng-if="!isLogged" class="align-center">
       <p>To add a comment for this event, please log in!</p>
       <a href="#/app/login" ng-click="closeLoginModal()" class="button button-full button-positive">Log In</a>
@@ -86,8 +86,13 @@
 
     <h3>Upload a photo!</h3>
     <div ng-if="isLogged">
-    
-       <button class="button" ng-click="upload()">Upload From Assets</button>
+
+      <ion-footer-bar class="bar bar-positive">
+        <div class="button-bar">
+          <button class="button icon-left ion-chatbox-working" ng-click="scrollTo('add-comment')">Add Comment</button>
+          <button class="button icon-left ion-upload" ng-click="loadImage()">Upload Photo</button>
+        </div>
+      </ion-footer-bar>
 
     </div>
     <div ng-repeat="image in images" class="image">
