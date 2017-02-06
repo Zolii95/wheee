@@ -222,7 +222,7 @@ input {
 .img-thumbnail {
     padding: 4px;
     background-color: #fff;
-    border-radius: 0px;
+    border-radius: 50%;
     border: 1px solid #f6f6f6;
     height: auto;
 }
@@ -267,6 +267,10 @@ span.newsletter {
 
 .button-100 {
     width: 94% !important;
+}
+
+.mt-25 {
+    margin-top: 25px;
 }
 
 .mb-20 {
@@ -390,7 +394,8 @@ span.location-spec {
     padding: 15px;
     width: 99%;
     border-left: 5px solid #CCC;
-    background: #f9f9f9;
+    background: #F4F4F4;
+    border-radius: 6px;
 }
 
 .comment img, .comment p {
@@ -399,6 +404,8 @@ span.location-spec {
 
 .comment img {
     border: 1px solid #CCC;
+    width: 55px;
+    border-radius: 6px;
 }
 
 .comment p {
@@ -452,10 +459,7 @@ span.location-spec {
 
 .welcome-view {
     background-image: url('../img/welcome_background.jpg');
-    background-repeat: no-repeat;
-    background-size: auto 100%;
-    background-position: center top;
-    background-attachment: fixed;
+    background-size: cover;
 
     color: #fff;
 }
@@ -545,4 +549,51 @@ span.location-spec {
     margin-bottom: 10px;
     width: 100%;
     color: #FFF;
+}
+
+#menu {
+    padding: 25px 0 25px 0;
+    background-image: url('../img/menu-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#menu img {
+    border-radius: 50%;
+    width: 100px;
+}
+
+.ion-plus, .ion-minus {
+    float: right;
+}
+
+.item-stable {
+    background-color: transparent !important;
+}
+
+.item-stable a, .item, .item-complex .item-content {
+    background-color: transparent !important;
+    color: #FFF !important;
+}
+
+.item {
+    border-color: #FFF !important;
+    padding: 5px 0 5px 0 !important;
+}
+
+.list {
+    padding-top: 25px !important;
+}
+
+.item-accordion.child {
+    padding-left: 25px !important;
+}
+
+#menu .menu-logo {
+    width: 100px;
+    border-radius: 0;
+}
+
+.profile-picture {
+    width: 100px;
 }

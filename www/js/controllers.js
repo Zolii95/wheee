@@ -34,6 +34,22 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $state.go('app.home');
     }
 
+    $scope.populateMenuDatas = function () {
+      $scope.menuProfileDatas = [];
+      $http.get('http://www.wheee.eu/api/user/profile_datas.php?dashboard=1&id=' + $scope.logged)
+      .success(function (response) {
+        $scope.menuProfileDatas.push({
+          email: response.response[0].email,
+          firstname: response.response[0].firstname,
+          lastname: response.response[0].lastname,
+          fb_picture: response.response[0].fb_picture
+        });
+      })
+    };
+
+    $scope.populateMenuDatas();
+  
+
     // login
 
   //This is the success callback from the login method
@@ -55,7 +71,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
                                                                   '&gender=' + profileInfo.gender + 
                                                                   '&age=' + profileInfo.age_range.min + 
                                                                   '&link=' + profileInfo.link + 
-                                                                  '&picture=' + profileInfo.picture.data.url + 
+                                                                  '&picture=http://graph.facebook.com/' + authResponse.userID + '/picture?type=large' + 
                                                                   '&updated=' + profileInfo.updated_time )
       .success(function (response) {
         angular.forEach(response.response, function (user) {
@@ -66,6 +82,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
           localStorage.setItem("logged", user);
           $scope.logged = localStorage.getItem("logged");
+          $scope.populateMenuDatas();
+
           $ionicLoading.hide();
           if($state.current.name != 'app.event_detail') {
             $state.go('app.home');
@@ -153,7 +171,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
                                                                   '&gender=' + profileInfo.gender + 
                                                                   '&age=' + profileInfo.age_range.min + 
                                                                   '&link=' + profileInfo.link + 
-                                                                  '&picture=' + profileInfo.picture.data.url + 
+                                                                  '&picture=http://graph.facebook.com/' + success.authResponse.userID + '/picture?type=large' +
                                                                   '&updated=' + profileInfo.updated_time )
             .success(function (response) {
               angular.forEach(response.response, function (user) {
@@ -164,6 +182,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
                 localStorage.setItem("logged", user);
                 $scope.logged = localStorage.getItem("logged");
+                $scope.populateMenuDatas();
+
                 $ionicLoading.hide();
                 if($state.current.name != 'app.event_detail') {
                   $state.go('app.home');
@@ -217,32 +237,38 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.groupLO[0] = {
       name: "Home",
       items: [],
-      link: "#/app/home"
+      link: "#/app/home",
+      icon: 'ion-android-home'
     };
 
     $scope.groupLO[1] = {
       name: "Search",
       items: [],
-      link: ""
+      link: "",
+      icon: 'ion-android-search'
     };
 
     $scope.groupLO[2] = {
       name: "Log In",
       items: [],
-      link: "#/app/welcome"
+      link: "#/app/welcome",
+      icon: 'ion-unlocked'
     };
     //Lenyilo menü a Search-nek
     $scope.groupLO[1].items[0] = {
       name: "Future Events",
-      link: "#/app/future_events"
+      link: "#/app/future_events",
+      icon: 'ion-android-search'
     };
     $scope.groupLO[1].items[1] = {
       name: "Past Events",
-      link: "#/app/past_events"
+      link: "#/app/past_events",
+      icon: 'ion-android-search'
     };
     $scope.groupLO[1].items[2] = {
       name: "Companies",
-      link: "#/app/companies"
+      link: "#/app/companies",
+      icon: 'ion-android-search'
     };
 
     //Menüpontok belépő állapotban
@@ -250,25 +276,29 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.groupLI[0] = {
       name: "Home",
       items: [],
-      link: "#/app/home"
+      link: "#/app/home",
+      icon: 'ion-android-home'
     };
 
     $scope.groupLI[1] = {
       name: "Search",
       items: [],
-      link: ""
+      link: "",
+      icon: 'ion-android-search'
     };
 
     $scope.groupLI[2] = {
       name: "My Profile",
       items: [],
-      link: ""
+      link: "",
+      icon: 'ion-android-person'
     };
 
     $scope.groupLI[3] = {
       name: "Log Out",
       items: [],
-      link: "#/app/logout"
+      link: "#/app/logout",
+      icon: 'ion-locked'
     };
     //Lenyilo menü a Search-höz
     $scope.groupLI[1].items[0] = {
@@ -286,19 +316,19 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     //Lenyilo menü a My Profile-hoz
     $scope.groupLI[2].items[0] = {
       name: "My dashboard",
-      link: "#/app/my_dashboard"
+      link: "#/app/my_dashboard",
     };
     $scope.groupLI[2].items[1] = {
       name: "Edit Profile",
-      link: "#/app/edit_profile"
+      link: "#/app/edit_profile",
     };
     $scope.groupLI[2].items[2] = {
       name: "My applications",
-      link: "#/app/my_applications"
+      link: "#/app/my_applications",
     };
     $scope.groupLI[2].items[3] = {
       name: "My bookmarks",
-      link: "#/app/my_bookmarks"
+      link: "#/app/my_bookmarks",
     };
 
 
