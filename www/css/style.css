@@ -57,8 +57,17 @@ h2 {
 .action-line {
     width: 100%;
     height: 75px;
-    background: #19D19A;
+    /*background: #0AC7B4;*/
     margin-top: -5px;
+    color: #0AC7B4;
+}
+
+.action-line i {
+    font-size: 47px;
+}
+
+.action-line p {
+    color: #333;
 }
 
 .action-button {
@@ -76,7 +85,7 @@ h2 {
 
 
 .myButton {
-    background-color: #19D19A;
+    background-color: #0AC7B4;
     color: white;
     margin-left: 10px;
    
@@ -294,13 +303,26 @@ span.newsletter {
 }
 
 .data-line {
-    height: 50px;
-    background: #2c2c2c;
+    height: 70px;
 }
+
+.data-line .time {
+    border-top: 1px solid #F4F4F4;
+    border-bottom: 1px solid #F4F4F4;
+    background: #F4F4F4;
+}
+
+.data-line i {
+    float: left;
+    color: #000;
+    font-size: 22px;
+    margin-top: 2px;
+}
+
 .data-block{
     width: 33.33%;
     float: left;
-    padding: 7px;
+    padding: 22px 10px;
 }
 
 .data-block img {
@@ -310,14 +332,25 @@ span.newsletter {
 }
 
 .data-block.back {
-    background: #3C3C3C;
-    height: 50px;
+    height: 70px;
+    background-color: #F4F4F4;
+    background-image: url('../img/arrow.png');
+    background-repeat: no-repeat;
+    background-position: left; 
+    border-right: 3px solid #fff;
+}
+
+.data-block.back p {
+    margin-left: 30px;
+    font-size: 16px;
+    text-decoration: none;
 }
 
 .data-block p {
-    color: #fff;
+    color: #000;
     float: left;
-    margin: 9px 0 0 7px;
+    font-size: 12px;
+    margin: 3px 0 0 7px;
 }
 
 p.detail-local {
@@ -333,6 +366,11 @@ h1.event-title {
     width: 100%;
     height: 20px;
     margin-bottom: 15px;
+}
+
+.loc-block i {
+    float: left;
+    font-size: 25px;
 }
 
 img.location-icon {
@@ -448,4 +486,63 @@ span.location-spec {
     color: #CCC;
     padding: 15px;
     margin-top: 10px;
+}
+
+.float-button-image {
+  width: 30px;
+  padding: 30px;
+  font-size: 40px;
+  background-image: url('../img/circle.png');
+  position: fixed;
+  bottom: 20px; /* Adjust to where you want it */
+  right: 20px; /* Adjust to where you want it */
+  z-index: 9999;
+}
+
+.float-button-image .height_fix {
+  margin-top: 100%;
+}
+
+.float-button-image .content {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  margin-top: -20px; /* Note, this must be half the font size */
+  color: #0AC7B4;
+}
+
+.float-button-comment {
+  width: 30px;
+  padding: 30px;
+  font-size: 40px;
+  background-image: url('../img/circle.png');
+  position: fixed;
+  bottom: 20px; /* Adjust to where you want it */
+  left: 20px; /* Adjust to where you want it */
+  z-index: 9999;
+}
+
+.float-button-comment .height_fix {
+  margin-top: 100%;
+}
+
+.float-button-comment .content {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  margin-top: -20px; /* Note, this must be half the font size */
+  color: #0AC7B4;
+}
+
+.photo-upload-btn {
+    background-color: #0AC7B4;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #FFF;
 }

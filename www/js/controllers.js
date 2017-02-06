@@ -67,8 +67,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           localStorage.setItem("logged", user);
           $scope.logged = localStorage.getItem("logged");
           $ionicLoading.hide();
-          $state.go('app.home');
-          
+          if($state.current.name != 'app.event_detail') {
+            $state.go('app.home');
+          }
+          else {
+            location.reload();
+          }
         });
 
         $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -77,13 +81,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       });
 
       $ionicLoading.hide();
-      if($state.current.name == 'app.login') {
-        location.reload();
-      }
-      else {
+      if($state.current.name != 'app.event_detail') {
         $state.go('app.home');
       }
-
+      else {
+        location.reload();
+      }
     }, function(fail){
       //fail get profile info
       console.log('profile info fail', fail);
@@ -116,12 +119,17 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   //This method is executed when the user press the "Login with facebook" button
   $scope.facebookSignIn = function() {
-
+    console.log($state.current.name);
     // FOR BROWSER LOGIN
 
     localStorage.setItem("logged", 1);
     $scope.logged = localStorage.getItem("logged");
-    $state.go('app.home');
+    if($state.current.name != 'app.event_detail') {
+      $state.go('app.home');
+    }
+    else {
+      location.reload();
+    }
 
     // FOR BROWSER LOGIN
 
@@ -157,8 +165,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
                 localStorage.setItem("logged", user);
                 $scope.logged = localStorage.getItem("logged");
                 $ionicLoading.hide();
-                $state.go('app.home');
-                
+                if($state.current.name != 'app.event_detail') {
+                  $state.go('app.home');
+                }
+                else {
+                  location.reload();
+                }
               });
 
               $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -171,11 +183,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 						console.log('profile info fail', fail);
 					});
 				}else{
-					if($state.current.name == 'app.login') {
-            location.reload();
+          if($state.current.name != 'app.event_detail') {
+            $state.go('app.home');
           }
           else {
-            $state.go('app.home');
+            location.reload();
           }
 				}
 
@@ -564,7 +576,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
   })
 
-  .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal, $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $ionicPopup, $cordovaActionSheet) {
+  .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal, $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $ionicLoading, $cordovaActionSheet) {
 
     // IMAGE upload
 
@@ -579,23 +591,27 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   // Present Actionsheet for switch beteen Camera / Library
   $scope.loadImage = function() {
-    var options = {
-      title: 'Select Image Source',
-      buttonLabels: ['Load from Library', 'Use Camera'],
-      addCancelButtonWithLabel: 'Cancel',
-      androidEnableCancelButton : true,
-    };
-    $cordovaActionSheet.show(options).then(function(btnIndex) {
-      var type = null;
-      if (btnIndex === 1) {
-        type = Camera.PictureSourceType.PHOTOLIBRARY;
-      } else if (btnIndex === 2) {
-        type = Camera.PictureSourceType.CAMERA;
-      }
-      if (type !== null) {
-        $scope.selectPicture(type);
-      }
-    });
+
+    if(!$scope.isImageUploaded) {
+
+      var options = {
+        title: 'Select Image Source',
+        buttonLabels: ['Select Photo from Gallery', 'Take a Photo'],
+        addCancelButtonWithLabel: 'Cancel',
+        androidEnableCancelButton : true,
+      };
+      $cordovaActionSheet.show(options).then(function(btnIndex) {
+        var type = null;
+        if (btnIndex === 1) {
+          type = Camera.PictureSourceType.PHOTOLIBRARY;
+        } else if (btnIndex === 2) {
+          type = Camera.PictureSourceType.CAMERA;
+        }
+        if (type !== null) {
+          $scope.selectPicture(type);
+        }
+      });
+    }
   };
 
 
@@ -620,6 +636,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     
         // If you are trying to load image from the gallery on Android we need special treatment!
         if ($cordovaDevice.getPlatform() == 'Android' && sourceType === Camera.PictureSourceType.PHOTOLIBRARY) {
+
+          $scope.isImageUploaded = 1;
+          $ionicLoading.show({
+            template: 'Uploading...'
+          });
+
           window.FilePath.resolveNativePath(imagePath, function(entry) {
             window.resolveLocalFileSystemURL(entry, success, fail);
             function fail(e) {
@@ -631,20 +653,26 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
               // Only copy because of access rights
               $cordovaFile.copyFile(namePath, fileEntry.name, cordova.file.dataDirectory, newFileName).then(function(success){
                 $scope.image = newFileName;
+
+                $scope.sendImageToServer();
               }, function(error){
                 $scope.showAlert('Error', error.exception);
               });
             };
           }
-        );
+          );
+
+
         } else {
           var namePath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-          // Move the file to permanent storage
+          //Move the file to permanent storage
           $cordovaFile.moveFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function(success){
             $scope.image = newFileName;
+            $scope.sendImageToServer();
           }, function(error){
             $scope.showAlert('Error', error.exception);
           });
+
         }
       },
       function(err){
@@ -652,7 +680,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       })
     };
 
-  
     // Returns the local path inside the app for an image
     $scope.pathForImage = function(image) {
       if (image === null) {
@@ -662,15 +689,15 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       }
     };
 
-    $scope.uploadImage = function() {
+    $scope.sendImageToServer = function() {
       // Destination URL
-      var url = "http://localhost:8888/upload.php";
+      var url = "http://www.wheee.eu/api/event_detail/save_image.php";
     
       // File for Upload
       var targetPath = $scope.pathForImage($scope.image);
     
       // File name only
-      var filename = $scope.image;;
+      var filename = $scope.image;
     
       var options = {
         fileKey: "file",
@@ -679,9 +706,10 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         mimeType: "multipart/form-data",
         params : {'fileName': filename}
       };
-    
+      
       $cordovaFileTransfer.upload(url, targetPath, options).then(function(result) {
-        $scope.showAlert('Success', 'Image upload finished.');
+        location.reload();
+        $ionicLoading.hide();
       });
     }
 
