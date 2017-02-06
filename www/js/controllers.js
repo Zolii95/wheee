@@ -140,14 +140,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     console.log($state.current.name);
     // FOR BROWSER LOGIN
 
-    localStorage.setItem("logged", 1);
-    $scope.logged = localStorage.getItem("logged");
-    if($state.current.name != 'app.event_detail') {
-      $state.go('app.home');
-    }
-    else {
-      location.reload();
-    }
+    // localStorage.setItem("logged", 1);
+    // $scope.logged = localStorage.getItem("logged");
+    // if($state.current.name != 'app.event_detail') {
+    //   $state.go('app.home');
+    // }
+    // else {
+    //   location.reload();
+    // }
 
     // FOR BROWSER LOGIN
 
@@ -750,6 +750,22 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       var handle = $ionicScrollDelegate.$getByHandle('EventDetail');
       handle.anchorScroll(true);  // 'true' for animation
     };
+
+
+    // DETELE comment
+
+    $scope.deleteComment = function(commentID){
+        $ionicLoading.show({
+          template: 'Deleteing comment...'
+        });
+        $http.get('http://www.wheee.eu/api/event_detail/delete_comment.php?comment_id=' + commentID)
+        .success(function (response) {
+          location.reload();
+          $ionicLoading.hide();
+        });
+    }
+
+    // DELETE COMMENT
 
     var EventDetails = {};
 

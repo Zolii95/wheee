@@ -77,11 +77,26 @@
       </div>
     </div>
     <div ng-repeat="comment in comments" class="comment">
-      <div class="comment-row">
-        <img ng-src="{{comment.image}}" />
-        <p>{{comment.comment}}</p>
-      </div>
-      <small>- {{comment.firstname}} {{comment.lastname}}, {{comment.comment_date}}</small>
+
+        <div class="comment-title-row">
+          <img ng-src="{{comment.image}}" />
+          <p><b>{{comment.firstname}} {{comment.lastname}}</b></p>
+          <div class="delete-box" ng-if="isLogged > 0 && isLogged == comment.commenter_id">
+            <i class="ion-trash-a" data-ng-init="commentID=comment.comment_id;" data-ng-attr-id="commentID" data-ng-click="deleteComment(commentID)"> </i>
+          </div>
+        </div>
+        <div class="clearer"></div>
+        
+        <div class="comment-description">
+          <p>{{comment.comment}}</p>
+        </div>
+        <div class="clearer"></div>
+
+        <div class="comment-date">
+          <small>Added on: {{comment.comment_date}}</small>
+        </div>
+        <div class="clearer"></div>
+      
     </div>
     
 
