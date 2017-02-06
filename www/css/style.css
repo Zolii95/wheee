@@ -597,3 +597,11 @@ span.location-spec {
 .profile-picture {
     width: 100px;
 }
+
+.header-logo {
+    height: 41px;
+    float: left;
+    position: relative;
+    z-index: 100;
+    margin: 7px 0 7px 15px;
+}
