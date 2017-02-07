@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', 'ngOpenFB', 'ngCordova', 'services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', 'ngOpenFB', 'ngCordova', 'services', 'ion-gallery'])
 
 .run(function($ionicPlatform,ngFB) {
   ngFB.init({appId: '599219800249231'});
@@ -146,4 +146,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
 ;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/welcome');
+})
+
+.config(function(ionGalleryConfigProvider) {
+  ionGalleryConfigProvider.setGalleryConfig({
+                          action_label: 'Close',
+                          template_gallery: '../templates/gallery.html',
+                          template_slider: '../templates/slider.html',
+                          toggle: false,
+                          row_size: 3,
+                          fixed_row_size: false,
+                          zoom_events: false
+  });
 });
+
+;

@@ -745,6 +745,18 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     // IMAGE upload
 
+    // IMAGE Gallery
+
+    $scope.images = [];
+    $http.get('http://www.wheee.eu/api/event_detail/get_images.php?event_id=38&image_limit=10')
+      .success(function (response) {
+        angular.forEach(response.response, function (image) {
+          $scope.images.push(image);
+        });
+      });
+
+    // IMAGE gallery
+
     $scope.scrollTo = function(target){
       $location.hash(target);   //set the location hash
       var handle = $ionicScrollDelegate.$getByHandle('EventDetail');
@@ -816,13 +828,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
                     });
                   });
 
-                $scope.images = [];
-                $http.get('http://www.wheee.eu/api/event_detail/get_images.php?event_id=38&image_limit=10')
-                  .success(function (response) {
-                    angular.forEach(response.response, function (image) {
-                      $scope.images.push(image);
-                    });
-                  });
               };
               $scope.getEvent();
 

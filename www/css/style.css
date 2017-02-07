@@ -623,3 +623,31 @@ span.location-spec {
 .clearer {
     clear: both;
 }
+
+.imageView .gallery-slide-view {
+    border: none !important;
+    width: 100% !important;
+}
+
+.imageView i.close, .imageView i.share {
+    font-size: 33px;
+    color: #FFF;
+    border-radius: 0;
+    border: none;
+    padding-left: 92%;
+}
+
+.imageView .image-subtitle {
+    height: 5% !important;
+    text-align: left;
+}
+
+.imageView .ng-binding {
+    font-size: 11px !important; 
+    color: #f4f4f4;
+}
+
+.image-delete, .image-share, .image-close {
+    width: 33.33%;
+    float: left;
+}
