@@ -1,6 +1,6 @@
 <ion-view>
   <ion-content class="container-padding">
-    <div ng-controller="SearchEvents" id="search">
+    <!--<div ng-controller="SearchEvents" id="search">-->
             <h2>Find Your Events</h2>
             <div ng-controller="autoCompleteController as ctrl" layout="column" ng-cloak>
                 <md-content class="md-padding">
@@ -41,21 +41,28 @@
                         </md-not-found>
                     </md-autocomplete>
                 </md-content>
-                 <button ng-click="search()" class="button button-block myButton" >
+                 <button ng-click="searchFuture()" class="button button-block myButton" >
                     <span id="searchButton" >Wheee! SEARCH!</span>
                 </button>
-            </div>
+            
       
-    </div>
+    <!--</div>-->
 
     <div class="list newEvents body" ng-controller="Events">
             <h2>Found Events</h2>
+            <div class="item body" ng-repeat="event in ctrl.newEvents">
+                <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
+                <div class="title-container">
+                    <h1>{{event.event_title}}</h1>
+                </div>
+            </div>
             <div class="item body" ng-repeat="event in newEvents">
                 <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
                 <div class="title-container">
                     <h1>{{event.event_title}}</h1>
                 </div>
             </div>
+        </div>
         </div>
   </ion-content>
 </ion-view>
