@@ -1,53 +1,52 @@
-<ion-view view-title="Event Details">
+<ion-view cache-view="false">
   <ion-content delegate-handle="EventDetail">
     <img ng-src="{{eventData[0].header_image}}" class="eventHeader"/>
     <div class="action-line">
       <div class="action-button align-center" ng-if="!isLogged" ng-click="openLoginModal()">
-        <img ng-src="../img/plus.png"/>
-        <p><b>Wheee! Join!</b></p>
+        <i class="ion-android-checkbox-outline"> </i>
+        <p>Wheee! Join!</p>
       </div>
       <div class="action-button align-center" ng-if="isLogged && !eventStatus[0].is_joined" ng-click="changeJoinedStatus()">
-        <img ng-src="../img/plus.png"/>
-        <p><b>Join! Wheee!</b></p>
+        <i class="ion-android-checkbox-outline"> </i>
+        <p>Join! Wheee!</p>
       </div>
       <div class="action-button align-center" ng-if="isLogged && eventStatus[0].is_joined" ng-click="changeJoinedStatus()">
-        <img ng-src="../img/minus.png"/>
-        <p><b>Leave</b></p>
+        <i class="ion-android-checkbox-outline-blank"> </i>
+        <p>Leave</p>
       </div>
       <div class="action-button align-center" ng-if="!isLogged" ng-click="openLoginModal()">
-        <img ng-src="../img/bookmark_unbookmarked.png"/>
-        <p><b>Bookmark</b></p>
+        <i class="ion-ios-star"> </i>
+        <p>Bookmark</p>
       </div>
       <div class="action-button align-center" ng-if="isLogged && !eventStatus[0].is_bookmarked" ng-click="changeBookmarkedStatus()">
-        <img ng-src="../img/bookmark_unbookmarked.png"/>
-        <p><b>Bookmark</b></p>
+        <i class="ion-ios-star"> </i>
+        <p>Bookmark</p>
       </div>
       <div class="action-button align-center" ng-if="isLogged && eventStatus[0].is_bookmarked" ng-click="changeBookmarkedStatus()">
-        <img ng-src="../img/bookmark_bookmarked.png"/>
-        <p><b>Unbookmark</b></p>
+        <i class="ion-ios-star-outline"> </i>
+        <p>Unbookmark</p>
       </div>
       <div class="action-button align-center">
-        <img ng-src="../img/invite.png"/>
-        <p><b>Invite</b></p>
+        <i class="ion-email"> </i>
+        <p>Invite</p>
       </div>
       <div class="action-button align-center" ng-click="shareViaFacebook()">
-        <img ng-src="../img/facebook.png"/>
-        <p><b>Share</b></p>
+        <i class="ion-android-share-alt"> </i>
+        <p>Share</p>
       </div>
     </div>
     <div class="data-line">
       <a href="#/app/future_events">
         <div class="data-block back" >
-          <img ng-src="../img/back.png"/>
           <p>Back</p>
         </div>
       </a>
-      <div class="data-block">
-        <img ng-src="../img/calendar.png"/>
+      <div class="data-block time">
+        <i class="ion-ios-calendar-outline"> </i>
         <p>{{eventData[0].event_start_date}}</p>
       </div>
-      <div class="data-block">
-        <img ng-src="../img/clock.png"/>
+      <div class="data-block time">
+        <i class="ion-android-time"> </i>
         <p>{{eventData[0].event_start_hour}}</p>
       </div>
     </div>
@@ -56,44 +55,60 @@
     <p class="detail-local"><b>{{eventData[0].local_name}}</b></p>  
     <h1 class="event-title">{{eventData[0].event_title}}</h1>
     <div class="loc-block">
-      <img ng-src="../img/location_big.png" class="location-icon"/> 
+      <i class="ion-ios-location-outline"> </i>
       <span class="location-spec">{{eventData[0].location}}, {{eventData[0].county}}</span>
     </div>
     <div ng-bind-html="eventDescription"></div>
-
-    <h3 id="add-comment">Leave a comment!</h3>
-    <div ng-if="!isLogged" class="align-center">
+    <div id="add-comment"></div>
+    <h3>Leave a comment!</h3>
+    <div ng-if="!isLogged || isLogged == 0" class="align-center">
       <p>To add a comment for this event, please log in!</p>
-      <a href="#/app/login" ng-click="closeLoginModal()" class="button button-full button-positive">Log In</a>
+      <a class="facebook-sign-in button button-block" ng-click="facebookSignIn()">
+          Log in with Facebook
+        </a>
     </div>
-    <div ng-if="isLogged">
+    <div ng-if="isLogged > 0">
       <div class="add-comment">
         <form name="commentForm" ng-submit="saveComment(commentForm)">
           <textarea type="text" class="form-input message-input" placeholder="Message" ng-model="message" name="message"></textarea>
 
-          <button class="button myButton submit-100 mb-20" type="submit">Add comment</button>
+          <button class="button icon-left myButton submit-100 mb-20 ion-chatbox-working" type="submit">Add comment</button>
         </form>
       </div>
     </div>
     <div ng-repeat="comment in comments" class="comment">
-      <div class="comment-row">
-        <img ng-src="{{comment.image}}" />
-        <p>{{comment.comment}}</p>
-      </div>
-      <small>- {{comment.firstname}} {{comment.lastname}}, {{comment.comment_date}}</small>
+
+        <div class="comment-title-row">
+          <img ng-src="{{comment.image}}" />
+          <p><b>{{comment.firstname}} {{comment.lastname}}</b></p>
+          <div class="delete-box" ng-if="isLogged > 0 && isLogged == comment.commenter_id">
+            <i class="ion-trash-a" data-ng-init="commentID=comment.comment_id;" data-ng-attr-id="commentID" data-ng-click="deleteComment(commentID)"> </i>
+          </div>
+        </div>
+        <div class="clearer"></div>
+        
+        <div class="comment-description">
+          <p>{{comment.comment}}</p>
+        </div>
+        <div class="clearer"></div>
+
+        <div class="comment-date">
+          <small>Added on: {{comment.comment_date}}</small>
+        </div>
+        <div class="clearer"></div>
+      
     </div>
     
 
     <h3>Upload a photo!</h3>
-    <div ng-if="isLogged">
-
-      <ion-footer-bar class="bar bar-positive">
-        <div class="button-bar">
-          <button class="button icon-left ion-chatbox-working" ng-click="scrollTo('add-comment')">Add Comment</button>
-          <button class="button icon-left ion-upload" ng-click="loadImage()">Upload Photo</button>
-        </div>
-      </ion-footer-bar>
-
+    <div ng-if="!isLogged || isLogged == 0" class="align-center">
+      <p>To add a comment for this event, please log in!</p>
+      <a class="facebook-sign-in button button-block" ng-click="facebookSignIn()">
+          Log in with Facebook
+        </a>
+    </div>
+    <div ng-if="isLogged > 0">
+      <button class="button icon-left ion-images photo-upload-btn" ng-click="loadImage()">Upload / Take a Photo</button>
     </div>
     <div ng-repeat="image in images" class="image">
       <img ng-src="http://www.wheee.eu/upload/uimg/{{image.image}}" />
@@ -106,4 +121,19 @@
     </div>
 
   </ion-content>
+  <div class="float-button-image" ng-click="loadImage()" ng-if="isLogged > 0">
+    <span class="height-fix">
+      <a class="content">
+        <i class="ion-images"> </i>
+      </a>
+    </span>
+  </div>
+  <div class="float-button-comment" ng-click="scrollTo('add-comment')" ng-if="isLogged > 0">
+    <span class="height-fix">
+      <a class="content">
+        <i class="ion-chatbox-working"> </i>
+      </a>
+    </span>
+  </div>
+  
 </ion-view>

@@ -1,30 +1,42 @@
-<ion-side-menus enable-menu-with-back-views="true" >
+<ion-side-menus enable-menu-with-back-views="true">
 	<ion-side-menu-content>
 		<ion-nav-bar class="bar-stable menu-navbar">
-				<ion-nav-buttons side="right">
-				<button class="button button-icon button-clear ion-navicon menu-button" menu-toggle="right">
-        </button>
+			<img ng-src="http://www.wheee.eu/assets/images/logo-160x160-10.png" class="header-logo"/>
+			<ion-nav-buttons side="right">	
+				<button class="button button-icon button-clear ion-navicon menu-button" menu-toggle="right"></button>
 			</ion-nav-buttons>
 		</ion-nav-bar>
 		<ion-nav-view name="menuContent"></ion-nav-view>
 	</ion-side-menu-content>
 
 	<ion-side-menu side="right">
-		<ion-header-bar class="bar-stable menu-navbar">
-			<span class="title">Wheee!</span>
-		</ion-header-bar>
-		<ion-content>
+		<ion-content id="menu">
+
+			<div ng-if="logged > 0" class="align-center">
+				<a ng-href="#/app/edit_profile"><img ng-src="{{menuProfileDatas[0].fb_picture}}"/></a>
+				<h4 class="white">{{menuProfileDatas[0].firstname}} {{menuProfileDatas[0].lastname}}</h4>
+				<p class="white">{{menuProfileDatas[0].email}}</p>
+			</div>
+
+			<div ng-if="!logged || logged == 0" class="align-center ">
+				<img ng-src="http://www.wheee.eu/assets/images/logo-160x160-10.png" class="menu-logo"/>
+				<h4 class="white">Wheee!</h4>
+				<p class="white">Find your best events!</p>
+			</div>
+
 			<ion-list ng-if="!logged || logged == 0">
 				<div ng-repeat="group in groupLO">
 					<ion-item ng-if="group.name!='Search'" menu-close class="item-stable" ng-click="toggleGroup(group)" ng-href="{{group.link}}" ng-class="{active: isGroupShown(group)}">
+						<i class="{{group.icon}}"> </i>
 						<i  ng-class="group.name=='Search' ? (isGroupShown(group) ? 'ion-minus' : 'ion-plus') : ''"></i> 
 								&nbsp; {{group.name}}
 					</ion-item>
 					<ion-item ng-if="group.name=='Search'" class="item-stable" ng-click="toggleGroup(group)" ng-href="{{group.link}}" ng-class="{active: isGroupShown(group)}">
+						<i class="{{group.icon}}"> </i>
 						<i  ng-class="group.name=='Search' ? (isGroupShown(group) ? 'ion-minus' : 'ion-plus') : ''"></i> 
 								&nbsp; {{group.name}}
 					</ion-item>
-					<ion-item menu-close class="item-accordion" ng-repeat="item in group.items" ng-click="toggleGroup(group)" ng-href="{{item.link}}" ng-show="isGroupShown(group)">
+					<ion-item menu-close class="item-accordion child" ng-repeat="item in group.items" ng-click="toggleGroup(group)" ng-href="{{item.link}}" ng-show="isGroupShown(group)">
 						{{item.name}}
 					</ion-item>
 				</div>
@@ -32,16 +44,16 @@
 			<ion-list ng-if="logged > 0">
 				<div ng-repeat="group in groupLI" >
 					<ion-item ng-if="group.name!='Search' && group.name!='My Profile'" menu-close class="item-stable" ng-click="toggleGroup(group)" ng-href="{{group.link}}" ng-class="{active: isGroupShown(group)}">
-						
+						<i class="{{group.icon}}"> </i>
 						<i ng-class="group.name=='Search' || group.name=='My Profile' ? (isGroupShown(group) ? 'ion-minus' : 'ion-plus') : ''"></i> 
 								&nbsp; {{group.name}}
 					</ion-item>
 					<ion-item ng-if="group.name=='Search' || group.name=='My Profile'" class="item-stable" ng-click="toggleGroup(group)" ng-href="{{group.link}}" ng-class="{active: isGroupShown(group)}">
-						
+						<i class="{{group.icon}}"> </i>
 						<i ng-class="group.name=='Search' || group.name=='My Profile' ? (isGroupShown(group) ? 'ion-minus' : 'ion-plus') : ''"></i> 
 								&nbsp; {{group.name}}
 					</ion-item>
-					<ion-item menu-close class="item-accordion" ng-repeat="item in group.items" ng-href="{{item.link}}" ng-show="isGroupShown(group)">
+					<ion-item menu-close class="item-accordion child" ng-repeat="item in group.items" ng-href="{{item.link}}" ng-show="isGroupShown(group)">
 						{{item.name}}
 					</ion-item>
 				</div>
