@@ -5,7 +5,7 @@ var Event_Place = "";
 var CountryName = "";
 var CityName = "";
 var Event_PlaceName = "";
-var searched_location;
+var searched_location = {};
 
 angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
@@ -820,7 +820,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             });
         } else {
           EventDetail.setEvObject(response.response);
-          $log.info(EventDetail.getEvObject())
+          $log.info("href");
+          $log.info(EventDetail.getEvObject());
           location.href = '#/app/future_events';
         }
 
@@ -835,8 +836,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $log.info(EventDetail.getEvObject());
   })
 
-  .controller('Events', function ($scope, $http, EventDetail) {
-    $scope.newEvents = EventDetail.getEvObject();   
+  .controller('Events', function ($scope, $http, EventDetail, $route) {
+    $route.reload();
+    $scope.newEvents = EventDetail.getEvObject();
   })
 
   .controller('NewEvents', function ($scope, $http) {
