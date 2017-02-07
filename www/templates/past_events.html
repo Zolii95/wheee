@@ -1,8 +1,8 @@
 <ion-view>
-  <ion-content class="container-padding">
-    <div ng-controller="SearchEvents" id="search">
+    <ion-content class="container-padding">
+        <div ng-controller="SearchEvents" id="search">
             <h2>Find Past Events</h2>
-            <div ng-controller="autoCompleteController as ctrl" layout="column" ng-cloak>
+            <div ng-controller="autoCompleteControllerPast as ctrl" layout="column" ng-cloak>
                 <md-content class="md-padding">
                     <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCountryItem" md-search-text="ctrl.searchCountryText"
                         md-search-text-change="ctrl.searchTextChangeCountry(ctrl.searchText)" md-selected-item-change="ctrl.countryChange(item)"
@@ -14,7 +14,7 @@
                         <md-not-found>
                             No countries matching "{{ctrl.searchCountryText}}" were found.
                         </md-not-found>
-                    </md-autocomplete>
+                        </md-autocomplete>
                 </md-content>
                 <md-content class="md-padding" ng-show="ctrl.showCity">
                     <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCityItem" md-search-text="ctrl.searchCityText"
@@ -27,7 +27,7 @@
                         <md-not-found>
                             No countries matching "{{ctrl.searchCityText}}" were found.
                         </md-not-found>
-                    </md-autocomplete>
+                        </md-autocomplete>
                 </md-content>
                 <md-content class="md-padding" ng-show="ctrl.showEvent">
                     <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedEventItem" md-search-text="ctrl.searchEventText"
@@ -39,23 +39,24 @@
                         <md-not-found>
                             No countries matching "{{ctrl.searchEventText}}" were found.
                         </md-not-found>
-                    </md-autocomplete>
+                        </md-autocomplete>
                 </md-content>
-                 <button ng-click="search()" class="button button-block myButton" >
+                <button ng-click="searchPast()" class="button button-block myButton">
                     <span id="searchButton" >Wheee! SEARCH!</span>
                 </button>
-            </div>
-      
-    </div>
 
-    <div class="list newEvents body" ng-controller="Events">
-            <h2>Found Events</h2>
-            <div class="item body" ng-repeat="event in newEvents">
-                <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
-                <div class="title-container">
-                    <h1>{{event.event_title}}</h1>
+
+            </div>
+
+            <div class="list newEvents body">
+                <h2>Found Events</h2>
+                <div class="item body" ng-repeat="event in ctrl.pastEvents">
+                    <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
+                    <div class="title-container">
+                        <h1>{{event.event_title}}</h1>
+                    </div>
                 </div>
             </div>
         </div>
-  </ion-content>
+    </ion-content>
 </ion-view>

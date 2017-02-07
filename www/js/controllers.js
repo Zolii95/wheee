@@ -6,6 +6,7 @@ var CountryName = "";
 var CityName = "";
 var Event_PlaceName = "";
 var searched_location = {};
+var PastEvents = 0;
 
 angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
@@ -481,6 +482,148 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.getEvents();
   })
 
+.controller('autoCompleteControllerPast', function ($scope, $timeout, $log, $http, $q, EventDetail) {
+    var self = this;
+    self.showCity = false;
+    self.showEvent = false;
+    self.simulateQuery = true;
+    self.isDisabled = false;
+
+    //http://www.wheee.eu/api/event_search/events.php?event_id=37
+
+    self.queryCountrySearch = function (query) {
+      return $http.get("http://www.wheee.eu/api/event_autocomplete/countries.php?past_events=1")
+        .then(function (response) {
+          var tmp = response.data.response.map(function (state) {
+            return {
+              id: state.id,
+              value: state.name.toLowerCase(),
+              display: state.name
+            }
+          });
+          return query ? tmp.filter(createFilterFor(query)) : tmp;
+        })
+    }
+
+    self.queryCitySearch = function (query) {
+      return $http.get("http://www.wheee.eu/api/event_autocomplete/cities.php?past_events=1&country_id=" + Country)
+        .then(function (response) {
+          var tmp = response.data.response.map(function (state) {
+            return {
+              id: state.id,
+              value: state.name.toLowerCase(),
+              display: state.name
+            }
+          });
+          return query ? tmp.filter(createFilterFor(query)) : tmp;
+        })
+    }
+
+    self.queryEventSearch = function (query) {
+      return $http.get("http://www.wheee.eu/api/event_autocomplete/events_and_locals.php?past_events=1&location_id=" + City)
+        .then(function (response) {
+
+
+          var tmp1 = response.data.response.local_name.map(function (state) {
+            return {
+              id: state.client_id,
+              value: state.local_name.toLowerCase(),
+              display: state.local_name
+            }
+
+          });
+          var tmp2 = response.data.response.title.map(function (state) {
+            return {
+              id: state.id,
+              value: state.title.toLowerCase(),
+              display: state.title
+            }
+          });
+          var tmp = tmp1.concat(tmp2);
+          return query ? tmp.filter(createFilterFor(query)) : tmp;
+        })
+    }
+
+    self.searchTextChangeCountry = searchTextChangeCountry;
+
+    self.searchTextChangeCity = searchTextChangeCity;
+    self.countryChange = countryChange;
+    self.cityChange = cityChange;
+    self.eventChange = eventChange;
+
+
+
+    function searchTextChangeCity(text) {
+
+      self.showEvent = false;
+    }
+    function searchTextChangeCountry(text) {
+      self.showCity = false;
+      self.showEvent = false;
+    }
+    function countryChange(item) {
+      $log.info('Item changed to ' + JSON.stringify(item));
+      Country = item.id;
+      CountryName = item.value;
+      localStorage.setItem("last_searchedCountryId", Country);
+      localStorage.setItem("last_searchedCountryName", CountryName);
+      self.showCity = true;
+    }
+    function cityChange(item) {
+      $log.info('Item changed to ' + JSON.stringify(item));
+      City = item.id;
+      CityName = item.value;
+      localStorage.setItem("last_searchedCityId", City);
+      localStorage.setItem("last_searchedCityName", CityName);
+      self.showEvent = true;
+    }
+    function eventChange(item) {
+      $log.info('Item changed to ' + JSON.stringify(item));
+      Event_Place = item.id;
+      Event_PlaceName = item.value;
+      while (Event_PlaceName.indexOf(" ") != -1) {
+        Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
+      }
+    }
+
+    String.prototype.replaceAt = function (index, character) {
+      return this.substr(0, index) + character + this.substr(index + character.length);
+    }
+
+    //When clicked on search button
+    
+
+    self.pastEvents = {};
+    $scope.searchPast = function () {
+      PastEvents = 1;
+      self.pastEvents = EventDetail.getEvObject();
+      var EventDetails = {};
+
+      $http.get("http://www.wheee.eu/api/event_search/events.php?past_events=1&last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1")
+        .success(function (response) {
+          if (response.response.length < 2) {
+            $http.get("http://www.wheee.eu/api/event_search/events.php?past_events=1&event_id=" + Event_Place)
+              .success(function (response2) {
+                location.href = '#/app/event_detail';
+              })
+            } else {
+            EventDetail.setEvObject(response.response);
+            self.pastEvents = EventDetail.getEvObject();
+            $log.info(self.pastEvents);
+          }
+        })
+    };
+
+
+
+    //filter function for search query
+    function createFilterFor(query) {
+      var lowercaseQuery = angular.lowercase(query);
+      return function filterFn(state) {
+        return (state.value.indexOf(lowercaseQuery) === 0);
+      };
+    }
+  })
 
   .controller('autoCompleteController', function ($scope, $timeout, $log, $http, $q, EventDetail) {
     var self = this;
@@ -594,6 +737,30 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.search = function () {
       location.href = '#/app/event_detail';
     };
+    
+    self.newEvents = {};
+    $scope.searchFuture = function () {
+      PastEvents = 0;
+      self.newEvents = EventDetail.getEvObject();
+      var EventDetails = {};
+
+      $http.get("http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1")
+        .success(function (response) {
+          if (response.response.length < 2) {
+            //$http.get("http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place)
+             //.success(function (response2) {
+                location.href = '#/app/event_detail';
+              //})
+            } else {
+            EventDetail.setEvObject(response.response);
+            self.newEvents = EventDetail.getEvObject();
+            $log.info(self.newEvents);
+          }
+        })
+    };
+
+   
+    
 
 
 
@@ -766,13 +933,22 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
 
     // DELETE COMMENT
-
+    var link1;
+    var link2;
     var EventDetails = {};
+    if(PastEvents == 0){
+      link1 = "http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1";
+      link2 = "http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place;
+  }else if(PastEvents == 1){
+      link1 = "http://www.wheee.eu/api/event_search/events.php?past_events=1&last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1";
+      link2 = "http://www.wheee.eu/api/event_search/events.php?past_events=1&event_id=" + Event_Place;
+  }
 
-    $http.get("http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1")
+
+    $http.get(link1)
       .success(function (response) {
         if (response.response.length == 0) {
-          $http.get("http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place)
+          $http.get(link2)
             .success(function (response2) {
               EventDetails = response2.response[Object.keys(response2.response)[0]];
               $log.info(EventDetails);
@@ -895,7 +1071,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         } else {
           EventDetail.setEvObject(response.response);
           $log.info("href");
-          $log.info(EventDetail.getEvObject());
+          
           location.href = '#/app/future_events';
         }
 
@@ -910,9 +1086,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $log.info(EventDetail.getEvObject());
   })
 
-  .controller('Events', function ($scope, $http, EventDetail, $route) {
-    $route.reload();
+  .controller('Events', function ($scope, $http, EventDetail, $log) {
+    //$log.info(EventDetail.getEvObject());
     $scope.newEvents = EventDetail.getEvObject();
+       //$log.info(EventDetail.getEvObject());
+       //$log.info(showSearchedEvents);
   })
 
   .controller('NewEvents', function ($scope, $http) {
