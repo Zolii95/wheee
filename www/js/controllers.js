@@ -141,14 +141,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     console.log($state.current.name);
     // FOR BROWSER LOGIN
 
-    // localStorage.setItem("logged", 1);
-    // $scope.logged = localStorage.getItem("logged");
-    // if($state.current.name != 'app.event_detail') {
-    //   $state.go('app.home');
-    // }
-    // else {
-    //   location.reload();
-    // }
+    localStorage.setItem("logged", 1);
+    $scope.logged = localStorage.getItem("logged");
+    if($state.current.name != 'app.event_detail') {
+      $state.go('app.home');
+    }
+    else {
+      location.reload();
+    }
 
     // FOR BROWSER LOGIN
 
@@ -344,7 +344,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       else {
         localStorage.setItem("logged", 0);
         $scope.logged = localStorage.getItem("logged");
-        $ionicSideMenuDelegate.toggleRight();
+        $ionicSideMenuDelegate.toggleLeft();
         $state.go('app.welcome');
       }
     };
@@ -815,6 +815,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     // Take image with the camera or from library and store it inside the app folder
     // Image will not be saved to users Library.
     $scope.selectPicture = function(sourceType) {
+
+      $scope.isImageUploaded = 1;
+
       var options = {
         quality: 100,
         destinationType: Camera.DestinationType.FILE_URI,
@@ -834,7 +837,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         // If you are trying to load image from the gallery on Android we need special treatment!
         if ($cordovaDevice.getPlatform() == 'Android' && sourceType === Camera.PictureSourceType.PHOTOLIBRARY) {
 
-          $scope.isImageUploaded = 1;
           $ionicLoading.show({
             template: 'Uploading...'
           });
@@ -1104,8 +1106,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.newEvents = [];
     $scope.getEvents = function () {
       $scope.page++;
-      $http.get('http://www.wheee.eu/api/event_homepage/newest_events.php?location_id=37&limit=5')
+      $http.get('http://www.wheee.eu/api/event_homepage/newest_events.php?location_id=37&limit=10')
         .success(function (response) {
+          $scope.newNr = 310 * response.new_nr + 20 + 'px';
           angular.forEach(response.response, function (event) {
             $scope.newEvents.push(event);
           });

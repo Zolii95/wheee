@@ -77,13 +77,32 @@
 
 
         <div class="list newEvents body" ng-controller="NewEvents">
-            <h2>Newest Events</h2>
-            <div class="item body" ng-repeat="event in newEvents">
+            <!--<i class="ion-ribbon-a"> </i>
+            <span class="location-spec">Newest Events</span>
+            <div class="clearer"></div>-->
+
+            <ion-scroll id="ionScrollRegion" direction="x" overflow-scroll="false">
+                <div id="overflowingContent" style="width: {{newNr}}">
+                    <div class="scroll-item" ng-repeat="event in newEvents">
+                        <div class="hslide-imgbg" style="background-image: url(http://www.wheee.eu/upload/headers/{{event.header_image}});">
+                            <!--<img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />-->
+                        </div>
+                        <div class="clearer"></div>
+                        <div class="hscroll-content">
+                            <h3>{{event.title}}</h3>
+                            <i class="ion-ios-location-outline"> </i>
+                            <span>{{event.local_name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </ion-scroll>
+
+            <!--<div class="item body" ng-repeat="event in newEvents" scroll="true" direction="y">
                 <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
                 <div class="title-container">
                     <h1>{{event.title}}</h1>
                 </div>
-            </div>
+            </div>-->
         </div>
 
         <div class="contactsLink">

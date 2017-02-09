@@ -1,9 +1,4 @@
 /* Empty. Add your own CSS if you like */
-
-.body {
-    background-color: #E0E0E0 !important;
-}
-
 #home h1{
     padding-top: 50px;
     text-align: center;
@@ -19,33 +14,6 @@ h2 {
     position: relative;
 }
 
-.newEvents img {
-    width: 100%;   
-    position: relative;
-}
-
-
-@media (max-width: 300px) {
- .newEvents img {
-     height: 19.824vh;
- }
-}
-@media (min-width: 301px) and (max-width: 350px) {
-  .newEvents img{  height: 23.216vh;
-  }
-}
-@media (min-width: 351px) and (max-width: 400px) {
-    .newEvents img{ height: 26.43vh;
-  } 
-}
-@media (min-width: 401px) and (max-width: 450px) {
-    .newEvents img{ height: 29.822vh;
-  }
-}
-@media (min-width: 451px) {
-    .newEvents img{  height: 39.643vh;
-  } 
-}
 
 .eventHeader {
     width: 100%;
@@ -78,11 +46,8 @@ h2 {
 
 #search {
     padding-top: 20px;
-    padding-bottom: 20px;
-    background-color: #E0E0E0 !important;
-    
+    padding-bottom: 20px;    
 }
-
 
 .myButton {
     background-color: #0AC7B4;
@@ -103,8 +68,7 @@ h2 {
 }
 
 .menu-button{
-    color:black !important;
-    background-color:white !important;
+    color:#FFF !important;
     width: 45px;
     height: 35px;
     margin-top: 3px;
@@ -127,14 +91,6 @@ h2 {
 
 .item {
     padding: 15px 0 15px 0 !important;
-}
-
-.newEvents{
-    width: 100%;
-}
-
-.newEvents img {
-    width: 100%;
 }
 
 .title-container{
@@ -173,7 +129,7 @@ h2 {
 
 .text_t {
     position: absolute;
-    top: 0px;
+    top: 22%;
     color:white;
     font-size: 1.5em;
     left: 5%;
@@ -208,6 +164,10 @@ input {
 
 .container-padding {
     padding: 15px;
+}
+
+.mt-40 {
+    margin-top: 40px;
 }
 
 .form-input {
@@ -650,4 +610,61 @@ span.location-spec {
 .image-delete, .image-share, .image-close {
     width: 33.33%;
     float: left;
+}
+
+.bar.bar-header {
+  background-color: rgba(0, 0, 0, .25) !important; /* or transparent, or background:none */
+}
+
+.has-header {
+    top: 0 !important;
+}
+
+#add-comment {
+    height: 40px;
+}
+
+.share-event {
+    color: #FFF;
+    font-size: 28px;
+}
+
+.bar .title + .buttons {
+    right: 15px;
+    top: 11px;
+}
+
+#overflowingContent{
+  /*width: -webkit-max-content;
+  width: max-content;*/
+  /*width: 3200px;*/
+  padding: 10px;
+}
+
+#ionScrollRegion {
+    height: 330px;
+}
+
+.scroll-item{
+  display: block;
+  float: left;
+  width: 300px;
+  height: 300px;
+  border-radius: 6px;
+  margin-right: 10px;
+  background: #f7f7f7 !important;
+  padding: 0 !important;
+  box-shadow: 1px 4px 2px -2px grey;
+}
+
+.newEvents .hslide-imgbg {
+    height: 180px;
+    background-size: cover;
+    background-position: top center;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.newEvents .hscroll-content {
+    padding: 10px;
 }

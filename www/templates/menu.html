@@ -1,15 +1,14 @@
 <ion-side-menus enable-menu-with-back-views="true">
 	<ion-side-menu-content>
 		<ion-nav-bar class="bar-stable menu-navbar">
-			<img ng-src="http://www.wheee.eu/assets/images/logo-160x160-10.png" class="header-logo"/>
-			<ion-nav-buttons side="right">	
-				<button class="button button-icon button-clear ion-navicon menu-button" menu-toggle="right"></button>
+			<ion-nav-buttons side="left">	
+				<button class="button button-icon button-clear ion-navicon menu-button" menu-toggle="left"></button>
 			</ion-nav-buttons>
 		</ion-nav-bar>
 		<ion-nav-view name="menuContent"></ion-nav-view>
 	</ion-side-menu-content>
 
-	<ion-side-menu side="right">
+	<ion-side-menu side="left">
 		<ion-content id="menu">
 
 			<div ng-if="logged > 0" class="align-center">
