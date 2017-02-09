@@ -50,7 +50,7 @@
 
             <div class="list newEvents body">
                 <h2>Found Events</h2>
-                <div class="item body" ng-repeat="event in ctrl.pastEvents">
+                <div class="item body" ng-repeat="event in ctrl.pastEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
                     <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
                     <div class="title-container">
                         <h1>{{event.event_title}}</h1>

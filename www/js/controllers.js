@@ -480,6 +480,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         });
     };
     $scope.getEvents();
+    $scope.GoToDetails = function(eventId){
+      console.log(eventId);
+      Event_Place = eventId;
+      City = "";
+      Event_PlaceName = "";
+      location.href = '#/app/event_detail';
+
+    }
   })
 
 .controller('autoCompleteControllerPast', function ($scope, $timeout, $log, $http, $q, EventDetail) {
@@ -614,7 +622,13 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         })
     };
 
-
+    $scope.GoToDetails = function(eventId){
+      console.log(eventId);
+      Event_Place = eventId;
+      City = "";
+      Event_PlaceName = "";
+      location.href = '#/app/event_detail';
+    }
 
     //filter function for search query
     function createFilterFor(query) {
@@ -760,7 +774,13 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
 
    
-    
+    $scope.GoToDetails = function(eventId){
+      console.log(eventId);
+      Event_Place = eventId;
+      City = "";
+      Event_PlaceName = "";
+      location.href = '#/app/event_detail';
+    }
 
 
 
@@ -1120,6 +1140,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     };
     $scope.getEvents();
+    $scope.GoToDetails = function(eventId){
+      console.log(eventId);
+      Event_Place = eventId;
+      location.href = '#/app/event_detail';
+    }
   })
 
 

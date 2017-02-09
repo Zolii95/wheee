@@ -3,7 +3,7 @@
         <div ng-controller="TopEvents" class="body">
             <ion-slide-box show-pager="false" ng-if="default!='None'">
                 <ion-slide>
-                    <div id="topEvents">
+                    <div id="topEvents" >
                         <img ng-src={{default}} />
                         <h1></h1>
                     </div>
@@ -11,7 +11,7 @@
             </ion-slide-box>
             <ion-slide-box show-pager="false" ng-if="default=='None' ">
                 <ion-slide ng-repeat="event in topEvents">
-                    <div id="topEvents">
+                    <div id="topEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
                         <button class="button button-block myButton">{{event.button_text}}
             			</button>
                         <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
@@ -83,7 +83,7 @@
 
             <ion-scroll id="ionScrollRegion" direction="x" overflow-scroll="false">
                 <div id="overflowingContent" style="width: {{newNr}}">
-                    <div class="scroll-item" ng-repeat="event in newEvents">
+                    <div class="scroll-item" ng-repeat="event in newEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
                         <div class="hslide-imgbg" style="background-image: url(http://www.wheee.eu/upload/headers/{{event.header_image}});">
                             <!--<img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />-->
                         </div>

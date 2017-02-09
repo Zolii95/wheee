@@ -50,13 +50,13 @@
 
     <div class="list newEvents body" ng-controller="Events">
             <h2>Found Events</h2>
-            <div class="item body" ng-repeat="event in ctrl.newEvents">
+            <div class="item body" ng-repeat="event in ctrl.newEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
                 <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
                 <div class="title-container">
                     <h1>{{event.event_title}}</h1>
                 </div>
             </div>
-            <div class="item body" ng-repeat="event in newEvents">
+            <div class="item body" ng-repeat="event in newEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
                 <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
                 <div class="title-container">
                     <h1>{{event.event_title}}</h1>
