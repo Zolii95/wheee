@@ -1,6 +1,6 @@
 <ion-view>
     <ion-content class="container-padding">
-        <div ng-controller="SearchEvents" id="search">
+        
             <h2>Find Past Events</h2>
             <div ng-controller="autoCompleteControllerPast as ctrl" layout="column" ng-cloak>
                 <md-content class="md-padding">
@@ -46,11 +46,11 @@
                 </button>
 
 
-            </div>
 
             <div class="list newEvents body">
                 <h2>Found Events</h2>
-                <div class="item body" ng-repeat="event in ctrl.pastEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
+                <div class="item body" ng-repeat="event in ctrl.pastEvents" data-ng-init="eventId=event.id;" 
+                        data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
                     <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
                     <div class="title-container">
                         <h1>{{event.event_title}}</h1>
@@ -58,5 +58,6 @@
                 </div>
             </div>
         </div>
+        
     </ion-content>
 </ion-view>
