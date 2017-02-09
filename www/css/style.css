@@ -9,9 +9,11 @@ h2 {
     text-align: center;
 }
 
-#topEvents img{
+#topEvents {
     height: 250px;
     position: relative;
+    background-size: cover;
+    background-position: top center;
 }
 
 
@@ -46,7 +48,8 @@ h2 {
 
 #search {
     padding-top: 20px;
-    padding-bottom: 20px;    
+    padding-bottom: 20px; 
+    background: #f4f4f4;
 }
 
 .myButton {
@@ -189,6 +192,10 @@ input {
 
 .align-center {
     text-align: center;
+}
+
+.align-right {
+    float: right;
 }
 
 span.newsletter {
@@ -635,10 +642,7 @@ span.location-spec {
 }
 
 #overflowingContent{
-  /*width: -webkit-max-content;
-  width: max-content;*/
-  /*width: 3200px;*/
-  padding: 10px;
+  padding: 5px 10px;
 }
 
 #ionScrollRegion {
@@ -665,6 +669,27 @@ span.location-spec {
     border-top-right-radius: 6px;
 }
 
+.newEvents .hscroll-content h3 {
+    font-size: 17px;
+    font-weight: bold;
+}
+
 .newEvents .hscroll-content {
     padding: 10px;
+}
+
+p.subtitle {
+    margin: 0;
+    padding: 0 10px;
+    text-transform: uppercase;
+    font-size: 16px;
+    color: #0AC7B4;
+}
+
+.subtitle i.align-right {
+    margin-right: 5px;
+}
+
+md-content.md-default-theme, md-content {
+    background-color: transparent;
 }

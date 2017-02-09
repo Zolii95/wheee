@@ -11,10 +11,9 @@
             </ion-slide-box>
             <ion-slide-box show-pager="false" ng-if="default=='None' ">
                 <ion-slide ng-repeat="event in topEvents">
-                    <div id="topEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
+                    <div id="topEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)" style="background-image: url(http://www.wheee.eu/upload/headers/{{event.header_image}});">
                         <button class="button button-block myButton">{{event.button_text}}
             			</button>
-                        <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
                         <h2 class="text_t">{{event.title}}</h2>
                         <h2 class="text_l">{{event.local_name}}</h2>
                     </div>
@@ -22,10 +21,13 @@
             </ion-slide-box>
         </div>
 
-
-
         <div id="search">
-            <h2>Find Your Events</h2>
+
+            <p class="subtitle white">
+                <i class="ion-search"> </i>
+                <span>Find your best events</span>
+            </p>
+
             <div ng-controller="autoCompleteController as ctrl" layout="column" ng-cloak>
                 <md-content class="md-padding">
                     <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCountryItem" md-search-text="ctrl.searchCountryText"
@@ -66,7 +68,7 @@
                         </md-not-found>
                     </md-autocomplete>
                 </md-content>
-                 <button ng-click="search()" class="button button-block myButton" >
+                 <button ng-click="search()" class="button button-block myButton button-100" >
                     <span id="searchButton" >Wheee! SEARCH!</span>
                 </button>
             </div>
@@ -77,21 +79,35 @@
 
 
         <div class="list newEvents body" ng-controller="NewEvents">
-            <!--<i class="ion-ribbon-a"> </i>
-            <span class="location-spec">Newest Events</span>
-            <div class="clearer"></div>-->
+
+            <p class="subtitle">
+                <i class="ion-arrow-up-b"> </i>
+                <span>Newest Events</span>
+
+                <a href="#/app/future_events" class="link">
+                    <span class="align-right">Search all</span>
+                    <i class="ion-search align-right"> </i>
+                </a>
+            </p>
+
+            <div class="clearer"></div>
 
             <ion-scroll id="ionScrollRegion" direction="x" overflow-scroll="false">
                 <div id="overflowingContent" style="width: {{newNr}}">
                     <div class="scroll-item" ng-repeat="event in newEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
                         <div class="hslide-imgbg" style="background-image: url(http://www.wheee.eu/upload/headers/{{event.header_image}});">
-                            <!--<img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />-->
                         </div>
                         <div class="clearer"></div>
                         <div class="hscroll-content">
                             <h3>{{event.title}}</h3>
-                            <i class="ion-ios-location-outline"> </i>
-                            <span>{{event.local_name}}</span>
+                            <p>
+                                <i class="ion-ios-location-outline"> </i>
+                                <span><b>{{event.local_name}}</b> - <i>{{event.location}}, {{event.county}}</i></span>
+                            </p>
+                            <p>
+                                <i class="ion-ios-calendar-outline"> </i>
+                                <span>{{event.event_start}}</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -105,9 +121,9 @@
             </div>-->
         </div>
 
-        <div class="contactsLink">
+        <!--<div class="contactsLink">
             <a href="#/app/contacts">Contact Us</a>
-        </div>
+        </div>-->
 
 
     </ion-content>
