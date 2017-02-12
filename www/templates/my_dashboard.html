@@ -1,11 +1,14 @@
 <ion-view>
-  <ion-content class="container-padding mt-40">
-    <h1>My Dashboard</h1>
+  <ion-content class="container-padding padt-55">
+    <div class="align-center mt-25 mb-20 dash-img">
+      <img ng-src="{{myDashboard[0].fb_picture}}"/>
+      <p>{{myDashboard[0].firstname}} {{myDashboard[0].lastname}}</p>
+    </div>
 
-    <a href="/#/app/future_events" class="button myButton button-100 mb-20">Event Search</a>
-    <a href="/#/app/edit_profile" class="button myButton button-100 mb-20">Edit Profile</a>
-    <a href="/#/app/my_bookmarks" class="button myButton button-100 mb-20">My Bookmarks</a>
-    <a href="/#/app/my_applications" class="button myButton button-100 mb-20">My Applications</a>
+    <a ng-href="/#/app/future_events" class="button dashButton mb-20">Event Search</a>
+    <a ng-href="/#/app/my_bookmarks" class="button dashButton mb-20">My Bookmarks</a>
+    <a ng-href="/#/app/my_applications" class="button dashButton mb-20">My Applications</a>
+    <a ng-href="/#/app/edit_profile" class="button dashButton mb-20">Edit Profile</a>
 
     <p><b>Account Status</b></p>
 

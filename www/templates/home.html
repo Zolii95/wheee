@@ -12,7 +12,7 @@
             <ion-slide-box show-pager="false" ng-if="default=='None'" does-continue="true" slide-interval="2500" auto-play="true">
                 <ion-slide ng-repeat="event in topEvents">
                     <div id="topEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)" style="background-image: url(http://www.wheee.eu/upload/headers/{{event.header_image}});">
-                        <button class="button button-block myButton">{{event.button_text}}
+                        <button class="button button-block sliderButton">{{event.button_text}}
             			</button>
                         <h2 class="text_t">{{event.title}}</h2>
                         <h2 class="text_l">{{event.local_name}}</h2>
@@ -52,7 +52,7 @@
                             <span md-highlight-text="ctrl.searchCityText" md-highlight-flags="^i">{{item.display}}</span>
                         </md-item-template>
                         <md-not-found>
-                            No countries matching "{{ctrl.searchCityText}}" were found.
+                            No counties matching "{{ctrl.searchCityText}}" were found.
                         </md-not-found>
                     </md-autocomplete>
                 </md-content>
@@ -64,11 +64,11 @@
                             <span md-highlight-text="ctrl.searchEventText" md-highlight-flags="^i">{{item.display}}</span>
                         </md-item-template>
                         <md-not-found>
-                            No countries matching "{{ctrl.searchEventText}}" were found.
+                            No events / event places matching "{{ctrl.searchEventText}}" were found.
                         </md-not-found>
                     </md-autocomplete>
                 </md-content>
-                 <button ng-click="search()" class="button button-block myButton button-100" >
+                 <button ng-click="search()" class="button searchButton" >
                     <span id="searchButton" >Wheee! SEARCH!</span>
                 </button>
             </div>

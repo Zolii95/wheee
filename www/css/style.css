@@ -52,12 +52,23 @@ h2 {
     background: #f4f4f4;
 }
 
-.myButton {
+.sliderButton {
     background-color: #0AC7B4;
     color: white;
     margin-left: 10px;
-   
     width: 50% !important;
+}
+
+.searchButton {
+    background-color: #0AC7B4;
+    color: white;
+    margin: 10px 8px;
+}
+
+.dashButton {
+    background-color: #0AC7B4;
+    color: white;
+    width: 100%;
 }
 
 .menu-navbar{
@@ -171,6 +182,10 @@ input {
 
 .mt-40 {
     margin-top: 40px;
+}
+
+.padt-55 {
+    padding-top: 55px;
 }
 
 .form-input {
@@ -692,4 +707,20 @@ p.subtitle {
 
 md-content.md-default-theme, md-content {
     background-color: transparent;
+}
+
+.dash-img {
+    margin-bottom: 35px;
+}
+
+.dash-img img {
+    border-radius: 50%;
+}
+
+.dash-img p {
+    margin-top: -40px;
+    padding: 3px;
+    background-color: #fff;
+    opacity: 0.6;
+    z-index: 1000;
 }

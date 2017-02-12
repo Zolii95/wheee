@@ -355,7 +355,15 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   //MyApplications
 
-  .controller('MyApplicationsCtrl', function ($scope, $http) {
+  .controller('MyApplicationsCtrl', function ($scope, $http, $ionicLoading, $ionicPlatform) {
+
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+
+    $ionicPlatform.ready(function () {
+      $ionicLoading.hide();
+    });
 
     $scope.getMyApplications = function () {
 
@@ -369,11 +377,28 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
     $scope.getMyApplications();
 
+    $scope.GoToDetails = function(eventId){
+      Event_Place = eventId;
+      City = "";
+      Event_PlaceName = "";
+      localStorage.setItem('last_searchedEventId', eventId);
+      location.href = '#/app/event_detail';
+
+    }
+
   })
 
   //MyBookmarks
 
-  .controller('MyBookmarksCtrl', function ($scope, $http) {
+  .controller('MyBookmarksCtrl', function ($scope, $http, $ionicLoading, $ionicPlatform) {
+
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+
+    $ionicPlatform.ready(function () {
+      $ionicLoading.hide();
+    });
 
     $scope.getMyBookmarks = function () {
 
@@ -387,11 +412,28 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
     $scope.getMyBookmarks();
 
+    $scope.GoToDetails = function(eventId){
+      Event_Place = eventId;
+      City = "";
+      Event_PlaceName = "";
+      localStorage.setItem('last_searchedEventId', eventId);
+      location.href = '#/app/event_detail';
+
+    }
+
   })
 
   //MyDashboard
 
-  .controller('MyDashboardCtrl', function ($scope, $http) {
+  .controller('MyDashboardCtrl', function ($scope, $http, $ionicLoading, $ionicPlatform) {
+
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+
+    $ionicPlatform.ready(function () {
+      $ionicLoading.hide();
+    });
 
     $scope.getMyDashboard = function () {
 
@@ -419,9 +461,20 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   })
 
   //Profile
-  .controller('ProfileCtrl', function ($scope, $http) {
+  .controller('ProfileCtrl', function ($scope, $http, $ionicLoading, $ionicPlatform) {
+
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+
+    $ionicPlatform.ready(function () {
+      $ionicLoading.hide();
+    });
 
     $scope.saveData = function (user) {
+      $ionicLoading.show({
+        template: 'Saving...'
+      });
 
       $http.post('http://www.wheee.eu/api/user/save_profile_datas.php?user_id=' + localStorage.getItem("logged")
         + '&firstname=' + user.firstname.$modelValue
@@ -799,7 +852,15 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
   })
 
-  .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal, $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $ionicLoading, $cordovaActionSheet) {
+  .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal, $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $ionicLoading, $cordovaActionSheet, $ionicPlatform) {
+
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+
+    $ionicPlatform.ready(function () {
+      $ionicLoading.hide();
+    });
 
    if(EventDetails) {
      var eventID = EventDetails.id;
