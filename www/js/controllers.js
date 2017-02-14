@@ -266,11 +266,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       link: "#/app/past_events",
       icon: 'ion-android-search'
     };
-    $scope.groupLO[1].items[2] = {
-      name: "Companies",
-      link: "#/app/companies",
-      icon: 'ion-android-search'
-    };
+    // $scope.groupLO[1].items[2] = {
+    //   name: "Companies",
+    //   link: "#/app/companies",
+    //   icon: 'ion-android-search'
+    // };
 
     //Menüpontok belépő állapotban
     $scope.groupLI = [];
@@ -310,10 +310,10 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       name: "Past Events",
       link: "#/app/past_events"
     };
-    $scope.groupLI[1].items[2] = {
-      name: "Companies",
-      link: "#/app/companies"
-    };
+    // $scope.groupLI[1].items[2] = {
+    //   name: "Companies",
+    //   link: "#/app/companies"
+    // };
     //Lenyilo menü a My Profile-hoz
     $scope.groupLI[2].items[0] = {
       name: "My dashboard",
@@ -627,23 +627,24 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $log.info('Item changed to ' + JSON.stringify(item));
       Country = item.id;
       CountryName = item.value;
-      localStorage.setItem("last_searchedCountryId", Country);
-      localStorage.setItem("last_searchedCountryName", CountryName);
+      // localStorage.setItem("last_searchedCountryId", item.id);
+      // localStorage.setItem("last_searchedCountryName", item.display);
       self.showCity = true;
     }
     function cityChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       City = item.id;
       CityName = item.value;
-      localStorage.setItem("last_searchedCityId", City);
-      localStorage.setItem("last_searchedCityName", CityName);
+      // localStorage.setItem("last_searchedCityId", item.id);
+      // localStorage.setItem("last_searchedCityName", item.display);
       self.showEvent = true;
     }
     function eventChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       Event_Place = item.id;
       Event_PlaceName = item.value;
-      localStorage.setItem("last_searchedEventId", item.id);
+      // localStorage.setItem("last_searchedEventId", item.id);
+      // localStorage.setItem("last_searchedEventName", item.display);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
@@ -657,6 +658,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     
 
     self.pastEvents = {};
+    self.thereAreResults = 0;
     $scope.searchPast = function () {
       PastEvents = 1;
       self.pastEvents = EventDetail.getEvObject();
@@ -672,6 +674,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             } else {
             EventDetail.setEvObject(response.response);
             self.pastEvents = EventDetail.getEvObject();
+            self.thereAreResults = 1;
             $log.info(self.pastEvents);
           }
         })
@@ -683,7 +686,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       City = "";
       Event_PlaceName = "";
       localStorage.setItem('last_searchedEventId', eventId);
-      console.log(localStorage.getItem('last_searchedEventId'));
       location.href = '#/app/event_detail';
     }
 
@@ -698,8 +700,23 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   .controller('autoCompleteController', function ($scope, $timeout, $log, $http, $q, EventDetail) {
     var self = this;
-    self.showCity = false;
-    self.showEvent = false;
+    self.selectedCountryValue = localStorage.getItem('last_searchedCountryName');
+    Country = localStorage.getItem('last_searchedCountryId');
+    if(self.selectedCountryValue) {
+      self.showCity = true;
+    }
+    else {
+      self.showCity = false;
+    }
+    self.selectedCityValue = localStorage.getItem('last_searchedCityName');
+    City = localStorage.getItem('last_searchedCityId');
+    if(self.selectedCityValue) {
+      self.showEvent = true;
+    }
+    else {
+      self.showEvent = false;
+    }
+    self.selectedEventValue = localStorage.getItem('last_searchedEventName');
     self.simulateQuery = true;
     self.isDisabled = false;
 
@@ -779,16 +796,16 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $log.info('Item changed to ' + JSON.stringify(item));
       Country = item.id;
       CountryName = item.value;
-      localStorage.setItem("last_searchedCountryId", Country);
-      localStorage.setItem("last_searchedCountryName", CountryName);
+      localStorage.setItem("last_searchedCountryId", item.id);
+      localStorage.setItem("last_searchedCountryName", item.display);
       self.showCity = true;
     }
     function cityChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       City = item.id;
       CityName = item.value;
-      localStorage.setItem("last_searchedCityId", City);
-      localStorage.setItem("last_searchedCityName", CityName);
+      localStorage.setItem("last_searchedCityId", item.id);
+      localStorage.setItem("last_searchedCityName", item.display);
       self.showEvent = true;
     }
     function eventChange(item) {
@@ -796,6 +813,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       Event_Place = item.id;
       Event_PlaceName = item.value;
       localStorage.setItem("last_searchedEventId", item.id);
+      localStorage.setItem("last_searchedEventName", item.display);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
@@ -811,6 +829,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
     
     self.newEvents = {};
+    self.thereAreResults = 0;
     $scope.searchFuture = function () {
       PastEvents = 0;
       self.newEvents = EventDetail.getEvObject();
@@ -826,6 +845,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             } else {
             EventDetail.setEvObject(response.response);
             self.newEvents = EventDetail.getEvObject();
+            self.thereAreResults = 1;
             $log.info(self.newEvents);
           }
         })

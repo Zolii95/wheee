@@ -1,8 +1,14 @@
 <ion-view>
-    <ion-content class="container-padding">
+    <ion-content class="padt-55">
         
-            <h2>Find Past Events</h2>
             <div ng-controller="autoCompleteControllerPast as ctrl" layout="column" ng-cloak>
+
+            <div id="search">
+                <p class="subtitle white">
+                    <i class="ion-search"> </i>
+                    <span>Find events in our archive</span>
+                </p>
+
                 <md-content class="md-padding">
                     <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCountryItem" md-search-text="ctrl.searchCountryText"
                         md-search-text-change="ctrl.searchTextChangeCountry(ctrl.searchText)" md-selected-item-change="ctrl.countryChange(item)"
@@ -25,7 +31,7 @@
                             <span md-highlight-text="ctrl.searchCityText" md-highlight-flags="^i">{{item.display}}</span>
                         </md-item-template>
                         <md-not-found>
-                            No countries matching "{{ctrl.searchCityText}}" were found.
+                            No counties matching "{{ctrl.searchCityText}}" were found.
                         </md-not-found>
                         </md-autocomplete>
                 </md-content>
@@ -37,25 +43,50 @@
                             <span md-highlight-text="ctrl.searchEventText" md-highlight-flags="^i">{{item.display}}</span>
                         </md-item-template>
                         <md-not-found>
-                            No countries matching "{{ctrl.searchEventText}}" were found.
+                            No events / event places matching "{{ctrl.searchEventText}}" were found.
                         </md-not-found>
                         </md-autocomplete>
                 </md-content>
-                <button ng-click="searchPast()" class="button button-block myButton">
+                <button ng-click="searchPast()" class="button searchButton">
                     <span id="searchButton" >Wheee! SEARCH!</span>
                 </button>
+            </div>
 
+            <p class="subtitle white mt-25">
+                <i class="ion-android-done-all"> </i>
+                <span>Results found</span>
+            </p>
 
+            <div class="newEvents body event-list-cont">
 
-            <div class="list newEvents body">
-                <h2>Found Events</h2>
-                <div class="item body" ng-repeat="event in ctrl.pastEvents" data-ng-init="eventId=event.id;" 
+                <div ng-if="ctrl.thereAreResults == 0">
+                    <p>Please make a search!</p>
+                </div>
+
+                <div class="list-item" ng-repeat="event in ctrl.pastEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
+                    <div class="hslide-imgbg" style="background-image: url(http://www.wheee.eu/upload/headers/{{event.header_image}});">
+                    </div>
+                    <div class="clearer"></div>
+                    <div class="hscroll-content">
+                        <h3>{{event.event_title}}</h3>
+                        <p>
+                            <i class="ion-ios-location-outline"> </i>
+                            <span><b>{{event.local_name}}</b> - <i>{{event.location}}, {{event.county}}</i></span>
+                        </p>
+                        <p>
+                            <i class="ion-ios-calendar-outline"> </i>
+                            <span>{{event.event_start_date}}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!--<div class="item body" ng-repeat="event in ctrl.pastEvents" data-ng-init="eventId=event.id;" 
                         data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
                     <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
                     <div class="title-container">
                         <h1>{{event.event_title}}</h1>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
         
