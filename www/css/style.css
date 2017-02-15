@@ -84,9 +84,14 @@ h2 {
 .menu-button{
     color:#FFF !important;
     width: 45px;
-    height: 35px;
-    margin-top: 3px;
-    
+    height: 34px;    
+}
+
+.back-button i {
+    color: #fff;
+    margin-left: 20px;
+    line-height: 44px;
+    font-size: 26px;
 }
 
 .title{
@@ -740,4 +745,8 @@ md-content.md-default-theme, md-content {
     background-color: #fff;
     opacity: 0.6;
     z-index: 1000;
+}
+
+.bar .buttons span {
+    color: transparent !important;
 }
