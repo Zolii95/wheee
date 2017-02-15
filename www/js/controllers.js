@@ -1160,23 +1160,34 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
               }
 
               $scope.changeJoinedStatus = function () {
-                $ionicLoading.show({
-                  template: 'Saving...'
-                });
-                $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?joined=1&event_id=' + eventID + '&user_id=' + localStorage.getItem("logged"))
-                  .success(function (response) {
-                    window.location.reload();
+
+                if($scope.isLogged > 0) {
+                  $ionicLoading.show({
+                    template: 'Saving...'
                   });
+                  $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?joined=1&event_id=' + eventID + '&user_id=' + localStorage.getItem("logged"))
+                    .success(function (response) {
+                      window.location.reload();
+                    });
+                }
+                else {
+                  $scope.openLoginModal();
+                }
               }
 
               $scope.changeBookmarkedStatus = function () {
-                $ionicLoading.show({
-                  template: 'Saving...'
-                });
-                $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?bookmark=1&event_id=' + eventID + '&user_id=' + localStorage.getItem("logged"))
-                  .success(function (response) {
-                    window.location.reload();
+                if($scope.isLogged > 0) {
+                  $ionicLoading.show({
+                    template: 'Saving...'
                   });
+                  $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?bookmark=1&event_id=' + eventID + '&user_id=' + localStorage.getItem("logged"))
+                    .success(function (response) {
+                      window.location.reload();
+                    });
+                }
+                else {
+                  $scope.openLoginModal();
+                }
               }
 
               // $scope.shareViaFacebook = function() {
@@ -1193,7 +1204,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
               $scope.openLoginModal = function () {
                 $ionicModal.fromTemplateUrl('login-modal.html', {
                   scope: $scope,
-                  animation: 'splat'
+                  animation: 'slide-in-up'
                 }).then(function (modal) {
                   $scope.modal = modal;
                   $scope.modal.show();
