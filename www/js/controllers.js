@@ -665,7 +665,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       Event_Place = eventId;
       City = "";
       Event_PlaceName = "";
-      localStorage.setItem('last_searchedEventId', eventId);
+      localStorage.setItem('last_searchedPastEventId', eventId);
+      localStorage.setItem('isPastSearch', 1);
       location.href = '#/app/event_detail';
     }
 
@@ -895,6 +896,10 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
  
     if(EventDetails) {
       var eventID = EventDetails.id;
+    }
+    else if(localStorage.getItem('last_searchedPastEventId') && localStorage.getItem('isPastSearch') == 1) {
+      var eventID = localStorage.getItem('last_searchedPastEventId');
+      localStorage.setItem('isPastSearch', 0);
     }
     else if(localStorage.getItem('last_searchedEventId')) {
       var eventID = localStorage.getItem('last_searchedEventId');
