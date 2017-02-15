@@ -31,149 +31,49 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state, $q, $ionicLoading, $ionicSideMenuDelegate) {
     $scope.logged = localStorage.getItem("logged");
 
-    if($scope.logged && $scope.logged > 0 && $state.current.name == 'app.welcome') {
+    if ($scope.logged && $scope.logged > 0 && $state.current.name == 'app.welcome') {
       $state.go('app.home');
     }
 
     $scope.populateMenuDatas = function () {
       $scope.menuProfileDatas = [];
       $http.get('http://www.wheee.eu/api/user/profile_datas.php?dashboard=1&id=' + $scope.logged)
-      .success(function (response) {
-        $scope.menuProfileDatas.push({
-          email: response.response[0].email,
-          firstname: response.response[0].firstname,
-          lastname: response.response[0].lastname,
-          fb_picture: response.response[0].fb_picture
-        });
-      })
+        .success(function (response) {
+          $scope.menuProfileDatas.push({
+            email: response.response[0].email,
+            firstname: response.response[0].firstname,
+            lastname: response.response[0].lastname,
+            fb_picture: response.response[0].fb_picture
+          });
+        })
     };
 
     $scope.populateMenuDatas();
-  
+
 
     // login
 
-  //This is the success callback from the login method
-  var fbLoginSuccess = function(response) {
-    if (!response.authResponse){
-      fbLoginError("Cannot find the authResponse");
-      return;
-    }
-
-    var authResponse = response.authResponse;
-
-    getFacebookProfileInfo(authResponse)
-    .then(function(profileInfo) {
-      //for the purpose of this example I will store user data on local storage
-      
-      $http.get('http://www.wheee.eu/api/user/get_user_id.php?email=' + profileInfo.email + 
-                                                                  '&first_name=' + profileInfo.first_name + 
-                                                                  '&last_name=' + profileInfo.last_name + 
-                                                                  '&gender=' + profileInfo.gender + 
-                                                                  '&age=' + profileInfo.age_range.min + 
-                                                                  '&link=' + profileInfo.link + 
-                                                                  '&picture=http://graph.facebook.com/' + authResponse.userID + '/picture?type=large' + 
-                                                                  '&updated=' + profileInfo.updated_time )
-      .success(function (response) {
-        angular.forEach(response.response, function (user) {
-
-          $ionicLoading.show({
-            template: 'Logging in...'
-          });
-
-          localStorage.setItem("logged", user);
-          $scope.logged = localStorage.getItem("logged");
-          $scope.populateMenuDatas();
-
-          $ionicLoading.hide();
-          if($state.current.name != 'app.event_detail') {
-            $state.go('app.home');
-          }
-          else {
-            location.reload();
-          }
-        });
-
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-      }).error(function (err) {
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-      });
-
-      $ionicLoading.hide();
-      if($state.current.name != 'app.event_detail') {
-        $state.go('app.home');
+    //This is the success callback from the login method
+    var fbLoginSuccess = function (response) {
+      if (!response.authResponse) {
+        fbLoginError("Cannot find the authResponse");
+        return;
       }
-      else {
-        location.reload();
-      }
-    }, function(fail){
-      //fail get profile info
-      console.log('profile info fail', fail);
-    });
-  };
 
+      var authResponse = response.authResponse;
 
-  //This is the fail callback from the login method
-  var fbLoginError = function(error){
-    console.log('fbLoginError', error);
-    $ionicLoading.hide();
-  };
+      getFacebookProfileInfo(authResponse)
+        .then(function (profileInfo) {
+          //for the purpose of this example I will store user data on local storage
 
-  //this method is to get the user profile info from the facebook api
-  var getFacebookProfileInfo = function (authResponse) {
-    var info = $q.defer();
-
-    facebookConnectPlugin.api('/me?fields=first_name,last_name,gender,locale,age_range,link,picture,updated_time,email&access_token=' + authResponse.accessToken, null,
-      function (response) {
-				console.log(response);
-        info.resolve(response);
-      },
-      function (response) {
-				console.log(response);
-        info.reject(response);
-      }
-    );
-    return info.promise;
-  };
-
-  //This method is executed when the user press the "Login with facebook" button
-  $scope.facebookSignIn = function() {
-    console.log($state.current.name);
-    // FOR BROWSER LOGIN
-
-    localStorage.setItem("logged", 1);
-    $scope.logged = localStorage.getItem("logged");
-    if($state.current.name != 'app.event_detail') {
-      $state.go('app.home');
-    }
-    else {
-      location.reload();
-    }
-
-    // FOR BROWSER LOGIN
-
-    facebookConnectPlugin.getLoginStatus(function(success){
-     if(success.status === 'connected'){
-        // the user is logged in and has authenticated your app, and response.authResponse supplies
-        // the user's ID, a valid access token, a signed request, and the time the access token
-        // and signed request each expire
-        console.log('getLoginStatus', success.status);
-
-				//check if we have our user saved
-
-				if(!$scope.logged || $scope.logged == 0)
-				{
-					getFacebookProfileInfo(success.authResponse)
-					.then(function(profileInfo) {
-
-            $http.get('http://www.wheee.eu/api/user/get_user_id.php?email=' + profileInfo.email + 
-                                                                  '&first_name=' + profileInfo.first_name + 
-                                                                  '&last_name=' + profileInfo.last_name + 
-                                                                  '&gender=' + profileInfo.gender + 
-                                                                  '&age=' + profileInfo.age_range.min + 
-                                                                  '&link=' + profileInfo.link + 
-                                                                  '&picture=http://graph.facebook.com/' + success.authResponse.userID + '/picture?type=large' +
-                                                                  '&updated=' + profileInfo.updated_time )
+          $http.get('http://www.wheee.eu/api/user/get_user_id.php?email=' + profileInfo.email +
+            '&first_name=' + profileInfo.first_name +
+            '&last_name=' + profileInfo.last_name +
+            '&gender=' + profileInfo.gender +
+            '&age=' + profileInfo.age_range.min +
+            '&link=' + profileInfo.link +
+            '&picture=http://graph.facebook.com/' + authResponse.userID + '/picture?type=large' +
+            '&updated=' + profileInfo.updated_time)
             .success(function (response) {
               angular.forEach(response.response, function (user) {
 
@@ -186,7 +86,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
                 $scope.populateMenuDatas();
 
                 $ionicLoading.hide();
-                if($state.current.name != 'app.event_detail') {
+                if ($state.current.name != 'app.event_detail') {
                   $state.go('app.home');
                 }
                 else {
@@ -199,33 +99,132 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
               $scope.$broadcast('scroll.infiniteScrollComplete');
             });
 
-					}, function(fail){
-						//fail get profile info
-						console.log('profile info fail', fail);
-					});
-				}else{
-          if($state.current.name != 'app.event_detail') {
+          $ionicLoading.hide();
+          if ($state.current.name != 'app.event_detail') {
             $state.go('app.home');
           }
           else {
             location.reload();
           }
-				}
-
-     } else {
-        //if (success.status === 'not_authorized') the user is logged in to Facebook, but has not authenticated your app
-        //else The person is not logged into Facebook, so we're not sure if they are logged into this app or not.
-        console.log('getLoginStatus', success.status);
-
-			  $ionicLoading.show({
-          template: 'Logging in...'
+        }, function (fail) {
+          //fail get profile info
+          console.log('profile info fail', fail);
         });
+    };
 
-        //ask the permissions you need. You can learn more about FB permissions here: https://developers.facebook.com/docs/facebook-login/permissions/v2.4
-        facebookConnectPlugin.login(['email', 'public_profile'], fbLoginSuccess, fbLoginError);
+
+    //This is the fail callback from the login method
+    var fbLoginError = function (error) {
+      console.log('fbLoginError', error);
+      $ionicLoading.hide();
+    };
+
+    //this method is to get the user profile info from the facebook api
+    var getFacebookProfileInfo = function (authResponse) {
+      var info = $q.defer();
+
+      facebookConnectPlugin.api('/me?fields=first_name,last_name,gender,locale,age_range,link,picture,updated_time,email&access_token=' + authResponse.accessToken, null,
+        function (response) {
+          console.log(response);
+          info.resolve(response);
+        },
+        function (response) {
+          console.log(response);
+          info.reject(response);
+        }
+      );
+      return info.promise;
+    };
+
+    //This method is executed when the user press the "Login with facebook" button
+    $scope.facebookSignIn = function () {
+      console.log($state.current.name);
+      // FOR BROWSER LOGIN
+
+      localStorage.setItem("logged", 1);
+      $scope.logged = localStorage.getItem("logged");
+      if ($state.current.name != 'app.event_detail') {
+        $state.go('app.home');
       }
-    });
-  };
+      else {
+        location.reload();
+      }
+
+      // FOR BROWSER LOGIN
+
+      facebookConnectPlugin.getLoginStatus(function (success) {
+        if (success.status === 'connected') {
+          // the user is logged in and has authenticated your app, and response.authResponse supplies
+          // the user's ID, a valid access token, a signed request, and the time the access token
+          // and signed request each expire
+          console.log('getLoginStatus', success.status);
+
+          //check if we have our user saved
+
+          if (!$scope.logged || $scope.logged == 0) {
+            getFacebookProfileInfo(success.authResponse)
+              .then(function (profileInfo) {
+
+                $http.get('http://www.wheee.eu/api/user/get_user_id.php?email=' + profileInfo.email +
+                  '&first_name=' + profileInfo.first_name +
+                  '&last_name=' + profileInfo.last_name +
+                  '&gender=' + profileInfo.gender +
+                  '&age=' + profileInfo.age_range.min +
+                  '&link=' + profileInfo.link +
+                  '&picture=http://graph.facebook.com/' + success.authResponse.userID + '/picture?type=large' +
+                  '&updated=' + profileInfo.updated_time)
+                  .success(function (response) {
+                    angular.forEach(response.response, function (user) {
+
+                      $ionicLoading.show({
+                        template: 'Logging in...'
+                      });
+
+                      localStorage.setItem("logged", user);
+                      $scope.logged = localStorage.getItem("logged");
+                      $scope.populateMenuDatas();
+
+                      $ionicLoading.hide();
+                      if ($state.current.name != 'app.event_detail') {
+                        $state.go('app.home');
+                      }
+                      else {
+                        location.reload();
+                      }
+                    });
+
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                  }).error(function (err) {
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                  });
+
+              }, function (fail) {
+                //fail get profile info
+                console.log('profile info fail', fail);
+              });
+          } else {
+            if ($state.current.name != 'app.event_detail') {
+              $state.go('app.home');
+            }
+            else {
+              location.reload();
+            }
+          }
+
+        } else {
+          //if (success.status === 'not_authorized') the user is logged in to Facebook, but has not authenticated your app
+          //else The person is not logged into Facebook, so we're not sure if they are logged into this app or not.
+          console.log('getLoginStatus', success.status);
+
+          $ionicLoading.show({
+            template: 'Logging in...'
+          });
+
+          //ask the permissions you need. You can learn more about FB permissions here: https://developers.facebook.com/docs/facebook-login/permissions/v2.4
+          facebookConnectPlugin.login(['email', 'public_profile'], fbLoginSuccess, fbLoginError);
+        }
+      });
+    };
 
     // login
 
@@ -266,11 +265,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       link: "#/app/past_events",
       icon: 'ion-android-search'
     };
-    // $scope.groupLO[1].items[2] = {
-    //   name: "Companies",
-    //   link: "#/app/companies",
-    //   icon: 'ion-android-search'
-    // };
+    $scope.groupLO[1].items[2] = {
+      name: "Companies",
+      link: "#/app/companies",
+      icon: 'ion-android-search'
+    };
 
     //Menüpontok belépő állapotban
     $scope.groupLI = [];
@@ -310,10 +309,10 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       name: "Past Events",
       link: "#/app/past_events"
     };
-    // $scope.groupLI[1].items[2] = {
-    //   name: "Companies",
-    //   link: "#/app/companies"
-    // };
+    $scope.groupLI[1].items[2] = {
+      name: "Companies",
+      link: "#/app/companies"
+    };
     //Lenyilo menü a My Profile-hoz
     $scope.groupLI[2].items[0] = {
       name: "My dashboard",
@@ -355,15 +354,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   //MyApplications
 
-  .controller('MyApplicationsCtrl', function ($scope, $http, $ionicLoading, $ionicPlatform) {
-
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
-
-    $ionicPlatform.ready(function () {
-      $ionicLoading.hide();
-    });
+  .controller('MyApplicationsCtrl', function ($scope, $http) {
 
     $scope.getMyApplications = function () {
 
@@ -377,28 +368,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
     $scope.getMyApplications();
 
-    $scope.GoToDetails = function(eventId){
-      Event_Place = eventId;
-      City = "";
-      Event_PlaceName = "";
-      localStorage.setItem('last_searchedEventId', eventId);
-      location.href = '#/app/event_detail';
-
-    }
-
   })
 
   //MyBookmarks
 
-  .controller('MyBookmarksCtrl', function ($scope, $http, $ionicLoading, $ionicPlatform) {
-
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
-
-    $ionicPlatform.ready(function () {
-      $ionicLoading.hide();
-    });
+  .controller('MyBookmarksCtrl', function ($scope, $http) {
 
     $scope.getMyBookmarks = function () {
 
@@ -412,28 +386,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
     $scope.getMyBookmarks();
 
-    $scope.GoToDetails = function(eventId){
-      Event_Place = eventId;
-      City = "";
-      Event_PlaceName = "";
-      localStorage.setItem('last_searchedEventId', eventId);
-      location.href = '#/app/event_detail';
-
-    }
-
   })
 
   //MyDashboard
 
-  .controller('MyDashboardCtrl', function ($scope, $http, $ionicLoading, $ionicPlatform) {
-
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
-
-    $ionicPlatform.ready(function () {
-      $ionicLoading.hide();
-    });
+  .controller('MyDashboardCtrl', function ($scope, $http) {
 
     $scope.getMyDashboard = function () {
 
@@ -461,20 +418,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   })
 
   //Profile
-  .controller('ProfileCtrl', function ($scope, $http, $ionicLoading, $ionicPlatform) {
-
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
-
-    $ionicPlatform.ready(function () {
-      $ionicLoading.hide();
-    });
+  .controller('ProfileCtrl', function ($scope, $http) {
 
     $scope.saveData = function (user) {
-      $ionicLoading.show({
-        template: 'Saving...'
-      });
 
       $http.post('http://www.wheee.eu/api/user/save_profile_datas.php?user_id=' + localStorage.getItem("logged")
         + '&firstname=' + user.firstname.$modelValue
@@ -533,18 +479,17 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         });
     };
     $scope.getEvents();
-    $scope.GoToDetails = function(eventId){
+    $scope.GoToDetails = function (eventId) {
       console.log(eventId);
       Event_Place = eventId;
       City = "";
       Event_PlaceName = "";
-      localStorage.setItem('last_searchedEventId', eventId);
       location.href = '#/app/event_detail';
 
     }
   })
 
-.controller('autoCompleteControllerPast', function ($scope, $timeout, $log, $http, $q, EventDetail) {
+  .controller('autoCompleteControllerPast', function ($scope, $timeout, $log, $http, $q, EventDetail) {
     var self = this;
     self.showCity = false;
     self.showEvent = false;
@@ -627,24 +572,22 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $log.info('Item changed to ' + JSON.stringify(item));
       Country = item.id;
       CountryName = item.value;
-      // localStorage.setItem("last_searchedCountryId", item.id);
-      // localStorage.setItem("last_searchedCountryName", item.display);
+      localStorage.setItem("last_searchedCountryId", Country);
+      localStorage.setItem("last_searchedCountryName", CountryName);
       self.showCity = true;
     }
     function cityChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       City = item.id;
       CityName = item.value;
-      // localStorage.setItem("last_searchedCityId", item.id);
-      // localStorage.setItem("last_searchedCityName", item.display);
+      localStorage.setItem("last_searchedCityId", City);
+      localStorage.setItem("last_searchedCityName", CityName);
       self.showEvent = true;
     }
     function eventChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       Event_Place = item.id;
       Event_PlaceName = item.value;
-      // localStorage.setItem("last_searchedEventId", item.id);
-      // localStorage.setItem("last_searchedEventName", item.display);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
@@ -655,37 +598,41 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
 
     //When clicked on search button
-    
+
 
     self.pastEvents = {};
-    self.thereAreResults = 0;
     $scope.searchPast = function () {
       PastEvents = 1;
       self.pastEvents = EventDetail.getEvObject();
       var EventDetails = {};
+      var link = "";
+      if (Event_PlaceName == "") {
+        link = "http://www.wheee.eu/api/event_search/events.php?past_events=1&last_searched_location=" + City + "&current_page=1";
+      } else {
+        link = "http://www.wheee.eu/api/event_search/events.php?past_events=1&last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1";
 
-      $http.get("http://www.wheee.eu/api/event_search/events.php?past_events=1&last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1")
+      }
+
+      $http.get(link)
         .success(function (response) {
           if (response.response.length < 2) {
             $http.get("http://www.wheee.eu/api/event_search/events.php?past_events=1&event_id=" + Event_Place)
               .success(function (response2) {
                 location.href = '#/app/event_detail';
               })
-            } else {
+          } else {
             EventDetail.setEvObject(response.response);
             self.pastEvents = EventDetail.getEvObject();
-            self.thereAreResults = 1;
             $log.info(self.pastEvents);
           }
         })
     };
 
-    $scope.GoToDetails = function(eventId){
+    $scope.GoToDetails = function (eventId) {
       console.log(eventId);
       Event_Place = eventId;
       City = "";
       Event_PlaceName = "";
-      localStorage.setItem('last_searchedEventId', eventId);
       location.href = '#/app/event_detail';
     }
 
@@ -700,23 +647,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   .controller('autoCompleteController', function ($scope, $timeout, $log, $http, $q, EventDetail) {
     var self = this;
-    self.selectedCountryValue = localStorage.getItem('last_searchedCountryName');
-    Country = localStorage.getItem('last_searchedCountryId');
-    if(self.selectedCountryValue) {
-      self.showCity = true;
-    }
-    else {
-      self.showCity = false;
-    }
-    self.selectedCityValue = localStorage.getItem('last_searchedCityName');
-    City = localStorage.getItem('last_searchedCityId');
-    if(self.selectedCityValue) {
-      self.showEvent = true;
-    }
-    else {
-      self.showEvent = false;
-    }
-    self.selectedEventValue = localStorage.getItem('last_searchedEventName');
+    self.showCity = false;
+    self.showEvent = false;
     self.simulateQuery = true;
     self.isDisabled = false;
 
@@ -796,24 +728,23 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $log.info('Item changed to ' + JSON.stringify(item));
       Country = item.id;
       CountryName = item.value;
-      localStorage.setItem("last_searchedCountryId", item.id);
-      localStorage.setItem("last_searchedCountryName", item.display);
+      localStorage.setItem("last_searchedCountryId", Country);
+      localStorage.setItem("last_searchedCountryName", CountryName);
       self.showCity = true;
     }
+
     function cityChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       City = item.id;
       CityName = item.value;
-      localStorage.setItem("last_searchedCityId", item.id);
-      localStorage.setItem("last_searchedCityName", item.display);
+      localStorage.setItem("last_searchedCityId", City);
+      localStorage.setItem("last_searchedCityName", CityName);
       self.showEvent = true;
     }
     function eventChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       Event_Place = item.id;
       Event_PlaceName = item.value;
-      localStorage.setItem("last_searchedEventId", item.id);
-      localStorage.setItem("last_searchedEventName", item.display);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
@@ -822,42 +753,71 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     String.prototype.replaceAt = function (index, character) {
       return this.substr(0, index) + character + this.substr(index + character.length);
     }
-
+//////////////////// HA VÁROSRA KERESÜNK ÉS CSAK EGY TALÁLAT VAN, AKKOR A HELY NEVÉT EL KELL MENTENI Event_PlaceName-BE
     //When clicked on search button
     $scope.search = function () {
-      location.href = '#/app/event_detail';
+      PastEvents = 0;
+      self.newEvents = EventDetail.getEvObject();
+      var EventDetails = {};
+
+      var link = "";
+      if (Event_PlaceName == "") {
+        link = "http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&current_page=1";
+      } else {
+        link = "http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1";
+
+      }
+
+      $http.get(link)
+        .success(function (response) {
+          if (response.response.length == 0) {
+
+            location.href = '#/app/event_detail';
+
+          } else {
+            EventDetail.setEvObject(response.response);
+            self.newEvents = EventDetail.getEvObject();
+            $log.info(self.newEvents);
+            location.href = '#/app/future_events';
+          }
+        })
+
     };
-    
+
     self.newEvents = {};
-    self.thereAreResults = 0;
     $scope.searchFuture = function () {
       PastEvents = 0;
       self.newEvents = EventDetail.getEvObject();
       var EventDetails = {};
 
-      $http.get("http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1")
+      var link = "";
+      if (Event_PlaceName == "") {
+        link = "http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&current_page=1";
+      } else {
+        link = "http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1";
+
+      }
+
+      $http.get(link)
         .success(function (response) {
           if (response.response.length < 2) {
-            //$http.get("http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place)
-             //.success(function (response2) {
-                location.href = '#/app/event_detail';
-              //})
-            } else {
+
+            location.href = '#/app/event_detail';
+
+          } else {
             EventDetail.setEvObject(response.response);
             self.newEvents = EventDetail.getEvObject();
-            self.thereAreResults = 1;
             $log.info(self.newEvents);
           }
         })
     };
 
-   
-    $scope.GoToDetails = function(eventId){
+
+    $scope.GoToDetails = function (eventId) {
       console.log(eventId);
       Event_Place = eventId;
       City = "";
       Event_PlaceName = "";
-      localStorage.setItem('last_searchedEventId', eventId);
       location.href = '#/app/event_detail';
     }
 
@@ -872,66 +832,48 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
   })
 
-  .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal, $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $ionicLoading, $cordovaActionSheet, $ionicPlatform) {
-
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
-
-    $ionicPlatform.ready(function () {
-      $ionicLoading.hide();
-    });
-
-   if(EventDetails) {
-     var eventID = EventDetails.id;
-   }
-   else if(localStorage.getItem('last_searchedEventId')) {
-     var eventID = localStorage.getItem('last_searchedEventId');
-   }
-   else {
-     location.href = '#/app/future_events';
-   }
+  .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal, $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $ionicLoading, $cordovaActionSheet) {
 
     // IMAGE upload
 
-  $scope.image = null;
- 
-  $scope.showAlert = function(title, msg) {
-    var alertPopup = $ionicPopup.alert({
-      title: title,
-      template: msg
-    });
-  };
+    $scope.image = null;
 
-  // Present Actionsheet for switch beteen Camera / Library
-  $scope.loadImage = function() {
-
-    if(!$scope.isImageUploaded) {
-
-      var options = {
-        title: 'Select Image Source',
-        buttonLabels: ['Select Photo from Gallery', 'Take a Photo'],
-        addCancelButtonWithLabel: 'Cancel',
-        androidEnableCancelButton : true,
-      };
-      $cordovaActionSheet.show(options).then(function(btnIndex) {
-        var type = null;
-        if (btnIndex === 1) {
-          type = Camera.PictureSourceType.PHOTOLIBRARY;
-        } else if (btnIndex === 2) {
-          type = Camera.PictureSourceType.CAMERA;
-        }
-        if (type !== null) {
-          $scope.selectPicture(type);
-        }
+    $scope.showAlert = function (title, msg) {
+      var alertPopup = $ionicPopup.alert({
+        title: title,
+        template: msg
       });
-    }
-  };
+    };
+
+    // Present Actionsheet for switch beteen Camera / Library
+    $scope.loadImage = function () {
+
+      if (!$scope.isImageUploaded) {
+
+        var options = {
+          title: 'Select Image Source',
+          buttonLabels: ['Select Photo from Gallery', 'Take a Photo'],
+          addCancelButtonWithLabel: 'Cancel',
+          androidEnableCancelButton: true,
+        };
+        $cordovaActionSheet.show(options).then(function (btnIndex) {
+          var type = null;
+          if (btnIndex === 1) {
+            type = Camera.PictureSourceType.PHOTOLIBRARY;
+          } else if (btnIndex === 2) {
+            type = Camera.PictureSourceType.CAMERA;
+          }
+          if (type !== null) {
+            $scope.selectPicture(type);
+          }
+        });
+      }
+    };
 
 
     // Take image with the camera or from library and store it inside the app folder
     // Image will not be saved to users Library.
-    $scope.selectPicture = function(sourceType) {
+    $scope.selectPicture = function (sourceType) {
 
       $scope.isImageUploaded = 1;
 
@@ -941,16 +883,16 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         sourceType: sourceType,
         saveToPhotoAlbum: false
       };
-    
-      $cordovaCamera.getPicture(options).then(function(imagePath) {
+
+      $cordovaCamera.getPicture(options).then(function (imagePath) {
         // Grab the file name of the photo in the temporary directory
         var currentName = imagePath.replace(/^.*[\\\/]/, '');
-    
+
         //Create a new name for the photo
         var d = new Date(),
-        n = d.getTime(),
-        newFileName =  n + ".jpg";
-    
+          n = d.getTime(),
+          newFileName = n + ".jpg";
+
         // If you are trying to load image from the gallery on Android we need special treatment!
         if ($cordovaDevice.getPlatform() == 'Android' && sourceType === Camera.PictureSourceType.PHOTOLIBRARY) {
 
@@ -958,20 +900,20 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             template: 'Uploading...'
           });
 
-          window.FilePath.resolveNativePath(imagePath, function(entry) {
+          window.FilePath.resolveNativePath(imagePath, function (entry) {
             window.resolveLocalFileSystemURL(entry, success, fail);
             function fail(e) {
               console.error('Error: ', e);
             }
-    
+
             function success(fileEntry) {
               var namePath = fileEntry.nativeURL.substr(0, fileEntry.nativeURL.lastIndexOf('/') + 1);
               // Only copy because of access rights
-              $cordovaFile.copyFile(namePath, fileEntry.name, cordova.file.dataDirectory, newFileName).then(function(success){
+              $cordovaFile.copyFile(namePath, fileEntry.name, cordova.file.dataDirectory, newFileName).then(function (success) {
                 $scope.image = newFileName;
 
                 $scope.sendImageToServer();
-              }, function(error){
+              }, function (error) {
                 $scope.showAlert('Error', error.exception);
               });
             };
@@ -980,29 +922,24 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
 
         } else {
-
-          $ionicLoading.show({
-            template: 'Uploading...'
-          });
-
           var namePath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
           //Move the file to permanent storage
-          $cordovaFile.moveFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function(success){
+          $cordovaFile.moveFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function (success) {
             $scope.image = newFileName;
             $scope.sendImageToServer();
-          }, function(error){
+          }, function (error) {
             $scope.showAlert('Error', error.exception);
           });
 
         }
       },
-      function(err){
-        // Not always an error, maybe cancel was pressed...
-      })
+        function (err) {
+          // Not always an error, maybe cancel was pressed...
+        })
     };
 
     // Returns the local path inside the app for an image
-    $scope.pathForImage = function(image) {
+    $scope.pathForImage = function (image) {
       if (image === null) {
         return '';
       } else {
@@ -1010,25 +947,25 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       }
     };
 
-    $scope.sendImageToServer = function() {
+    $scope.sendImageToServer = function () {
       // Destination URL
       var url = "http://www.wheee.eu/api/event_detail/save_image.php";
-    
+
       // File for Upload
       var targetPath = $scope.pathForImage($scope.image);
-    
+
       // File name only
       var filename = $scope.image;
-    
+
       var options = {
         fileKey: "file",
         fileName: filename,
         chunkedMode: false,
         mimeType: "multipart/form-data",
-        params : {'fileName': filename}
+        params: { 'fileName': filename }
       };
-      
-      $cordovaFileTransfer.upload(url, targetPath, options).then(function(result) {
+
+      $cordovaFileTransfer.upload(url, targetPath, options).then(function (result) {
         location.reload();
         $ionicLoading.hide();
       });
@@ -1039,7 +976,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     // IMAGE Gallery
 
     $scope.images = [];
-    $http.get('http://www.wheee.eu/api/event_detail/get_images.php?event_id=' + eventID + '&image_limit=10')
+    $http.get('http://www.wheee.eu/api/event_detail/get_images.php?event_id=38&image_limit=10')
       .success(function (response) {
         angular.forEach(response.response, function (image) {
           $scope.images.push(image);
@@ -1048,7 +985,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     // IMAGE gallery
 
-    $scope.scrollTo = function(target){
+    $scope.scrollTo = function (target) {
       $location.hash(target);   //set the location hash
       var handle = $ionicScrollDelegate.$getByHandle('EventDetail');
       handle.anchorScroll(true);  // 'true' for animation
@@ -1057,13 +994,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     // DETELE comment
 
-    $scope.deleteComment = function(commentID){
-        $ionicLoading.show({
-          template: 'Deleting comment...'
-        });
-        $http.get('http://www.wheee.eu/api/event_detail/delete_comment.php?comment_id=' + commentID)
+    $scope.deleteComment = function (commentID) {
+      $ionicLoading.show({
+        template: 'Deleteing comment...'
+      });
+      $http.get('http://www.wheee.eu/api/event_detail/delete_comment.php?comment_id=' + commentID)
         .success(function (response) {
           location.reload();
+          $ionicLoading.hide();
         });
     }
 
@@ -1071,13 +1009,13 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     var link1;
     var link2;
     var EventDetails = {};
-    if(PastEvents == 0){
+    if (PastEvents == 0) {
       link1 = "http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1";
       link2 = "http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place;
-  }else if(PastEvents == 1){
+    } else if (PastEvents == 1) {
       link1 = "http://www.wheee.eu/api/event_search/events.php?past_events=1&last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1";
       link2 = "http://www.wheee.eu/api/event_search/events.php?past_events=1&event_id=" + Event_Place;
-  }
+    }
 
 
     $http.get(link1)
@@ -1093,11 +1031,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
               $scope.saveComment = function (commentForm) {
 
                 if (!$scope.isMessageAdded && commentForm.$$success.parse[0].$modelValue) {
-                  $ionicLoading.show({
-                    template: 'Adding comment...'
-                  });
                   var message = commentForm.$$success.parse[0].$modelValue;
-                  $http.get('http://www.wheee.eu/api/event_detail/save_comment.php?event_id=' + eventID + '&user_id=' + $scope.isLogged + '&message=' + message)
+                  $http.get('http://www.wheee.eu/api/event_detail/save_comment.php?event_id=38&user_id=' + $scope.isLogged + '&message=' + message)
                     .success(function (response) {
                       window.location.reload();
                     });
@@ -1107,7 +1042,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
               $scope.getEvent = function () {
                 $scope.eventData = [];
-                $http.get('http://www.wheee.eu/api/event_search/events.php?event_id=' + eventID)
+                $http.get('http://www.wheee.eu/api/event_search/events.php?event_id=38')
                   .success(function (response) {
                     $scope.eventData.push({
                       event_title: response.response[1].event_title,
@@ -1123,7 +1058,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
                   });
                 $log.info(EventDetails);
                 $scope.comments = [];
-                $http.get('http://www.wheee.eu/api/event_detail/get_comments.php?event_id=' + eventID + '&comment_limit=10')
+                $http.get('http://www.wheee.eu/api/event_detail/get_comments.php?event_id=38&comment_limit=10')
                   .success(function (response) {
                     angular.forEach(response.response, function (comment) {
                       $scope.comments.push(comment);
@@ -1137,7 +1072,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
               if ($scope.isLogged) {
                 $scope.eventStatus = [];
-                $http.get('http://www.wheee.eu/api/event_search/get_event_status.php?event_id=' + eventID + '&user_id=' + $scope.isLogged)
+                $http.get('http://www.wheee.eu/api/event_search/get_event_status.php?event_id=38&user_id=' + $scope.isLogged)
                   .success(function (response) {
                     $scope.eventStatus.push({
                       is_joined: response.response.is_joined,
@@ -1147,24 +1082,29 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
               }
 
               $scope.changeJoinedStatus = function () {
-                $ionicLoading.show({
-                  template: 'Saving...'
-                });
-                $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?joined=1&event_id=' + eventID + '&user_id=' + localStorage.getItem("logged"))
+                $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?joined=1&event_id=38&user_id=' + localStorage.getItem("logged"))
                   .success(function (response) {
                     window.location.reload();
                   });
               }
 
               $scope.changeBookmarkedStatus = function () {
-                $ionicLoading.show({
-                  template: 'Saving...'
-                });
-                $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?bookmark=1&event_id=' + eventID + '&user_id=' + localStorage.getItem("logged"))
+                $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?bookmark=1&event_id=38&user_id=' + localStorage.getItem("logged"))
                   .success(function (response) {
                     window.location.reload();
                   });
               }
+
+              // $scope.shareViaFacebook = function() {
+              //   var message = 'Test';
+              //   var logo = 'test';
+              //   var url = 'http://test.com'
+              //     $cordovaSocialSharing.canShareVia("facebook", message, logo, url).then(function(result) {
+              //         $cordovaSocialSharing.shareViaFacebook(message, logo, url);
+              //     }, function(error) {
+              //         alert(error)
+              //     });
+              // }
 
               $scope.openLoginModal = function () {
                 $ionicModal.fromTemplateUrl('login-modal.html', {
@@ -1197,7 +1137,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         } else {
           EventDetail.setEvObject(response.response);
           $log.info("href");
-          
+
           location.href = '#/app/future_events';
         }
 
@@ -1215,8 +1155,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   .controller('Events', function ($scope, $http, EventDetail, $log) {
     //$log.info(EventDetail.getEvObject());
     $scope.newEvents = EventDetail.getEvObject();
-       //$log.info(EventDetail.getEvObject());
-       //$log.info(showSearchedEvents);
+    //$log.info(EventDetail.getEvObject());
+    //$log.info(showSearchedEvents);
   })
 
   .controller('NewEvents', function ($scope, $http) {
@@ -1239,16 +1179,15 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     };
     $scope.getEvents();
-    $scope.GoToDetails = function(eventId){
+    $scope.GoToDetails = function (eventId) {
       console.log(eventId);
       Event_Place = eventId;
-      localStorage.setItem('last_searchedEventId', eventId);
       location.href = '#/app/event_detail';
     }
   })
 
 
-;
+  ;
 
 
 
