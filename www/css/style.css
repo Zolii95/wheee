@@ -218,8 +218,12 @@ input {
     text-align: center;
 }
 
-.align-right {
+.align-right, .float-right {
     float: right;
+}
+
+.float-left {
+    float: left;
 }
 
 span.newsletter {
@@ -258,6 +262,10 @@ span.newsletter {
 
 .button-100 {
     width: 94% !important;
+}
+
+.mt-10 {
+    margin-top: 10px;
 }
 
 .mt-25 {
@@ -723,6 +731,11 @@ p.subtitle {
     color: #0AC7B4;
 }
 
+p.iconed-text {
+    margin: 10px 0;
+    font-size: 15px;
+}
+
 .subtitle i.align-right {
     margin-right: 5px;
 }
@@ -765,3 +778,25 @@ i.img-del {
 i.img-del:hover {
     opacity: 1;
 }
+
+.loc-block.green i, .loc-block.green span {
+    color: #0AC7B4 !important;
+}
+
+.ion-nifty-modal .ion-close-round {
+    font-size: 22px;
+    margin: 6px;
+    opacity: 0.3;
+}
+
+.comp-bg-img {
+    background-size: cover;
+    background-position: center center;
+}
+
+#company-container {
+    background-image: url('../img/white-bg.png');
+    padding: 10px;
+    border-radius: 6px;
+}
+

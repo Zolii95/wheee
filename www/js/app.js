@@ -132,6 +132,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
         }
       }
     })
+
+    .state('app.company_page', {
+      url: '/company_page',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/company_page.html',
+          controller: "CompanyPageCtrl"
+        }
+      }
+    })
    
     .state('app.past_events', {
       url: '/past_events',

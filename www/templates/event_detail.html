@@ -12,25 +12,25 @@
   <ion-content delegate-handle="EventDetail" overflow-scroll="false">
     <img ng-src="{{eventData[0].header_image}}" class="eventHeader"/>
     <div class="action-line">
-      <div class="action-button align-center" ng-if="!isLogged || (isLogged && !eventStatus[0].is_joined)" ng-click="changeJoinedStatus()">
+      <div class="action-button align-center" ng-if="(!isLogged || isLogged == 0) || (isLogged && !eventStatus[0].is_joined)" ng-click="changeJoinedStatus()">
         <i class="ion-android-checkbox-outline-blank"> </i>
         <p>Join! Wheee!</p>
       </div>
-      <div class="action-button align-center" ng-if="isLogged && eventStatus[0].is_joined" ng-click="changeJoinedStatus()">
+      <div class="action-button align-center" ng-if="isLogged > 0 && eventStatus[0].is_joined" ng-click="changeJoinedStatus()">
         <i class="ion-android-checkbox-outline"> </i>
         <p>Leave</p>
       </div>
-      <div class="action-button align-center" ng-if="!isLogged || (isLogged && !eventStatus[0].is_bookmarked)" ng-click="changeBookmarkedStatus()">
+      <div class="action-button align-center" ng-if="(!isLogged || isLogged == 0) || (isLogged && !eventStatus[0].is_bookmarked)" ng-click="changeBookmarkedStatus()">
         <i class="ion-ios-star-outline"> </i>
         <p>Bookmark</p>
       </div>
-      <div class="action-button align-center" ng-if="isLogged && eventStatus[0].is_bookmarked" ng-click="changeBookmarkedStatus()">
+      <div class="action-button align-center" ng-if="isLogged > 0 && eventStatus[0].is_bookmarked" ng-click="changeBookmarkedStatus()">
         <i class="ion-ios-star"> </i>
         <p>Unbookmark</p>
       </div>
-      <div class="action-button align-center">
-        <i class="ion-email"> </i>
-        <p>Invite</p>
+      <div class="action-button align-center" data-ng-click="GoToCompanyPage(eventData[0].client_id)">
+        <i class="ion-ios-information-outline"> </i>
+        <p>Place Info</p>
       </div>
       <div class="action-button align-center" ng-click="shareViaFacebook()">
         <i class="ion-android-share-alt"> </i>
@@ -60,6 +60,12 @@
       <i class="ion-ios-location-outline"> </i>
       <span class="location-spec">{{eventData[0].location}}, {{eventData[0].county}}</span>
     </div>
+
+    <div class="loc-block green" ng-if="isLogged > 0 && eventStatus[0].is_joined">
+      <i class="ion-android-done-all"> </i>
+      <span class="location-spec">You had joined for this event! Wheee!</span>
+    </div>
+
     <div ng-bind-html="eventDescription"></div>
 
     <div id="add-comment"></div>

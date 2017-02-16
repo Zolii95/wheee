@@ -431,6 +431,42 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   })
 
+  // Company page
+
+  .controller('CompanyPageCtrl', function ($scope, $http, $sce) {
+
+    $scope.clientId = localStorage.getItem("lastSearchedCompanyId");
+
+    $scope.getCompanyData = function () {
+
+      $scope.companyData = [];
+      $http.get('http://www.wheee.eu/api/event_company/get_company.php?client_id=' + $scope.clientId)
+        .success(function (response) {
+          $scope.companyData.push({
+            email: response.response[0].email,
+            company_name: response.response[0].company_name,
+            pub_name: response.response[0].pub_name,
+            telephone: response.response[0].telephone,
+            homepage: response.response[0].homepage,
+            country: response.response[0].country,
+            county: response.response[0].county,
+            location: response.response[0].location,
+            logo: response.response[0].logo,
+            address: response.response[0].address,
+            zip_code: response.response[0].zip_code,
+            premium_profile: response.response[0].premium_profile,
+            premium_header: response.response[0].premium_header,
+            promo_participant: response.response[0].promo_participant
+          });
+          $scope.companyDescription = $sce.trustAsHtml(response.response[0].description);
+        })
+    };
+    $scope.getCompanyData();
+
+  })
+
+  // Company page
+
   //Profile
   .controller('ProfileCtrl', function ($scope, $http) {
 
@@ -1096,6 +1132,16 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
 
     // DELETE COMMENT
+
+    // GO TO Company page
+
+    $scope.GoToCompanyPage = function (clientId) {
+      localStorage.setItem("lastSearchedCompanyId", clientId);
+      location.href = '#/app/company_page';
+    }
+
+    // GO TO Company page
+
     var link1;
     var link2;
     var EventDetails = {};
@@ -1139,6 +1185,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
                 $http.get('http://www.wheee.eu/api/event_search/events.php?event_id=' + eventID)
                   .success(function (response) {
                     $scope.eventData.push({
+                      client_id: response.response[1].client_id,
                       event_title: response.response[1].event_title,
                       event_start_date: response.response[1].event_start_date,
                       event_start_hour: response.response[1].event_start_hour,
