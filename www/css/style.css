@@ -750,3 +750,18 @@ md-content.md-default-theme, md-content {
 .bar .buttons span {
     color: transparent !important;
 }
+
+i.img-del {
+    z-index: 100;
+    position: absolute;
+    font-size: 20px;
+    padding: 4px 6px;
+    margin: -5px;
+    background: #fff;
+    border-bottom-right-radius: 6px;
+    opacity: 0.75;
+}
+
+i.img-del:hover {
+    opacity: 1;
+}

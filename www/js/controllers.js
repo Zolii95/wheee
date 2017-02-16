@@ -893,6 +893,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
      $ionicPlatform.ready(function () {
        $ionicLoading.hide();
      });
+
+     $scope.isLogged = localStorage.getItem("logged");
  
     if(EventDetails) {
       var eventID = EventDetails.id;
@@ -1046,6 +1048,20 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
 
     // IMAGE upload
+
+    // IMAGE DELETE
+
+    $scope.deleteImage = function (photoId) {
+      $ionicLoading.show({
+        template: 'Deleteing photo...'
+      });
+      $http.get('http://www.wheee.eu/api/event_detail/delete_image.php?image_id=' + photoId)
+      .success(function (response) {
+        location.reload();
+      });
+    }
+
+    // IMAGE DELETE
 
     // IMAGE Gallery
 
