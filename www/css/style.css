@@ -398,6 +398,30 @@ h1.event-title {
     font-size: 16px;
 }
 
+.application-block {
+    width: 100%;
+}
+
+.application-block i {
+    width: 20px;
+    text-align: center;
+    float: left;
+    font-size: 20px;
+    color: #333;
+    margin-top: 4px;
+}
+
+.application-block span {
+    color: #333;
+    margin-left: 10px;
+    line-height: 30px;
+    font-size: 14px;
+}
+
+.application-block.bb {
+    border-bottom: 1px solid #fff;
+}
+
 .dash-general-stat {
     width: 100%;
     height: 20px;
@@ -446,7 +470,7 @@ img.location-icon {
 }
 
 .font-16 {
-    font-size: 16px;
+    font-size: 16px !important;
 }
 
 span.location-spec {
@@ -898,3 +922,27 @@ i.img-del:hover {
     border-radius: 6px;
 }
 
+.myapp-div {
+    width: 100%;
+    height: 170px;
+    background: #f7f7f7;
+    box-shadow: 1px 4px 2px -2px grey;
+    border-radius: 6px;
+    margin: 25px 0;
+    background-size: cover;
+    background-position: top center;
+}
+
+.myapp-div .title-column {
+    width: 40%;
+    float: left;
+    background-image: url('../img/white-bg.png');
+    padding: 10px;
+}
+.myapp-div .content-column {
+    width: 60%;
+    float: left;
+    background-image: url('../img/white-bg.png');
+    padding: 10px;
+    border-left: 2px solid #FFF;
+}

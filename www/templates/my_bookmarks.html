@@ -1,8 +1,77 @@
 <ion-view>
   <ion-content class="container-padding padt-55">
-    <h1>My Bookmarks</h1>
+    
+    <p class="subtitle white mt-25">
+        <i class="ion-bookmark"> </i>
+        <span>My bookmarks</span>
+    </p>
 
-        <div class="row header" nf-if="data">
+    <div class="myapp-div" ng-repeat="data in myBookmarks" data-ng-init="eventId=data.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)" style="background-image: url(http://www.wheee.eu/upload/headers/{{data.header_image}});">
+      <div class="title-column">
+
+
+          <div class="application-block float-left mb-0">
+            <span>&nbsp;</span>
+          </div>
+          <div class="clearer"></div>
+
+          <div class="application-block bb float-left mb-0">
+            <i class="ion-location"> </i>
+            <span>Event place</span>
+          </div>
+          <div class="clearer"></div>
+
+          <div class="application-block bb float-left mb-0">
+            <i class="ion-ios-calendar"> </i>
+            <span>Date</span>
+          </div>
+          <div class="clearer"></div>
+
+          <div class="application-block bb float-left mb-0">
+            <i class="ion-ios-clock"> </i>
+            <span>Hour</span>
+          </div>
+          <div class="clearer"></div>
+
+          <div class="application-block float-left mb-0">
+            <i class="ion-asterisk"> </i>
+            <span>Status</span>
+          </div>
+          <div class="clearer"></div>
+
+      </div>
+      <div class="content-column">
+          <div class="application-block float-left mb-0">
+            <i class="ion-flag"> </i>
+            <b><span class="font-16">{{data.event_title}}</span></b>
+          </div>
+          <div class="clearer"></div>
+
+          <div class="application-block bb float-left mb-0">
+            <span>{{data.local_name}}</span>
+          </div>
+          <div class="clearer"></div>
+
+          <div class="application-block bb float-left mb-0">
+            <span>{{data.event_start_date}}</span>
+          </div>
+          <div class="clearer"></div>
+
+          <div class="application-block bb float-left mb-0">
+            <span>{{data.event_start_hour}}</span>
+          </div>
+          <div class="clearer"></div>
+
+          <div class="application-block float-left mb-0">
+            <span>{{data.status}}</span>
+          </div>
+          <div class="clearer"></div>
+      </div>
+    </div>
+    <div class="clearer"></div>
+
+
+        <!--<div class="row header" nf-if="data">
           <div class="col">Event Title</div>
           <div class="col">Place</div>
           <div class="col">Date</div>
@@ -13,7 +82,7 @@
           <div class="col padt-13">{{data.local_name}}</div>
           <div class="col">{{data.event_start}}</div>
           <div class="col {{data.class}} padt-13">{{data.status}}</div>
-        </div>
+        </div>-->
 
 
         <p>Apply and participate on events with Wheee! and win!</p>

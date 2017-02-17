@@ -1,6 +1,9 @@
 <ion-view>
     <ion-content ng-repeat="user in userData" class="container-padding padt-55">
-        <h1>Profile Edit</h1>
+        <p class="subtitle white mt-25">
+            <i class="ion-edit"> </i>
+            <span>Profile Edit</span>
+        </p>
 
         <form name="authorizationForm" novalidate="" ng-submit="saveData(authorizationForm)">
 
@@ -21,11 +24,6 @@
                 <div class="error-container" ng-show="authorizationForm.username.$error" ng-messages="authorizationForm.username.$error">
                     <div ng-messages-include="error-list.html"></div>
                 </div>
-
-                <!--<label class="item item-input" ng-class="{ 'has-errors' : authorizationForm.password.$invalid && authorizationForm.$submitted, 'no-errors' : authorizationForm.password.$valid  && authorizationForm.$submitted}">
-                    
-                    
-                    </label>-->
                 <span class="input-label">First name *</span>
                 <input type="text" name="firstname" placeholder="First name *" ng-model="user.firstname" required class="form-input">
 
