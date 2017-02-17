@@ -1,30 +1,75 @@
 <ion-view>
-  <ion-content class="container-padding padt-55">
-    <div class="align-center mt-25 mb-20 dash-img">
+  <ion-content class="padt-55">
+    <div class="align-center dash-img">
+      <a ng-href="#/app/edit_profile"><i class="ion-android-settings"> </i></a>
       <img ng-src="{{myDashboard[0].fb_picture}}"/>
-      <p>{{myDashboard[0].firstname}} {{myDashboard[0].lastname}}</p>
+      <p class="font-16"><b>{{myDashboard[0].firstname}} {{myDashboard[0].lastname}}</b></p>
+      
+      <div class="general-line">
+        <div class="float-left align-center">
+          <div class="dash-general-stat">
+            <i class="ion-chatbox-working green"> </i>
+            <b>{{dashStat[0].comment_nr}}</b><br /><span class="dash-general-stat-text">comments</span>
+          </div>
+        </div>
+        <div class="float-right align-center">
+          <div class="dash-general-stat">
+            <i class="ion-images green"> </i>
+            <b>{{dashStat[0].image_nr}}</b><br /><span class="dash-general-stat-text">images</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a ng-href="#/app/my_applications">
+      <div class="container-padding stat-lines">
+        <div class="stat-block float-left mb-0">
+          <i class="ion-android-done-all"> </i>
+          <span>Joined</span>
+        </div>
+        <p class="float-right font-16 mb-0" style="line-height: 30px;">{{dashStat[0].joined_nr}}</p>
+        <div class="clearer"></div>
+      </div>
+    </a>
+
+    <a ng-href="#/app/my_bookmarks">
+      <div class="container-padding stat-lines">
+        <div class="stat-block float-left mb-0">
+          <i class="ion-android-bookmark"> </i>
+          <span>Bookmarked</span>
+        </div>
+        <p class="float-right font-16 mb-0" style="line-height: 30px;">{{dashStat[0].bookmarked_nr}}</p>
+        <div class="clearer"></div>
+      </div>
+    </a>
+
+    <div class="container-padding stat-lines">
+      <div class="stat-block float-left mb-0">
+        <i class="ion-ios-cart"> </i>
+        <span>Redeemable points</span>
+      </div>
+      <p class="float-right font-16 mb-0" style="line-height: 30px;">{{dashStat[0].points_nr}}</p>
+      <div class="clearer"></div>
     </div>
 
-    <a ng-href="#/app/future_events" class="button dashButton mb-20">Event Search</a>
-    <a ng-href="#/app/my_bookmarks" class="button dashButton mb-20">My Bookmarks</a>
-    <a ng-href="#/app/my_applications" class="button dashButton mb-20">My Applications</a>
-    <a ng-href="#/app/edit_profile" class="button dashButton mb-20">Edit Profile</a>
-
-    <p><b>Account Status</b></p>
-
-    <div class="account-status-list">
-      <div><span class="left">Status</span><span class="right coming">Active</span></div>
-      <div><span class="left">Creation date</span><span class="right">{{myDashboard[0].created_at}}</span></div>
-      <div><span class="left">Last updated</span><span class="right">{{myDashboard[0].updated_at}}</span></div>
-      <div><span class="left">First name</span><span class="right">{{myDashboard[0].firstname}}</span></div>
-      <div><span class="left">Last name</span><span class="right">{{myDashboard[0].lastname}}</span></div>
-      <div><span class="left">Gender</span><span class="right">{{myDashboard[0].gender}}</span></div>
-      <div><span class="left">E-mail</span><span class="right">{{myDashboard[0].email}}</span></div>
-      <div><span class="left">Birth year</span><span class="right">{{myDashboard[0].birth_year}}</span></div>
-      <div><span class="left">Country</span><span class="right">{{myDashboard[0].country}}</span></div>
-      <div><span class="left">County</span><span class="right">{{myDashboard[0].county}}</span></div>
-      <div><span class="left">Location</span><span class="right">{{myDashboard[0].location}}</span></div>
+    <div class="general-line-bottom" ng-if="myDashboard[0].country && myDashboard[0].county && myDashboard[0].location">
+      <div class="float-left align-center">
+        <div class="dash-location-stat">
+          <i class="ion-map"> </i>
+          <span class="dash-location-stat-text">{{myDashboard[0].country}}</span>
+        </div>
+      </div>
+      <div class="float-left align-center">
+        <div class="dash-location-stat">
+          <i class="ion-navigate"> </i>
+          <span class="dash-location-stat-text">{{myDashboard[0].county}}</span>
+        </div>
+      </div>
+      <div class="float-left align-center">
+        <div class="dash-location-stat">
+          <i class="ion-location"> </i>
+          <span class="dash-location-stat-text">{{myDashboard[0].location}}</span>
+        </div>
+      </div>
     </div>
-
   </ion-content>
 </ion-view>

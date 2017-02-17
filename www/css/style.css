@@ -272,6 +272,10 @@ span.newsletter {
     margin-top: 25px !important;
 }
 
+.mb-0 {
+    margin-bottom: 0;
+}
+
 .mb-20 {
     margin-bottom: 20px;
 }
@@ -365,10 +369,13 @@ h1.event-title {
     margin: -5px 0 4px 0;
 }
 
-.loc-block {
-    width: 100%;
+.loc-block, .stat-block {
     height: 20px;
     margin-bottom: 15px;
+}
+
+.loc-block {
+    width: 100%;   
 }
 
 .loc-block i {
@@ -376,8 +383,70 @@ h1.event-title {
     font-size: 25px;
 }
 
+.stat-block i {
+    width: 30px;
+    text-align: center;
+    float: left;
+    font-size: 30px;
+    color: #333;
+}
+
+.stat-block span {
+    color: #333;
+    margin-left: 15px;
+    line-height: 30px;
+    font-size: 16px;
+}
+
+.dash-general-stat {
+    width: 100%;
+    height: 20px;
+    margin-bottom: 15px;
+}
+
+.dash-general-stat i {
+    font-size: 40px;
+    line-height: 55px;
+    float: left;
+    margin-left: 15px;
+}
+
+.dash-location-stat i {
+    font-size: 30px;
+    line-height: 50px;
+    float: left;
+    margin-left: 15px;
+}
+
+.dash-general-stat b {
+    line-height: 30px;
+    font-size: 20px;
+}
+
+span.dash-general-stat-text {
+    font-weight: bold;
+    color: #b7b7b7;
+}
+
+span.dash-location-stat-text {
+    line-height: 50px;
+    color: #333;
+}
+
+.stat-lines {
+    border-bottom: 2px solid #e6e6e6;
+}
+
+.stat-lines .font-16 {
+    color: #333;
+}
+
 img.location-icon {
     float: left;
+}
+
+.font-16 {
+    font-size: 16px;
 }
 
 span.location-spec {
@@ -745,19 +814,44 @@ md-content.md-default-theme, md-content {
 }
 
 .dash-img {
-    margin-bottom: 35px;
+    padding: 30px 0 0 0;
+}
+
+.dash-img i.ion-android-settings {
+    color: #333;
+    position: absolute;
+    font-size: 30px;
+    margin: 6px 0 0 12px;
+    padding: 9px 14px;
+    background: #fff;
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border: 2px solid #e6e6e6;
+}
+
+.general-line {
+    margin-top: 20px;
+}
+
+.general-line, .general-line-bottom {
+    height: 55px; 
+    width: 100%; 
+    background: #e6e6e6;
+}
+
+.general-line .align-center {
+    width: 50%; 
+    height: 55px;
+}
+
+.general-line-bottom .align-center {
+    width: 33.33%;
+    height: 55px;
 }
 
 .dash-img img {
     border-radius: 50%;
-}
-
-.dash-img p {
-    margin-top: -40px;
-    padding: 3px;
-    background-color: #fff;
-    opacity: 0.6;
-    z-index: 1000;
+    border: 3px solid rgb(230, 230, 230);
 }
 
 .bar .buttons span {
@@ -780,6 +874,10 @@ i.img-del:hover {
 }
 
 .loc-block.green i, .loc-block.green span {
+    color: #0AC7B4 !important;
+}
+
+.green {
     color: #0AC7B4 !important;
 }
 

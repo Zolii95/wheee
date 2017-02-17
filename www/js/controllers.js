@@ -412,18 +412,25 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $http.get('http://www.wheee.eu/api/user/profile_datas.php?dashboard=1&id=' + localStorage.getItem("logged"))
         .success(function (response) {
           $scope.myDashboard.push({
-            id: response.response[0].id,
             email: response.response[0].email,
             firstname: response.response[0].firstname,
             lastname: response.response[0].lastname,
-            gender: response.response[0].gender,
             fb_picture: response.response[0].fb_picture,
-            birth_year: response.response[0].birth_year,
             country: response.response[0].country,
             county: response.response[0].county,
-            location: response.response[0].location,
-            created_at: response.response[0].created_at,
-            updated_at: response.response[0].updated_at,
+            location: response.response[0].location
+          });
+        })
+
+      $scope.dashStat = [];
+      $http.get('http://www.wheee.eu/api/user/get_account_statistics.php?user_id=' + localStorage.getItem("logged"))
+        .success(function (response) {
+          $scope.dashStat.push({
+            comment_nr: response.response.comment_nr,
+            image_nr: response.response.image_nr,
+            joined_nr: response.response.joined_nr,
+            bookmarked_nr: response.response.bookmark_nr,
+            points_nr: response.response.points_nr
           });
         })
     };
@@ -458,6 +465,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             premium_header: response.response[0].premium_header,
             promo_participant: response.response[0].promo_participant
           });
+          if($scope.companyData[0].premium_profile < 1) {
+            $scope.companyData[0].premium_header = '';
+          }
           $scope.companyDescription = $sce.trustAsHtml(response.response[0].description);
         })
     };
@@ -1034,6 +1044,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
 
         } else {
+
+          $ionicLoading.show({
+            template: 'Uploading...'
+          });
+          
           var namePath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
           //Move the file to permanent storage
           $cordovaFile.moveFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function (success) {
