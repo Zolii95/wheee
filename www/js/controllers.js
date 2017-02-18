@@ -319,16 +319,16 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       link: "#/app/my_dashboard",
     };
     $scope.groupLI[2].items[1] = {
-      name: "Edit Profile",
-      link: "#/app/edit_profile",
-    };
-    $scope.groupLI[2].items[2] = {
       name: "My applications",
       link: "#/app/my_applications",
     };
-    $scope.groupLI[2].items[3] = {
+    $scope.groupLI[2].items[2] = {
       name: "My bookmarks",
       link: "#/app/my_bookmarks",
+    };
+    $scope.groupLI[2].items[3] = {
+      name: "Edit Profile",
+      link: "#/app/edit_profile",
     };
 
 
@@ -369,7 +369,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.getMyApplications();
 
     $scope.GoToDetails = function (eventId) {
-      console.log(eventId);
       Event_Place = eventId;
       var link2;
       var EventDetails = {};
@@ -383,7 +382,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           EventDetail.setEvObject(EventDetails);
           City = "";
           Event_PlaceName = "";
-          //localStorage.setItem('last_searchedEventId', eventId);
+          localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
         })
 
@@ -408,7 +407,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.getMyBookmarks();
 
     $scope.GoToDetails = function (eventId) {
-      console.log(eventId);
       Event_Place = eventId;
       var link2;
       var EventDetails = {};
@@ -422,7 +420,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           EventDetail.setEvObject(EventDetails);
           City = "";
           Event_PlaceName = "";
-          //localStorage.setItem('last_searchedEventId', eventId);
+          localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
         })
     }
@@ -568,7 +566,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.getEvents();
 
     $scope.GoToDetails = function (eventId) {
-      //console.log(eventId); 
       Event_Place = eventId;
 
       var link2;
@@ -583,7 +580,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           EventDetail.setEvObject(EventDetails);
           City = "";
           Event_PlaceName = "";
-          //localStorage.setItem('last_searchedEventId', eventId);
+          localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
         })
 
@@ -610,7 +607,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     else {
       self.showEvent = false;
     }
-    self.selectedEventValue = localStorage.getItem('last_searchedPastEventName');
     self.simulateQuery = true;
     self.isDisabled = false;
 
@@ -707,7 +703,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       Event_Place = item.id;
       Event_PlaceName = item.value;
       localStorage.setItem("last_searchedPastEventId", Event_Place);
-      localStorage.setItem("last_searchedPastEventName", item.display);
+      // localStorage.setItem("last_searchedPastEventName", item.display);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
@@ -751,7 +747,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
 
     $scope.GoToDetails = function (eventId) {
-      console.log(eventId);
       Event_Place = eventId;
 
       var link2;
@@ -766,7 +761,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           EventDetail.setEvObject(EventDetails);
           City = "";
           Event_PlaceName = "";
-          //localStorage.setItem('last_searchedEventId', eventId);
+          localStorage.setItem('last_searchedPastEventId', eventId);
           localStorage.setItem('isPastSearch', 1);
           location.href = '#/app/event_detail';
         })
@@ -800,7 +795,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     else {
       self.showEvent = false;
     }
-    self.selectedEventValue = localStorage.getItem('last_searchedEventName');
     self.simulateQuery = true;
     self.isDisabled = false;
 
@@ -897,8 +891,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $log.info('Item changed to ' + JSON.stringify(item));
       Event_Place = item.id;
       Event_PlaceName = item.value;
-      //localStorage.setItem("last_searchedEventId", Event_Place);
-      //localStorage.setItem("last_searchedEventName", item.display);
+      localStorage.setItem("last_searchedEventId", Event_Place);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
@@ -981,7 +974,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
 
     $scope.GoToDetails = function (eventId) {
-      console.log(eventId);
       Event_Place = eventId;
       var link2;
       var EventDetails = {};
@@ -995,7 +987,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           EventDetail.setEvObject(EventDetails);
           City = "";
           Event_PlaceName = "";
-          //localStorage.setItem('last_searchedEventId', eventId);
+          localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
         })
     }
@@ -1025,7 +1017,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.isLogged = localStorage.getItem("logged");
 
-    if (EventDetails) {
+    if (EventDetails.id) {
       var eventID = EventDetails.id;
     }
     else if (localStorage.getItem('last_searchedPastEventId') && localStorage.getItem('isPastSearch') == 1) {
@@ -1411,7 +1403,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
     $scope.getEvents();
     $scope.GoToDetails = function (eventId) {
-      console.log(eventId);
       Event_Place = eventId;
       var link2;
       var EventDetails = {};
@@ -1425,7 +1416,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           EventDetail.setEvObject(EventDetails);
           City = "";
           Event_PlaceName = "";
-          //localStorage.setItem('last_searchedEventId', eventId);
+          localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
         })
     }
