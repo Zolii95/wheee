@@ -574,7 +574,27 @@ span.location-spec {
 
 .facebook-sign-in {
     background: #3b5998;
-    color: #fff;
+    color: #fff !important;
+}
+
+.twitter-share {
+    background: #00aced;
+    color: #fff !important;
+}
+
+.whatsapp-share {
+    background: #4dc247;
+    color: #fff !important;
+}
+
+.external-share {
+    background: #ff6600;
+    color: #fff !important;
+    line-height: normal;
+}
+
+.external-share span {
+    font-size: 13px;
 }
 
 .bottom-content {

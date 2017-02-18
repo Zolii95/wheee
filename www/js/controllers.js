@@ -141,14 +141,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       console.log($state.current.name);
       // FOR BROWSER LOGIN
 
-      localStorage.setItem("logged", 1);
-      $scope.logged = localStorage.getItem("logged");
-      if ($state.current.name != 'app.event_detail') {
-        $state.go('app.home');
-      }
-      else {
-        location.reload();
-      }
+      // localStorage.setItem("logged", 1);
+      // $scope.logged = localStorage.getItem("logged");
+      // if ($state.current.name != 'app.event_detail') {
+      //   $state.go('app.home');
+      // }
+      // else {
+      //   location.reload();
+      // }
 
       // FOR BROWSER LOGIN
 
@@ -1003,7 +1003,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
   })
 
-  .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal, $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $ionicLoading, $cordovaActionSheet, $ionicPlatform) {
+  .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal, 
+                                      $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, 
+                                      $cordovaDevice, $ionicLoading, $cordovaActionSheet, $ionicPlatform, 
+                                      $cordovaSocialSharing) {
+                                        
     var EventDetails = EventDetail.getEvObject();
 
     $log.info(EventDetails);
@@ -1325,16 +1329,49 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       }
     }
 
-    // $scope.shareViaFacebook = function() {
-    //   var message = 'Test';
-    //   var logo = 'test';
-    //   var url = 'http://test.com'
-    //     $cordovaSocialSharing.canShareVia("facebook", message, logo, url).then(function(result) {
-    //         $cordovaSocialSharing.shareViaFacebook(message, logo, url);
-    //     }, function(error) {
-    //         alert(error)
-    //     });
-    // }
+    // SOCIAL SHARING
+
+    $scope.prepareVariables = function() {
+      message = "Wheee! Check out this event! It looks awesome!";
+      subject = "Wheee! Look at this: " + $scope.eventData[0].event_title;
+      image = $scope.eventData[0].header_image;
+      link = 'http://www.wheee.eu/event.php?event_id=' + eventID;
+    }
+    
+
+    $scope.shareViaExternalOptions = function() {
+      $scope.prepareVariables();
+      $cordovaSocialSharing.share(message, subject, image, link);
+    }
+ 
+    $scope.shareViaFacebook = function() {
+      $scope.prepareVariables();
+      $cordovaSocialSharing.canShareVia("facebook", message, image, link).then(function(result) {
+          $cordovaSocialSharing.shareViaFacebook(message, image, link);
+      }, function(error) {
+          alert("Cannot share on Facebook, because there is no account attached to this device!");
+      });
+    }
+
+    $scope.shareViaTwitter = function() {
+      $scope.prepareVariables();
+      $cordovaSocialSharing.canShareVia("twitter", message, image, link).then(function(result) {
+          $cordovaSocialSharing.shareViaTwitter(message, image, link);
+      }, function(error) {
+          alert("Cannot share on Twitter, because there is no account attached to this device!");
+      });
+    }
+
+    $scope.shareViaWhatsApp = function() {
+      $scope.prepareVariables();
+      $cordovaSocialSharing.canShareVia("whatsapp", message, image, link).then(function(result) {
+          $cordovaSocialSharing.shareViaWhatsApp(message, image, link);
+      }, function(error) {
+          alert("Cannot share on WhatsApp, because there is no account attached to this device!");
+      });
+    }
+
+    // SOCIAL SHARING
 
     $scope.openLoginModal = function () {
       $ionicModal.fromTemplateUrl('login-modal.html', {
@@ -1346,9 +1383,19 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       });
     }
 
-    $scope.closeLoginModal = function () {
+    $scope.closeModal = function () {
       $scope.modal.hide();
     };
+
+    $scope.openShareModal = function () {
+      $ionicModal.fromTemplateUrl('share-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function (modal) {
+        $scope.modal = modal;
+        $scope.modal.show();
+      });
+    }
     // Cleanup the modal when we're done with it!
     // $scope.$on('$destroy', function() {
     //   $scope.modal.remove();

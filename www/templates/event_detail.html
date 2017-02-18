@@ -32,7 +32,7 @@
         <i class="ion-ios-information-outline"> </i>
         <p>Place Info</p>
       </div>
-      <div class="action-button align-center" ng-click="shareViaFacebook()">
+      <div class="action-button align-center" ng-click="openShareModal()">
         <i class="ion-android-share-alt"> </i>
         <p>Share</p>
       </div>
@@ -107,7 +107,7 @@
         <div class="clearer"></div>
       
     </div>
-    
+
 
     <h3>Upload a photo!</h3>
     <div ng-if="!isLogged || isLogged == 0" class="align-center">
@@ -120,7 +120,9 @@
       <button class="button icon-left ion-images photo-upload-btn" ng-click="loadImage()">Upload / Take a Photo</button>
     </div>
 
-    <ion-gallery ion-gallery-items="images" ion-gallery-row="3" ion-gallery-toggle="false"></ion-gallery>
+    <div ng-if="images">
+      <ion-gallery ion-gallery-items="images" ion-gallery-row="3" ion-gallery-toggle="false"></ion-gallery>
+    </div>
 
     </div>
 
