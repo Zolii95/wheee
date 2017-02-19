@@ -277,7 +277,7 @@ span.newsletter {
 }
 
 .mb-20 {
-    margin-bottom: 20px;
+    margin-bottom: 20px !important;
 }
 
 .padt-10 {
@@ -332,6 +332,19 @@ span.newsletter {
     padding: 22px 10px;
 }
 
+.data-block.time.two-lines {
+    padding: 4px 13px 6px 13px;
+    line-height: 26px;
+}
+
+.data-block.time.bonus-points {
+    padding: 11.5px 8px
+}
+
+.data-block.time.bonus-points i {
+    float: initial;
+}
+
 .data-block img {
     width: 15px;
     margin-top: 10px;
@@ -367,6 +380,7 @@ p.detail-local {
 
 h1.event-title {
     margin: -5px 0 4px 0;
+    font-size: 30px;
 }
 
 .loc-block, .stat-block {
@@ -461,6 +475,10 @@ span.dash-location-stat-text {
     border-bottom: 2px solid #e6e6e6;
 }
 
+.stat-lines.bonus {
+    background: #f4f4f4;
+}
+
 .stat-lines .font-16 {
     color: #333;
 }
@@ -476,6 +494,7 @@ img.location-icon {
 span.location-spec {
     float: left;
     margin-left: 5px;
+    margin-top: 3px;
     font-weight: bold;
     color: #CCC;
 }
@@ -921,6 +940,14 @@ i.img-del:hover {
     color: #0AC7B4 !important;
 }
 
+.attention i, .attention span {
+    color: #fbaf51 !important;
+}
+
+.attention span {
+    margin-top: 3px;
+}
+
 .green {
     color: #0AC7B4 !important;
 }
@@ -965,4 +992,8 @@ i.img-del:hover {
     background-image: url('../img/white-bg.png');
     padding: 10px;
     border-left: 2px solid #FFF;
+}
+
+table.product-table {
+    width: 100%;
 }

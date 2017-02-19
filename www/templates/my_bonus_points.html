@@ -1,0 +1,27 @@
+<ion-view>
+  <ion-content class="padt-55">
+    
+    <p class="subtitle white mt-25 mb-20">
+        <i class="ion-ios-cart"> </i>
+        <span>My Bonus Points</span>
+    </p>
+
+    <div class="container-padding stat-lines bonus" ng-repeat="points in userBonusPoints" data-ng-click="GoToCompanyProducts(points.client_id)">
+      <div class="stat-block float-left mb-0">
+        <i class="{{points.icon_type}}"> </i>
+        <span>{{points.local_name}}</span>
+      </div>
+      <p class="float-right font-16 mb-0" style="line-height: 30px;"><b>{{points.points}}</b></p>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="container-padding">
+        <p class="iconed-text">
+            <i class="ion-information-circled"> </i>
+            <span><b>Why to collect redeemable points?</b></span>
+        </p>
+        <p>The collected points after participation on events can be redeemed on products what you can consum in the local.</p>
+    </div>
+
+  </ion-content>
+</ion-view>

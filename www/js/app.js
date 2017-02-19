@@ -133,12 +133,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       }
     })
 
+    .state('app.my_bonus_points', {
+      url: '/my_bonus_points',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/my_bonus_points.html',
+          controller: "MyBonusPointsCtrl"
+        }
+      }
+    })
+
     .state('app.company_page', {
       url: '/company_page',
       views: {
         'menuContent': {
           templateUrl: 'templates/company_page.html',
           controller: "CompanyPageCtrl"
+        }
+      }
+    })
+
+    .state('app.products', {
+      url: '/products',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/products.html',
+          controller: "ProductsCtrl"
         }
       }
     })

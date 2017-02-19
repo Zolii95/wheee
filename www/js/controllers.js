@@ -141,14 +141,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       console.log($state.current.name);
       // FOR BROWSER LOGIN
 
-      // localStorage.setItem("logged", 1);
-      // $scope.logged = localStorage.getItem("logged");
-      // if ($state.current.name != 'app.event_detail') {
-      //   $state.go('app.home');
-      // }
-      // else {
-      //   location.reload();
-      // }
+      localStorage.setItem("logged", 1);
+      $scope.logged = localStorage.getItem("logged");
+      if ($state.current.name != 'app.event_detail') {
+        $state.go('app.home');
+      }
+      else {
+        location.reload();
+      }
 
       // FOR BROWSER LOGIN
 
@@ -315,22 +315,25 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     // };
     //Lenyilo menü a My Profile-hoz
     $scope.groupLI[2].items[0] = {
-      name: "My dashboard",
+      name: "My Dashboard",
       link: "#/app/my_dashboard",
     };
     $scope.groupLI[2].items[1] = {
-      name: "My applications",
+      name: "My Applications",
       link: "#/app/my_applications",
     };
     $scope.groupLI[2].items[2] = {
-      name: "My bookmarks",
+      name: "My Bookmarks",
       link: "#/app/my_bookmarks",
     };
     $scope.groupLI[2].items[3] = {
+      name: "My Bonus Points",
+      link: "#/app/my_bonus_points",
+    };
+    $scope.groupLI[2].items[4] = {
       name: "Edit Profile",
       link: "#/app/edit_profile",
     };
-
 
     $scope.toggleGroup = function (group) {
       if (group.link != '#/app/logout') {
@@ -501,6 +504,70 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   })
 
   // Company page
+
+  // Products
+
+  .controller('ProductsCtrl', function ($scope, $http) {
+
+    $scope.clientId = localStorage.getItem("lastSearchedCompanyIdForProduct");
+    $scope.isLogged = localStorage.getItem("logged");
+
+    $scope.getProducts = function () {
+
+      $scope.companyData = [];
+      $scope.companyProducts = [];
+      $http.get('http://www.wheee.eu/api/event_company/get_products.php?client_id=' + $scope.clientId + '&user_id=' + $scope.isLogged)
+        .success(function (response) {
+          $scope.companyData.push({
+            pub_name: response.response.company.pub_name,
+            logo: response.response.company.logo,
+            premium_profile: response.response.company.premium_profile,
+            premium_header: response.response.company.premium_header,
+            promo_participant: response.response.company.promo_participant,
+            bonus_points: response.response.company.bonus_points,
+            no_products_set: response.response.company.no_products_set
+          });
+          if ($scope.companyData[0].premium_profile < 1) {
+            $scope.companyData[0].premium_header = '';
+          }
+          angular.forEach(response.response.products, function (product) {
+            $scope.companyProducts.push(product);
+          });
+        })
+    };
+    $scope.getProducts();
+
+  })
+
+  // Products
+
+  // My Bonus Points
+
+  .controller('MyBonusPointsCtrl', function ($scope, $http) {
+
+    $scope.isLogged = localStorage.getItem("logged");
+
+    $scope.getBonusPoints = function () {
+
+      $scope.userBonusPoints = [];
+      $http.get('http://www.wheee.eu/api/user/get_bonus_points.php?user_id=' + $scope.isLogged)
+        .success(function (response) {
+          console.log(response.response);
+          angular.forEach(response.response, function (points) {
+            $scope.userBonusPoints.push(points);
+          });
+        })
+    };
+    $scope.getBonusPoints();
+
+    $scope.GoToCompanyProducts = function (clientId) {
+      localStorage.setItem("lastSearchedCompanyIdForProduct", clientId);
+      location.href = '#/app/products';
+    }
+
+  })
+
+  // My Bonus Points
 
   //Profile
   .controller('ProfileCtrl', function ($scope, $http) {
@@ -702,8 +769,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $log.info('Item changed to ' + JSON.stringify(item));
       Event_Place = item.id;
       Event_PlaceName = item.value;
-      localStorage.setItem("last_searchedPastEventId", Event_Place);
-      // localStorage.setItem("last_searchedPastEventName", item.display);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
@@ -761,8 +826,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           EventDetail.setEvObject(EventDetails);
           City = "";
           Event_PlaceName = "";
-          localStorage.setItem('last_searchedPastEventId', eventId);
-          localStorage.setItem('isPastSearch', 1);
+          localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
         })
 
@@ -1024,10 +1088,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     if (EventDetails.id) {
       var eventID = EventDetails.id;
     }
-    else if (localStorage.getItem('last_searchedPastEventId') && localStorage.getItem('isPastSearch') == 1) {
-      var eventID = localStorage.getItem('last_searchedPastEventId');
-      localStorage.setItem('isPastSearch', 0);
-    }
     else if (localStorage.getItem('last_searchedEventId')) {
       var eventID = localStorage.getItem('last_searchedEventId');
     }
@@ -1155,7 +1215,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.sendImageToServer = function () {
       // Destination URL
-      var url = "http://www.wheee.eu/api/event_detail/save_image.php";
+      var url = "http://www.wheee.eu/api/event_detail/save_image.php?event_id=" + eventID + "&user_id=" + $scope.isLogged;
 
       // File for Upload
       var targetPath = $scope.pathForImage($scope.image);
@@ -1183,7 +1243,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.deleteImage = function (photoId) {
       $ionicLoading.show({
-        template: 'Deleteing photo...'
+        template: 'Deleting photo...'
       });
       $http.get('http://www.wheee.eu/api/event_detail/delete_image.php?image_id=' + photoId)
         .success(function (response) {
@@ -1234,6 +1294,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       location.href = '#/app/company_page';
     }
 
+    $scope.GoToCompanyProducts = function (clientId) {
+      localStorage.setItem("lastSearchedCompanyIdForProduct", clientId);
+      location.href = '#/app/products';
+    }
+
     // GO TO Company page
 
 
@@ -1257,8 +1322,16 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
 
     $scope.getEvent = function () {
+
+      if(localStorage.getItem("logged") > 0) {
+        userID = localStorage.getItem("logged");
+      }
+      else {
+        userID = 0;
+      }
+
       $scope.eventData = [];
-      $http.get('http://www.wheee.eu/api/event_search/events.php?event_id=' + eventID)
+      $http.get('http://www.wheee.eu/api/event_search/events.php?event_id=' + eventID + '&user_id=' + userID)
         .success(function (response) {
           $scope.eventData.push({
             client_id: response.response[1].client_id,
@@ -1269,8 +1342,17 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             location: response.response[1].location,
             county: response.response[1].county,
             header_image: 'http://www.wheee.eu/upload/headers/' + response.response[1].header_image,
-            is_active: response.response[1].is_active
+            is_active: response.response[1].is_active,
+            is_past_event: response.response[1].is_past_event,
+            bonus_points: response.response[1].bonus_points
           });
+          if($scope.eventData[0].is_past_event == 1) {
+            $scope.backLink = '#/app/past_events';
+            $scope.isPastEvent = 1;
+          }
+          else {
+            $scope.backLink = '#/app/future_events';
+          }
           $scope.eventDescription = $sce.trustAsHtml(response.response[1].description);
         });
 
@@ -1396,26 +1478,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         $scope.modal.show();
       });
     }
-    // Cleanup the modal when we're done with it!
-    // $scope.$on('$destroy', function() {
-    //   $scope.modal.remove();
-    // });
-    // Execute action on hide modal
-    $scope.$on('modal.hidden', function () {
-      // Execute action
-    });
-    // Execute action on remove modal
-    $scope.$on('modal.removed', function () {
-      // Execute action
-    });
-
 
   })
 
 
   //------------***********--------------*********------------------------
 
-  //$state.reload();
 
 
   .controller('SearchEvents', function ($scope, $log, EventDetail) {
@@ -1471,16 +1539,3 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
 
   ;
-
-
-
-
-/**
-http://www.wheee.eu/api/event_homepage/newest_events.php?location_id=37&limit=5
-
-Default : http://www.wheee.eu/assets/images/headers/default.jpg
-
-http://www.wheee.eu/api/event_homepage/slider.php?location_id=37 //home slider (ha nincs ebbe a locationbe akkor null ebben az esetben default header kell)
-
-http://www.wheee.eu/api/event_search/events.php?last_searched_location=37&current_page=1
-*/
