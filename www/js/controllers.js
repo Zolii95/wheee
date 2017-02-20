@@ -373,21 +373,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
-      var link2;
-      var EventDetails = {};
-
-      link2 = "http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place;
-
-
-      $http.get(link2)
-        .success(function (response2) {
-          EventDetails = response2.response[Object.keys(response2.response)[0]];
-          EventDetail.setEvObject(EventDetails);
+      
           City = "";
           Event_PlaceName = "";
           localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
-        })
+        
 
     }
 
@@ -411,21 +402,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
-      var link2;
-      var EventDetails = {};
-
-      link2 = "http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place;
-
-
-      $http.get(link2)
-        .success(function (response2) {
-          EventDetails = response2.response[Object.keys(response2.response)[0]];
-          EventDetail.setEvObject(EventDetails);
+      
           City = "";
           Event_PlaceName = "";
           localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
-        })
+        
     }
 
   })
@@ -635,21 +617,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
 
-      var link2;
-      var EventDetails = {};
-
-      link2 = "http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place;
-
-
-      $http.get(link2)
-        .success(function (response2) {
-          EventDetails = response2.response[Object.keys(response2.response)[0]];
-          EventDetail.setEvObject(EventDetails);
+    
           City = "";
           Event_PlaceName = "";
           localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
-        })
+        
 
 
 
@@ -797,12 +770,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $http.get(link)
         .success(function (response) {
           if (response.response.length < 2) {
-            $http.get("http://www.wheee.eu/api/event_search/events.php?past_events=1&event_id=" + Event_Place)
-              .success(function (response2) {
-                EventDetails = response2.response[Object.keys(response2.response)[0]];
-                EventDetail.setEvObject(EventDetails);
+            
                 location.href = '#/app/event_detail';
-              })
+              
           } else {
             EventDetail.setEvObject(response.response);
             self.pastEvents = EventDetail.getEvObject();
@@ -814,21 +784,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
 
-      var link2;
-      var EventDetails = {};
-
-      link2 = "http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place;
-
-
-      $http.get(link2)
-        .success(function (response2) {
-          EventDetails = response2.response[Object.keys(response2.response)[0]];
-          EventDetail.setEvObject(EventDetails);
           City = "";
           Event_PlaceName = "";
           localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
-        })
+        
 
     }
 
@@ -982,14 +942,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $http.get(link)
         .success(function (response) {
           if (response.response.length == 0) {
-            link2 = "http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place;
-            $http.get(link2)
-              .success(function (response2) {
-                EventDetails = response2.response[Object.keys(response2.response)[0]];
-                EventDetail.setEvObject(EventDetails);
-                //localStorage.setItem('last_searchedEventId', eventId);
+            
                 location.href = '#/app/event_detail';
-              })
+              
 
           } else {
             EventDetail.setEvObject(response.response);
@@ -1039,21 +994,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
-      var link2;
-      var EventDetails = {};
-
-      link2 = "http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place;
-
-
-      $http.get(link2)
-        .success(function (response2) {
-          EventDetails = response2.response[Object.keys(response2.response)[0]];
-          EventDetail.setEvObject(EventDetails);
+     
           City = "";
           Event_PlaceName = "";
           localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
-        })
+        
     }
 
 
@@ -1519,21 +1465,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.getEvents();
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
-      var link2;
-      var EventDetails = {};
-
-      link2 = "http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place;
-
-
-      $http.get(link2)
-        .success(function (response2) {
-          EventDetails = response2.response[Object.keys(response2.response)[0]];
-          EventDetail.setEvObject(EventDetails);
+      
           City = "";
           Event_PlaceName = "";
           localStorage.setItem('last_searchedEventId', eventId);
           location.href = '#/app/event_detail';
-        })
+      
     }
   })
 
