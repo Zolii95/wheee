@@ -82,7 +82,7 @@
                     </div>
                 </div>
 
-                <div class="list-item" ng-repeat="event in newEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
+                <div class="list-item" ng-show="ctrl.showEvents == 0" ng-repeat="event in newEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
                     <div class="hslide-imgbg" style="background-image: url(http://www.wheee.eu/upload/headers/{{event.header_image}});">
                     </div>
                     <div class="clearer"></div>

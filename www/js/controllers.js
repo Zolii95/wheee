@@ -373,12 +373,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
-      
-          City = "";
-          Event_PlaceName = "";
-          localStorage.setItem('last_searchedEventId', eventId);
-          location.href = '#/app/event_detail';
-        
+
+      City = "";
+      Event_PlaceName = "";
+      localStorage.setItem('last_searchedEventId', eventId);
+      location.href = '#/app/event_detail';
+
 
     }
 
@@ -402,12 +402,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
-      
-          City = "";
-          Event_PlaceName = "";
-          localStorage.setItem('last_searchedEventId', eventId);
-          location.href = '#/app/event_detail';
-        
+
+      City = "";
+      Event_PlaceName = "";
+      localStorage.setItem('last_searchedEventId', eventId);
+      location.href = '#/app/event_detail';
+
     }
 
   })
@@ -617,12 +617,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
 
-    
-          City = "";
-          Event_PlaceName = "";
-          localStorage.setItem('last_searchedEventId', eventId);
-          location.href = '#/app/event_detail';
-        
+
+      City = "";
+      Event_PlaceName = "";
+      localStorage.setItem('last_searchedEventId', eventId);
+      location.href = '#/app/event_detail';
+
 
 
 
@@ -770,9 +770,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $http.get(link)
         .success(function (response) {
           if (response.response.length < 2) {
-            
-                location.href = '#/app/event_detail';
-              
+
+            location.href = '#/app/event_detail';
+
           } else {
             EventDetail.setEvObject(response.response);
             self.pastEvents = EventDetail.getEvObject();
@@ -784,11 +784,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
 
-          City = "";
-          Event_PlaceName = "";
-          localStorage.setItem('last_searchedEventId', eventId);
-          location.href = '#/app/event_detail';
-        
+      City = "";
+      Event_PlaceName = "";
+      localStorage.setItem('last_searchedEventId', eventId);
+      location.href = '#/app/event_detail';
+
 
     }
 
@@ -920,7 +920,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
     }
-
+    self.showEvents = 0;
     String.prototype.replaceAt = function (index, character) {
       return this.substr(0, index) + character + this.substr(index + character.length);
     }
@@ -930,7 +930,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       PastEvents = 0;
       self.newEvents = EventDetail.getEvObject();
       var EventDetails = {};
-
+      self.showEvents = 0;
       var link = "";
       if (Event_PlaceName == "") {
         link = "http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&current_page=1";
@@ -942,11 +942,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $http.get(link)
         .success(function (response) {
           if (response.response.length == 0) {
-            
-                location.href = '#/app/event_detail';
-              
-
+            location.href = '#/app/event_detail';
           } else {
+
             EventDetail.setEvObject(response.response);
             self.newEvents = EventDetail.getEvObject();
             $log.info(self.newEvents);
@@ -956,11 +954,13 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     };
 
+
     self.newEvents = {};
     $scope.searchFuture = function () {
       PastEvents = 0;
       self.newEvents = EventDetail.getEvObject();
       var EventDetails = {};
+      self.showEvents = 1;
 
       var link = "";
       if (Event_PlaceName == "") {
@@ -973,15 +973,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $http.get(link)
         .success(function (response) {
           if (response.response.length == 0) {
-            link2 = "http://www.wheee.eu/api/event_search/events.php?event_id=" + Event_Place;
-            $http.get(link2)
-              .success(function (response2) {
-                EventDetails = response2.response[Object.keys(response2.response)[0]];
-                EventDetail.setEvObject(EventDetails);
-                //localStorage.setItem('last_searchedEventId', eventId);
-                location.href = '#/app/event_detail';
-              })
-
+            //localStorage.setItem('last_searchedEventId', eventId);
+            location.href = '#/app/event_detail';
           } else {
             EventDetail.setEvObject(response.response);
             self.newEvents = EventDetail.getEvObject();
@@ -994,12 +987,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
-     
-          City = "";
-          Event_PlaceName = "";
-          localStorage.setItem('last_searchedEventId', eventId);
-          location.href = '#/app/event_detail';
-        
+
+      City = "";
+      Event_PlaceName = "";
+      localStorage.setItem('last_searchedEventId', eventId);
+      location.href = '#/app/event_detail';
+
     }
 
 
@@ -1013,11 +1006,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
   })
 
-  .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal, 
-                                      $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, 
-                                      $cordovaDevice, $ionicLoading, $cordovaActionSheet, $ionicPlatform, 
-                                      $cordovaSocialSharing) {
-                                        
+  .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal,
+    $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer,
+    $cordovaDevice, $ionicLoading, $cordovaActionSheet, $ionicPlatform,
+    $cordovaSocialSharing) {
+
     var EventDetails = EventDetail.getEvObject();
 
     $log.info(EventDetails);
@@ -1269,7 +1262,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.getEvent = function () {
 
-      if(localStorage.getItem("logged") > 0) {
+      if (localStorage.getItem("logged") > 0) {
         userID = localStorage.getItem("logged");
       }
       else {
@@ -1292,7 +1285,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             is_past_event: response.response[1].is_past_event,
             bonus_points: response.response[1].bonus_points
           });
-          if($scope.eventData[0].is_past_event == 1) {
+          if ($scope.eventData[0].is_past_event == 1) {
             $scope.backLink = '#/app/past_events';
             $scope.isPastEvent = 1;
           }
@@ -1359,43 +1352,43 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     // SOCIAL SHARING
 
-    $scope.prepareVariables = function() {
+    $scope.prepareVariables = function () {
       message = "Wheee! Check out this event! It looks awesome!";
       subject = "Wheee! Look at this: " + $scope.eventData[0].event_title;
       image = $scope.eventData[0].header_image;
       link = 'http://www.wheee.eu/event.php?event_id=' + eventID;
     }
-    
 
-    $scope.shareViaExternalOptions = function() {
+
+    $scope.shareViaExternalOptions = function () {
       $scope.prepareVariables();
       $cordovaSocialSharing.share(message, subject, image, link);
     }
- 
-    $scope.shareViaFacebook = function() {
+
+    $scope.shareViaFacebook = function () {
       $scope.prepareVariables();
-      $cordovaSocialSharing.canShareVia("facebook", message, image, link).then(function(result) {
-          $cordovaSocialSharing.shareViaFacebook(message, image, link);
-      }, function(error) {
-          alert("Cannot share on Facebook, because there is no account attached to this device!");
+      $cordovaSocialSharing.canShareVia("facebook", message, image, link).then(function (result) {
+        $cordovaSocialSharing.shareViaFacebook(message, image, link);
+      }, function (error) {
+        alert("Cannot share on Facebook, because there is no account attached to this device!");
       });
     }
 
-    $scope.shareViaTwitter = function() {
+    $scope.shareViaTwitter = function () {
       $scope.prepareVariables();
-      $cordovaSocialSharing.canShareVia("twitter", message, image, link).then(function(result) {
-          $cordovaSocialSharing.shareViaTwitter(message, image, link);
-      }, function(error) {
-          alert("Cannot share on Twitter, because there is no account attached to this device!");
+      $cordovaSocialSharing.canShareVia("twitter", message, image, link).then(function (result) {
+        $cordovaSocialSharing.shareViaTwitter(message, image, link);
+      }, function (error) {
+        alert("Cannot share on Twitter, because there is no account attached to this device!");
       });
     }
 
-    $scope.shareViaWhatsApp = function() {
+    $scope.shareViaWhatsApp = function () {
       $scope.prepareVariables();
-      $cordovaSocialSharing.canShareVia("whatsapp", message, image, link).then(function(result) {
-          $cordovaSocialSharing.shareViaWhatsApp(message, image, link);
-      }, function(error) {
-          alert("Cannot share on WhatsApp, because there is no account attached to this device!");
+      $cordovaSocialSharing.canShareVia("whatsapp", message, image, link).then(function (result) {
+        $cordovaSocialSharing.shareViaWhatsApp(message, image, link);
+      }, function (error) {
+        alert("Cannot share on WhatsApp, because there is no account attached to this device!");
       });
     }
 
@@ -1465,12 +1458,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.getEvents();
     $scope.GoToDetails = function (eventId) {
       Event_Place = eventId;
-      
-          City = "";
-          Event_PlaceName = "";
-          localStorage.setItem('last_searchedEventId', eventId);
-          location.href = '#/app/event_detail';
-      
+
+      City = "";
+      Event_PlaceName = "";
+      localStorage.setItem('last_searchedEventId', eventId);
+      location.href = '#/app/event_detail';
+
     }
   })
 
