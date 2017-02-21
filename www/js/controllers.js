@@ -769,7 +769,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
       $http.get(link)
         .success(function (response) {
-          if (response.response.length < 2) {
+          if (response.response.length == 0) {
 
             location.href = '#/app/event_detail';
 
@@ -822,8 +822,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     self.simulateQuery = true;
     self.isDisabled = false;
 
-    //http://www.wheee.eu/api/event_search/events.php?event_id=37
-
+    
     self.queryCountrySearch = function (query) {
       return $http.get("http://www.wheee.eu/api/event_autocomplete/countries.php")
         .then(function (response) {
@@ -855,21 +854,25 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     self.queryEventSearch = function (query) {
       return $http.get("http://www.wheee.eu/api/event_autocomplete/events_and_locals.php?location_id=" + City)
         .then(function (response) {
-
+          var _type = "";
 
           var tmp1 = response.data.response.local_name.map(function (state) {
+            if(state.type == 0){ _type = "(Location)"; }
+              else { _type = "(Event)"; }
             return {
               id: state.client_id,
               value: state.local_name.toLowerCase(),
-              display: state.local_name
+              display: state.local_name + " " +_type
             }
 
           });
           var tmp2 = response.data.response.title.map(function (state) {
+            if(state.type == 0){ _type = "(Location)"; }
+              else { _type = "(Event)"; }
             return {
               id: state.id,
               value: state.title.toLowerCase(),
-              display: state.title
+              display: state.title + " " +_type
             }
           });
           var tmp = tmp1.concat(tmp2);
@@ -974,6 +977,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         .success(function (response) {
           if (response.response.length == 0) {
             //localStorage.setItem('last_searchedEventId', eventId);
+            $log.info(response.response);
             location.href = '#/app/event_detail';
           } else {
             EventDetail.setEvObject(response.response);
