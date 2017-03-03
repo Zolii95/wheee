@@ -689,7 +689,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             return {
               id: state.client_id,
               value: state.local_name.toLowerCase(),
-              display: state.local_name
+              display: state.local_name,
+              class: state.class
             }
 
           });
@@ -697,7 +698,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             return {
               id: state.id,
               value: state.title.toLowerCase(),
-              display: state.title
+              display: state.title,
+              class: state.class
             }
           });
           var tmp = tmp1.concat(tmp2);
@@ -854,25 +856,22 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     self.queryEventSearch = function (query) {
       return $http.get("http://www.wheee.eu/api/event_autocomplete/events_and_locals.php?location_id=" + City)
         .then(function (response) {
-          var _type = "";
 
           var tmp1 = response.data.response.local_name.map(function (state) {
-            if(state.type == 0){ _type = "(Location)"; }
-              else { _type = "(Event)"; }
             return {
               id: state.client_id,
               value: state.local_name.toLowerCase(),
-              display: state.local_name + " " +_type
+              display: state.local_name,
+              class: state.class
             }
 
           });
           var tmp2 = response.data.response.title.map(function (state) {
-            if(state.type == 0){ _type = "(Location)"; }
-              else { _type = "(Event)"; }
             return {
               id: state.id,
               value: state.title.toLowerCase(),
-              display: state.title + " " +_type
+              display: state.title,
+              class: state.class
             }
           });
           var tmp = tmp1.concat(tmp2);
@@ -917,7 +916,13 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     function eventChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       Event_Place = item.id;
-      Event_PlaceName = item.value;
+      if(item.value != 'all locals' && item.value != 'all events') {
+        Event_PlaceName = item.value;
+      }
+      else {
+        Event_PlaceName = '';
+      }
+      console.log(Event_PlaceName);
       localStorage.setItem("last_searchedEventId", Event_Place);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
@@ -935,14 +940,18 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       var EventDetails = {};
       self.showEvents = 0;
       var link = "";
-      if (Event_PlaceName == "") {
-        link = "http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&current_page=1";
-      } else {
-        link = "http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1";
-
+      console.log(Event_PlaceName);
+      if(Event_PlaceName == "all+locals" || Event_PlaceName == "all+events") { 
+        location.href = '#/app/future_events'; 
       }
+      else {
+        if (Event_PlaceName == "") {
+          link = "http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&current_page=1";
+        } else {
+          link = "http://www.wheee.eu/api/event_search/events.php?last_searched_location=" + City + "&searched_local_name=" + Event_PlaceName + "&current_page=1";
+        }
 
-      $http.get(link)
+        $http.get(link)
         .success(function (response) {
           if (response.response.length == 0) {
             location.href = '#/app/event_detail';
@@ -954,7 +963,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             location.href = '#/app/future_events';
           }
         })
-
+      }
     };
 
 

@@ -151,7 +151,7 @@ h2 {
     top: 22%;
     color:white;
     font-size: 1.5em;
-    left: 5%;
+    left: 2.5%;
     font-weight: bold;
     background-color: black;
     padding: 5px;
@@ -171,7 +171,7 @@ h2 {
     opacity: 0.60;
 }
 
-#topEvents button{
+#topEvents button, a.sliderButton{
     bottom: 4%;
     position: absolute;
     z-index: 100;
@@ -996,4 +996,10 @@ i.img-del:hover {
 
 table.product-table {
     width: 100%;
+}
+
+.md-autocomplete-suggestions li span.subtitle {
+    color: #000;
+    font-weight: bold;
+    font-size: 17px;
 }

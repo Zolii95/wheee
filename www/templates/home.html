@@ -8,9 +8,9 @@
         <div ng-controller="TopEvents" class="body">
             <ion-slide-box show-pager="false" ng-if="default!='None'">
                 <ion-slide>
-                    <div id="topEvents" >
-                        <img ng-src={{default}} />
-                        <h1></h1>
+                    <div id="topEvents" style="background-image: url(http://www.wheee.eu/upload/headers/default.jpg">
+                    <a ng-href="#/app/future_events" class="button button-block sliderButton">Search! Wheee!</a>
+                    <h2 class="text_t">Find Your Best Events!</h2>
                     </div>
                 </ion-slide>
             </ion-slide-box>
@@ -66,7 +66,7 @@
                         md-selected-item-change="ctrl.eventChange(item)" md-items="item in ctrl.queryEventSearch(ctrl.searchEventText)"
                         md-item-text="item.display" md-min-length="0" placeholder="Event / Event place?">
                         <md-item-template>
-                            <span md-highlight-text="ctrl.searchEventText" md-highlight-flags="^i">{{item.display}}</span>
+                            <span md-highlight-text="ctrl.searchEventText" md-highlight-flags="^i" class="{{item.class}}">{{item.display}}</span>
                         </md-item-template>
                         <md-not-found>
                             No events / event places matching "{{ctrl.searchEventText}}" were found.
@@ -81,11 +81,8 @@
  
         </div>
 
-
-
         <div class="list newEvents body" ng-controller="NewEvents">
-
-            <p class="subtitle">
+            <p class="subtitle" ng-if="newEvents">
                 <i class="ion-arrow-up-b"> </i>
                 <span>Newest Events</span>
 
@@ -117,19 +114,6 @@
                     </div>
                 </div>
             </ion-scroll>
-
-            <!--<div class="item body" ng-repeat="event in newEvents" scroll="true" direction="y">
-                <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
-                <div class="title-container">
-                    <h1>{{event.title}}</h1>
-                </div>
-            </div>-->
         </div>
-
-        <!--<div class="contactsLink">
-            <a href="#/app/contacts">Contact Us</a>
-        </div>-->
-
-
     </ion-content>
 </ion-view>
