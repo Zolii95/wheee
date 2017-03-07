@@ -824,7 +824,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     self.simulateQuery = true;
     self.isDisabled = false;
 
-    
+
     self.queryCountrySearch = function (query) {
       return $http.get("http://www.wheee.eu/api/event_autocomplete/countries.php")
         .then(function (response) {
@@ -916,7 +916,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     function eventChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       Event_Place = item.id;
-      if(item.value != 'all locals' && item.value != 'all events') {
+      if (item.value != 'all locals' && item.value != 'all events') {
         Event_PlaceName = item.value;
       }
       else {
@@ -941,8 +941,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       self.showEvents = 0;
       var link = "";
       console.log(Event_PlaceName);
-      if(Event_PlaceName == "all+locals" || Event_PlaceName == "all+events") { 
-        location.href = '#/app/future_events'; 
+      if (Event_PlaceName == "all+locals" || Event_PlaceName == "all+events") {
+        location.href = '#/app/future_events';
       }
       else {
         if (Event_PlaceName == "") {
@@ -952,17 +952,17 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         }
 
         $http.get(link)
-        .success(function (response) {
-          if (response.response.length == 0) {
-            location.href = '#/app/event_detail';
-          } else {
+          .success(function (response) {
+            if (response.response.length == 0) {
+              location.href = '#/app/event_detail';
+            } else {
 
-            EventDetail.setEvObject(response.response);
-            self.newEvents = EventDetail.getEvObject();
-            $log.info(self.newEvents);
-            location.href = '#/app/future_events';
-          }
-        })
+              EventDetail.setEvObject(response.response);
+              self.newEvents = EventDetail.getEvObject();
+              $log.info(self.newEvents);
+              location.href = '#/app/future_events';
+            }
+          })
       }
     };
 
@@ -1019,10 +1019,37 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
   })
 
+  /*.controller('SoundController', function ($ionicPlatform, $timeout, $cordovaNativeAudio) {
+
+    var audioWheee = new Audio('sound/wheee.wav');
+    this.playWheee = function () {
+      audioWheee.play();
+    };
+
+    var vm = this;
+  
+    $ionicPlatform.ready(function () {
+  
+      // all calls to $cordovaNativeAudio return promises
+  
+      $cordovaNativeAudio.preloadSimple('snare', 'audio/snare.mp3');
+      $cordovaNativeAudio.preloadSimple('hi-hat', 'audio/highhat.mp3');
+      $cordovaNativeAudio.preloadSimple('bass', 'audio/bass.mp3');
+      $cordovaNativeAudio.preloadSimple('bongo', 'audio/bongo.mp3');
+    });
+  
+    vm.play = function (sound) {
+      audio.play();
+    };
+  
+    return vm;
+
+  })*/
+
   .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal,
     $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer,
     $cordovaDevice, $ionicLoading, $cordovaActionSheet, $ionicPlatform,
-    $cordovaSocialSharing) {
+    $cordovaSocialSharing, $ionicPlatform, $timeout, $cordovaNativeAudio) {
 
     var EventDetails = EventDetail.getEvObject();
 
@@ -1331,10 +1358,45 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           });
         });
     }
+    function sleep(milliseconds) {
+      var start = new Date().getTime();
+      for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds) {
+          break;
+        }
+      }
+    }
+    
+    var audioWheee = new Audio('sound/wheee.wav');
+    var audioOooh = new Audio('sound/oooh.wav');
+    var audioDelete = new Audio('sound/delete.wav');
+    var audioSave = new Audio('sound/save.wav');
+    
+    $scope.playWheee = function () {
+      audioWheee.play();
+      sleep(1000);
+      $scope.changeJoinedStatus();
+    };
+    $scope.playOooh = function () {
+      audioOooh.play();
+      sleep(2000);
+      $scope.changeJoinedStatus();
+    };
+    $scope.playSave = function () {
+      audioSave.play();
+      sleep(1000);
+      $scope.changeBookmarkedStatus();
+    };
+    $scope.playDelete = function () {
+      audioDelete.play();
+      sleep(1000);
+      $scope.changeBookmarkedStatus();
+    };
 
     $scope.changeJoinedStatus = function () {
 
       if ($scope.isLogged > 0) {
+        
         $ionicLoading.show({
           template: 'Saving...'
         });
@@ -1344,11 +1406,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           });
       }
       else {
+        audioOooh.play();
+        sleep(1000);
         $scope.openLoginModal();
       }
     }
 
     $scope.changeBookmarkedStatus = function () {
+
       if ($scope.isLogged > 0) {
         $ionicLoading.show({
           template: 'Saving...'
