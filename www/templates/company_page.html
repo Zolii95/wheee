@@ -1,26 +1,58 @@
 <ion-view>
-  <ion-content class="container-padding padt-55 comp-bg-img" style="background-image: url(http://www.wheee.eu/upload/company_header/{{companyData[0].premium_header}});">
+  <ion-content ng-if="companyData[0].premium_header" class="container-padding padt-55 comp-bg-img" style="background-image: url(http://www.wheee.eu/upload/company_header/{{companyData[0].premium_header}});">
     <div id="company-container" class="mt-25">
         <div class="align-center">
-            <img ng-src="http://www.wheee.eu/upload/company_logo/{{companyData[0].logo}}" class="mt-10"/>
-            <h3>{{companyData[0].pub_name}}</h3>
+            <img ng-if="companyData[0].logo" ng-src="http://www.wheee.eu/upload/company_logo/{{companyData[0].logo}}" class="mt-10"/>
+            <img ng-if="!companyData[0].logo" ng-src="http://www.wheee.eu/upload/company_logo/default.png" class="mt-10" />
+            <h3>{{companyData[0].pub_name}}</h3> 
             <p>{{companyData[0].company_name}}</p>
         </div>
         <p class="iconed-text">
             <i class="ion-location"> </i>
-            <span>{{companyData[0].address}}, {{companyData[0].zip_code}}, {{companyData[0].location}}</span>
+            <span ng-if="companyData[0].address">{{companyData[0].address}},</span> <span ng-if="companyData[0].zip_code">{{companyData[0].zip_code}},</span> <span ng-if="companyData[0].location">{{companyData[0].location}}</span>
             <br />
-            <span style="margin-left: 11px;">{{companyData[0].county}}, {{companyData[0].country}}</span>
+            <span style="margin-left: 11px;" ng-if="companyData[0].county && companyData[0].country">{{companyData[0].county}}, {{companyData[0].country}}</span>
         </p>
-        <p class="iconed-text">
+        <p class="iconed-text" ng-if="companyData[0].telephone">
             <i class="ion-ios-telephone"> </i>
             <span>{{companyData[0].telephone}}</span>
         </p>
-        <p class="iconed-text">
+        <p class="iconed-text" ng-if="companyData[0].email">
             <i class="ion-ios-email"> </i>
             <span>{{companyData[0].email}}</span>
         </p>
+        <p class="iconed-text" ng-if="companyData[0].homepage">
+            <i class="ion-ios-home"> </i>
+            <span>{{companyData[0].homepage}}</span>
+        </p>
+
+        <div ng-bind-html="companyDescription"></div>
+    </div>
+  </ion-content>
+
+  <ion-content ng-if="!companyData[0].premium_header" class="container-padding padt-55 comp-bg-img" style="background-image: url(http://www.wheee.eu/upload/company_header/default.jpg);">
+    <div id="company-container" class="mt-25">
+        <div class="align-center">
+            <img ng-if="companyData[0].logo" ng-src="http://www.wheee.eu/upload/company_logo/{{companyData[0].logo}}" class="mt-10"/>
+            <img ng-if="!companyData[0].logo" ng-src="http://www.wheee.eu/upload/company_logo/default.png" class="mt-10" />
+            <h3>{{companyData[0].pub_name}}</h3> 
+            <p>{{companyData[0].company_name}}</p>
+        </div>
         <p class="iconed-text">
+            <i class="ion-location"> </i>
+            <span ng-if="companyData[0].address">{{companyData[0].address}},</span> <span ng-if="companyData[0].zip_code">{{companyData[0].zip_code}},</span> <span ng-if="companyData[0].location">{{companyData[0].location}}</span>
+            <br />
+            <span style="margin-left: 11px;" ng-if="companyData[0].county && companyData[0].country">{{companyData[0].county}}, {{companyData[0].country}}</span>
+        </p>
+        <p class="iconed-text" ng-if="companyData[0].telephone">
+            <i class="ion-ios-telephone"> </i>
+            <span>{{companyData[0].telephone}}</span>
+        </p>
+        <p class="iconed-text" ng-if="companyData[0].email">
+            <i class="ion-ios-email"> </i>
+            <span>{{companyData[0].email}}</span>
+        </p>
+        <p class="iconed-text" ng-if="companyData[0].homepage">
             <i class="ion-ios-home"> </i>
             <span>{{companyData[0].homepage}}</span>
         </p>

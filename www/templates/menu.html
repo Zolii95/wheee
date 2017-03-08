@@ -60,6 +60,17 @@
 					</ion-item>
 				</div>
 			</ion-list>
+
+			<div ng-if="isSoundMuted > 0" class="disable-sound" ng-click="changeSoundStatus()">
+				<i class="ion-android-volume-mute" > </i>
+				<span>Enable Sound</span>
+			</div>
+
+			<div ng-if="!isSoundMuted || isSoundMuted == 0" class="disable-sound" ng-click="changeSoundStatus()">
+				<i class="ion-volume-medium" > </i>
+				<span>Disable Sound</span>
+			</div>
+
 		</ion-content>
 	</ion-side-menu>
 </ion-side-menus>

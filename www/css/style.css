@@ -1003,3 +1003,15 @@ table.product-table {
     font-weight: bold;
     font-size: 17px;
 }
+
+.disable-sound {
+    font-size: 17px;
+    color: white;
+    float: right;
+    margin-right: 20px;
+    margin-top:35px;
+}
+
+.disable-sound span {
+    margin-left: 10px;
+}
