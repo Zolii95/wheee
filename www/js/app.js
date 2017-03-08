@@ -6,20 +6,29 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', 'ngOpenFB', 'ngCordova', 'services', 'ion-gallery'])
 
-.run(function($ionicPlatform,ngFB) {
+.run(function($ionicPlatform, ngFB, $ionicPopup, $ionicModal) {
   ngFB.init({appId: '599219800249231'});
   $ionicPlatform.ready(function() {
     if(window.Connection) {
                 if(navigator.connection.type == Connection.NONE) {
-                    $ionicPopup.confirm({
-                        title: "Internet Disconnected",
-                        content: "The internet is disconnected on your device."
-                    })
-                    .then(function(result) {
-                        if(!result) {
-                            ionic.Platform.exitApp();
-                        }
+
+                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+                      //scope: $scope,
+                      animation: 'slide-in-up'
+                    }).then(function (modal) {
+                      //$scope.modal = modal;
+                      modal.show();
                     });
+
+                    // $ionicPopup.confirm({
+                    //     title: "No Internet Connection",
+                    //     content: "Please enable your internet connection!"
+                    // })
+                    // .then(function(result) {
+                    //     if(!result) {
+                    //         ionic.Platform.exitApp();
+                    //     }
+                    // });
                 }
             }
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

@@ -28,7 +28,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
   })
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state, $q, $ionicLoading, $ionicSideMenuDelegate) {
+  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state, $q, $ionicLoading, $ionicSideMenuDelegate, $ionicPlatform) {
     $scope.logged = localStorage.getItem("logged");
     $scope.isSoundMuted = localStorage.getItem("isSoundMuted");
 
@@ -51,6 +51,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     if ($scope.logged && $scope.logged > 0 && $state.current.name == 'app.welcome') {
       $state.go('app.home');
+    }
+
+    $scope.retryConnection = function () {
+      location.reload();
+    }
+
+    $scope.cancelConnection = function () {
+      ionic.Platform.exitApp();
     }
 
     $scope.populateMenuDatas = function () {

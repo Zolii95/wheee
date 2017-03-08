@@ -952,6 +952,10 @@ i.img-del:hover {
     color: #0AC7B4 !important;
 }
 
+.bg-green {
+    background: #0AC7B4;
+}
+
 .ion-nifty-modal .ion-close-round {
     font-size: 22px;
     margin: 6px;
