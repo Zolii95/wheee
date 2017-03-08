@@ -30,6 +30,24 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state, $q, $ionicLoading, $ionicSideMenuDelegate) {
     $scope.logged = localStorage.getItem("logged");
+    $scope.isSoundMuted = localStorage.getItem("isSoundMuted");
+
+    $scope.changeSoundStatus = function () {
+      $ionicLoading.show({
+        template: 'Saving...'
+      });
+
+      if($scope.isSoundMuted == 1) {
+        localStorage.setItem('isSoundMuted', 0);
+      }
+      else {
+        localStorage.setItem('isSoundMuted', 1);
+      }
+
+      $scope.isSoundMuted = localStorage.getItem("isSoundMuted");
+      $ionicSideMenuDelegate.toggleRight();
+      location.reload();
+    }
 
     if ($scope.logged && $scope.logged > 0 && $state.current.name == 'app.welcome') {
       $state.go('app.home');
@@ -141,7 +159,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       console.log($state.current.name);
       // FOR BROWSER LOGIN
 
-      localStorage.setItem("logged", 1);
+      localStorage.setItem("logged", 26);
       $scope.logged = localStorage.getItem("logged");
       if ($state.current.name != 'app.event_detail') {
         $state.go('app.home');
@@ -1048,8 +1066,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal,
     $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer,
-    $cordovaDevice, $ionicLoading, $cordovaActionSheet, $ionicPlatform,
-    $cordovaSocialSharing, $ionicPlatform, $timeout, $cordovaNativeAudio) {
+    $cordovaDevice, $ionicLoading, $cordovaActionSheet, $cordovaSocialSharing, 
+    $ionicPlatform, $timeout, $cordovaNativeAudio) {
 
     var EventDetails = EventDetail.getEvObject();
 
@@ -1366,39 +1384,51 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         }
       }
     }
-    
-    var audioWheee = new Audio('sound/wheee.wav');
-    var audioOooh = new Audio('sound/oooh.wav');
-    var audioDelete = new Audio('sound/delete.wav');
-    var audioSave = new Audio('sound/save.wav');
+
+    if(localStorage.getItem('isSoundMuted') == 0) {
+      var audioWheee = new Audio('sound/wheee.wav');
+      var audioOooh = new Audio('sound/oooh.wav');
+      var audioDelete = new Audio('sound/delete.wav');
+      var audioSave = new Audio('sound/save.wav');
+    }
     
     $scope.playWheee = function () {
-      audioWheee.play();
-      sleep(1000);
+      if(localStorage.getItem('isSoundMuted') == 0) { 
+        audioWheee.play();
+        sleep(1000);
+      }
       $scope.changeJoinedStatus();
     };
+
     $scope.playOooh = function () {
-      audioOooh.play();
-      sleep(2000);
+      if(localStorage.getItem('isSoundMuted') == 0) {
+        audioOooh.play();
+        sleep(3000);
+      }
       $scope.changeJoinedStatus();
     };
+
     $scope.playSave = function () {
-      audioSave.play();
-      sleep(1000);
+      if(localStorage.getItem('isSoundMuted') == 0) {
+        audioSave.play();
+        sleep(1000);
+      }
       $scope.changeBookmarkedStatus();
     };
+
     $scope.playDelete = function () {
-      audioDelete.play();
-      sleep(1000);
+      if(localStorage.getItem('isSoundMuted') == 0) {
+        audioDelete.play();
+        sleep(1000);
+      }
       $scope.changeBookmarkedStatus();
     };
 
     $scope.changeJoinedStatus = function () {
 
       if ($scope.isLogged > 0) {
-        
         $ionicLoading.show({
-          template: 'Saving...'
+            template: 'Saving...'
         });
         $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?joined=1&event_id=' + eventID + '&user_id=' + localStorage.getItem("logged"))
           .success(function (response) {
@@ -1406,8 +1436,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           });
       }
       else {
-        audioOooh.play();
-        sleep(1000);
         $scope.openLoginModal();
       }
     }
@@ -1416,7 +1444,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
       if ($scope.isLogged > 0) {
         $ionicLoading.show({
-          template: 'Saving...'
+            template: 'Saving...'
         });
         $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?bookmark=1&event_id=' + eventID + '&user_id=' + localStorage.getItem("logged"))
           .success(function (response) {
