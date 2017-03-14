@@ -10,7 +10,25 @@ var PastEvents = 0;
 
 angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
-  .factory('EventDetail', function () {
+  .factory('EventDetailPast', function () {
+
+    var eventdetail = {};
+    //eventdetail.cityId = "";
+    //eventdetail.placeName = "";
+    //eventdetail.placeId = "";
+
+    //return eventdetail;
+    return {
+      getEvObject: function () {
+        return eventdetail;
+      },
+      setEvObject: function (evObject) {
+        eventdetail = evObject;
+      }
+    };
+  })
+
+  .factory('EventDetailFuture', function () {
 
     var eventdetail = {};
     //eventdetail.cityId = "";
@@ -783,7 +801,7 @@ if(window.Connection) {
   })
 
 
-  .controller('TopEvents', function ($scope, $http, EventDetail) {
+  .controller('TopEvents', function ($scope, $http) {
 if(window.Connection) {
                 if(navigator.connection.type == Connection.NONE) {
 
@@ -845,7 +863,7 @@ if(window.Connection) {
     }
   })
 
-  .controller('autoCompleteControllerPast', function ($scope, $timeout, $log, $http, $q, EventDetail) {
+  .controller('autoCompleteControllerPast', function ($scope, $timeout, $log, $http, $q, EventDetailPast) {
     var self = this;
     self.selectedCountryValue = localStorage.getItem('last_searchedPastCountryName');
     Country = localStorage.getItem('last_searchedPastCountryId');
@@ -975,8 +993,8 @@ if(window.Connection) {
     self.pastEvents = {};
     $scope.searchPast = function () {
       PastEvents = 1;
-      self.pastEvents = EventDetail.getEvObject();
-      var EventDetails = {};
+      //self.pastEvents = EventDetailPast.getEvObject();
+      //var EventDetailPast = {};
       var link = "";
       if (Event_PlaceName == "") {
         link = "http://www.wheee.eu/api/event_search/events.php?past_events=1&last_searched_location=" + City + "&current_page=1";
@@ -992,8 +1010,8 @@ if(window.Connection) {
             location.href = '#/app/event_detail';
 
           } else {
-            EventDetail.setEvObject(response.response);
-            self.pastEvents = EventDetail.getEvObject();
+            EventDetailPast.setEvObject(response.response);
+            self.pastEvents = EventDetailPast.getEvObject();
             $log.info(self.pastEvents);
           }
         })
@@ -1019,7 +1037,7 @@ if(window.Connection) {
     }
   })
 
-  .controller('autoCompleteController', function ($scope, $timeout, $log, $http, $q, EventDetail) {
+  .controller('autoCompleteController', function ($scope, $timeout, $log, $http, $q, EventDetailFuture) {
     var self = this;
     self.selectedCountryValue = localStorage.getItem('last_searchedCountryName');
     Country = localStorage.getItem('last_searchedCountryId');
@@ -1152,8 +1170,8 @@ if(window.Connection) {
     //When clicked on search button
     $scope.search = function () {
       PastEvents = 0;
-      self.newEvents = EventDetail.getEvObject();
-      var EventDetails = {};
+      //self.newEvents = EventDetailFuture.getEvObject();
+      //var EventDetailFuture = {};
       self.showEvents = 0;
       var link = "";
       console.log(Event_PlaceName);
@@ -1173,8 +1191,8 @@ if(window.Connection) {
               location.href = '#/app/event_detail';
             } else {
 
-              EventDetail.setEvObject(response.response);
-              self.newEvents = EventDetail.getEvObject();
+              EventDetailFuture.setEvObject(response.response);
+              self.newEvents = EventDetailFuture.getEvObject();
               $log.info(self.newEvents);
               location.href = '#/app/future_events';
             }
@@ -1186,8 +1204,8 @@ if(window.Connection) {
     self.newEvents = {};
     $scope.searchFuture = function () {
       PastEvents = 0;
-      self.newEvents = EventDetail.getEvObject();
-      var EventDetails = {};
+      //self.newEvents = EventDetailFuture.getEvObject();
+      //var EventDetailFuture = {};
       self.showEvents = 1;
 
       var link = "";
@@ -1205,8 +1223,8 @@ if(window.Connection) {
             $log.info(response.response);
             location.href = '#/app/event_detail';
           } else {
-            EventDetail.setEvObject(response.response);
-            self.newEvents = EventDetail.getEvObject();
+            EventDetailFuture.setEvObject(response.response);
+            self.newEvents = EventDetailFuture.getEvObject();
 
             $log.info(self.newEvents);
           }
@@ -1263,7 +1281,7 @@ if(window.Connection) {
   })*/
 
   .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal,
-    $state, EventDetail, $cordovaCamera, $cordovaFile, $cordovaFileTransfer,
+    $state, $cordovaCamera, $cordovaFile, $cordovaFileTransfer,
     $cordovaDevice, $ionicLoading, $cordovaActionSheet, $cordovaSocialSharing, 
     $ionicPlatform, $timeout, $cordovaNativeAudio) {
 if(window.Connection) {
@@ -1288,9 +1306,9 @@ if(window.Connection) {
                     // });
                 }
             }
-    var EventDetails = EventDetail.getEvObject();
+    //var EventDetails = EventDetail.getEvObject();
 
-    $log.info(EventDetails);
+    //$log.info(EventDetails);
     $ionicLoading.show({
       template: 'Loading...'
     });
@@ -1301,10 +1319,10 @@ if(window.Connection) {
 
     $scope.isLogged = localStorage.getItem("logged");
 
-    if (EventDetails.id) {
+    /*if (EventDetails.id) {
       var eventID = EventDetails.id;
     }
-    else if (localStorage.getItem('last_searchedEventId')) {
+    else*/ if (localStorage.getItem('last_searchedEventId')) {
       var eventID = localStorage.getItem('last_searchedEventId');
     }
     else {
@@ -1750,18 +1768,18 @@ if(window.Connection) {
 
 
 
-  .controller('SearchEvents', function ($scope, $log, EventDetail) {
-    $log.info(EventDetail.getEvObject());
+  .controller('SearchEvents', function ($scope, $log) {
+    //$log.info(EventDetail.getEvObject());
   })
 
-  .controller('Events', function ($scope, $http, EventDetail, $log) {
+  .controller('Events', function ($scope, $http, EventDetailFuture, $log) {
     //$log.info(EventDetail.getEvObject());
-    $scope.newEvents = EventDetail.getEvObject();
+    $scope.newEvents = EventDetailFuture.getEvObject();
     //$log.info(EventDetail.getEvObject());
     //$log.info(showSearchedEvents);
   })
 
-  .controller('NewEvents', function ($scope, $http, EventDetail) {
+  .controller('NewEvents', function ($scope, $http, EventDetailFuture) {
     $scope.page = 0;
     $scope.total = 1;
     $scope.newEvents = [];
