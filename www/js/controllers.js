@@ -792,8 +792,16 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
     function eventChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
-      Event_Place = item.id;
-      Event_PlaceName = item.value;
+
+      if (item && item.value != 'all locals' && item.value != 'all events') {
+        Event_PlaceName = item.value;
+        Event_Place = item.id;
+      }
+      else if(!item) {
+        Event_PlaceName = '';
+        Event_Place = '';
+      }
+      localStorage.setItem("last_searchedEventId", Event_Place);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
@@ -965,14 +973,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
     function eventChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
-      Event_Place = item.id;
-      if (item.value != 'all locals' && item.value != 'all events') {
+      if (item && item.value != 'all locals' && item.value != 'all events') {
         Event_PlaceName = item.value;
+        Event_Place = item.id;
       }
-      else {
+      else if(!item) {
         Event_PlaceName = '';
+        Event_Place = '';
       }
-      console.log(Event_PlaceName);
       localStorage.setItem("last_searchedEventId", Event_Place);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
