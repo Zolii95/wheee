@@ -311,6 +311,8 @@ span.newsletter {
 
 .data-line {
     height: 70px;
+    display: block;
+    position: relative;
 }
 
 .data-line .time {
@@ -330,6 +332,8 @@ span.newsletter {
     width: 33.33%;
     float: left;
     padding: 22px 10px;
+    display: block;
+    position: relative;
 }
 
 .data-block.time.two-lines {

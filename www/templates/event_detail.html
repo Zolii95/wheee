@@ -45,6 +45,7 @@
         <p>Share</p>
       </div>
     </div>
+
     <div class="data-line" ng-if="(!isLogged || isLogged == 0) || (isLogged && eventData[0].bonus_points < 1)">
       <a ng-href="{{backLink}}">
         <div class="data-block back" >
@@ -79,6 +80,8 @@
         <b class="green font-16">{{eventData[0].bonus_points}}</b><span class="dash-general-stat-text"> bonus points</span>
       </div>
     </div>
+    
+    <div class="clearer"></div>
 
     <div class="container-padding">
 
@@ -91,7 +94,7 @@
 
     <div class="loc-block green" ng-if="isLogged > 0 && eventStatus[0].is_joined">
       <i class="ion-android-done-all"> </i>
-      <span class="location-spec">You had joined for this event! Wheee!</span>
+      <span class="location-spec">You'll be there! Wheee!</span>
     </div>
 
     <div class="attention loc-block" ng-if="isPastEvent == 1">

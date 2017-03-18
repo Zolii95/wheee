@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.wheee" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Wheee!</name>
-  <description>Find your best events in your town!    </description>
+  <description>Find your best events in your town!</description>
   <author email="zolicsaba@yahoo.com" href="http://wheee.eu/">&#xD;
       Géczi Zoltán Csaba
     </author>

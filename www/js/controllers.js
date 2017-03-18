@@ -47,6 +47,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   })
 
   .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state, $q, $ionicLoading, $ionicSideMenuDelegate, $ionicPlatform) {
+
     if (window.Connection) {
       if (navigator.connection.type == Connection.NONE) {
 
@@ -69,6 +70,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         // });
       }
     }
+
     $scope.logged = localStorage.getItem("logged");
     $scope.isSoundMuted = localStorage.getItem("isSoundMuted");
 
@@ -207,14 +209,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       console.log($state.current.name);
       // FOR BROWSER LOGIN
 
-      localStorage.setItem("logged", 26);
-      $scope.logged = localStorage.getItem("logged");
-      if ($state.current.name != 'app.event_detail') {
-        $state.go('app.home');
-      }
-      else {
-        location.reload();
-      }
+      // localStorage.setItem("logged", 26);
+      // $scope.logged = localStorage.getItem("logged");
+      // if ($state.current.name != 'app.event_detail') {
+      //   $state.go('app.home');
+      // }
+      // else {
+      //   location.reload();
+      // }
 
       // FOR BROWSER LOGIN
 
@@ -424,6 +426,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   //MyApplications
 
   .controller('MyApplicationsCtrl', function ($scope, $http) {
+
     if (window.Connection) {
       if (navigator.connection.type == Connection.NONE) {
 
@@ -446,6 +449,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         // });
       }
     }
+
     $scope.getMyApplications = function () {
 
       $scope.myApplications = [];
@@ -474,6 +478,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   //MyBookmarks
 
   .controller('MyBookmarksCtrl', function ($scope, $http) {
+
     if (window.Connection) {
       if (navigator.connection.type == Connection.NONE) {
 
@@ -496,6 +501,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         // });
       }
     }
+
     $scope.getMyBookmarks = function () {
 
       $scope.myBookmarks = [];
@@ -523,6 +529,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   //MyDashboard
 
   .controller('MyDashboardCtrl', function ($scope, $http) {
+
     if (window.Connection) {
       if (navigator.connection.type == Connection.NONE) {
 
@@ -545,6 +552,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         // });
       }
     }
+
     $scope.getMyDashboard = function () {
 
       $scope.myDashboard = [];
@@ -580,6 +588,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   // Company page
 
   .controller('CompanyPageCtrl', function ($scope, $http, $sce) {
+
     if (window.Connection) {
       if (navigator.connection.type == Connection.NONE) {
 
@@ -602,6 +611,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         // });
       }
     }
+
     $scope.clientId = localStorage.getItem("lastSearchedCompanyId");
 
     $scope.getCompanyData = function () {
@@ -625,8 +635,13 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             premium_header: response.response[0].premium_header,
             promo_participant: response.response[0].promo_participant
           });
-          if ($scope.companyData[0].premium_profile < 1) {
-            $scope.companyData[0].premium_header = '';
+          if ($scope.companyData[0].premium_profile > 0) {
+            if(!$scope.companyData[0].premium_header) {
+              $scope.companyData[0].premium_header = 'default.jpg';
+            }
+          }
+          else {
+            $scope.companyData[0].premium_header = 'default.jpg';
           }
           $scope.companyDescription = $sce.trustAsHtml(response.response[0].description);
         })
@@ -640,6 +655,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   // Products
 
   .controller('ProductsCtrl', function ($scope, $http) {
+
     if (window.Connection) {
       if (navigator.connection.type == Connection.NONE) {
 
@@ -662,6 +678,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         // });
       }
     }
+
     $scope.clientId = localStorage.getItem("lastSearchedCompanyIdForProduct");
     $scope.isLogged = localStorage.getItem("logged");
 
@@ -697,6 +714,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   // My Bonus Points
 
   .controller('MyBonusPointsCtrl', function ($scope, $http) {
+
     if (window.Connection) {
       if (navigator.connection.type == Connection.NONE) {
 
@@ -719,6 +737,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         // });
       }
     }
+
     $scope.isLogged = localStorage.getItem("logged");
 
     $scope.getBonusPoints = function () {
@@ -745,6 +764,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   //Profile
   .controller('ProfileCtrl', function ($scope, $http) {
+
     if (window.Connection) {
       if (navigator.connection.type == Connection.NONE) {
 
@@ -767,6 +787,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         // });
       }
     }
+
     $scope.saveData = function (user) {
 
       $http.post('http://www.wheee.eu/api/user/save_profile_datas.php?user_id=' + localStorage.getItem("logged")
@@ -802,6 +823,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
 
   .controller('TopEvents', function ($scope, $http) {
+
     if (window.Connection) {
       if (navigator.connection.type == Connection.NONE) {
 
@@ -824,6 +846,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         // });
       }
     }
+
     $scope.page = 0;
     $scope.total = 1;
     $scope.topEvents = [];
@@ -976,8 +999,16 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
     function eventChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
-      Event_Place = item.id;
-      Event_PlaceName = item.value;
+
+      if (item && item.value != 'all locals' && item.value != 'all events') {
+        Event_PlaceName = item.value;
+        Event_Place = item.id;
+      }
+      else if(!item) {
+        Event_PlaceName = '';
+        Event_Place = '';
+      }
+      localStorage.setItem("last_searchedEventId", Event_Place);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
       }
@@ -1150,14 +1181,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
     function eventChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
-      Event_Place = item.id;
-      if (item.value != 'all locals' && item.value != 'all events') {
+      if (item && item.value != 'all locals' && item.value != 'all events') {
         Event_PlaceName = item.value;
+        Event_Place = item.id;
       }
-      else {
+      else if(!item) {
         Event_PlaceName = '';
+        Event_Place = '';
       }
-      console.log(Event_PlaceName);
       localStorage.setItem("last_searchedEventId", Event_Place);
       while (Event_PlaceName.indexOf(" ") != -1) {
         Event_PlaceName = Event_PlaceName.replaceAt(Event_PlaceName.indexOf(" "), "+");
@@ -1288,6 +1319,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $state, $cordovaCamera, $cordovaFile, $cordovaFileTransfer,
     $cordovaDevice, $ionicLoading, $cordovaActionSheet, $cordovaSocialSharing,
     $ionicPlatform, $timeout, $cordovaNativeAudio) {
+
     if (window.Connection) {
       if (navigator.connection.type == Connection.NONE) {
 
@@ -1310,6 +1342,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         // });
       }
     }
+
     //var EventDetails = EventDetail.getEvObject();
 
     //$log.info(EventDetails);
@@ -1630,7 +1663,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       }
     }
 
-    if (localStorage.getItem('isSoundMuted') == 0) {
+    if(localStorage.getItem('isSoundMuted') == 0 || !localStorage.getItem('isSoundMuted')) {
+
       var audioWheee = new Audio('sound/wheee.wav');
       var audioOooh = new Audio('sound/oooh.wav');
       var audioDelete = new Audio('sound/delete.wav');
@@ -1638,15 +1672,17 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
 
     $scope.playWheee = function () {
-      if (localStorage.getItem('isSoundMuted') == 0) {
+
+      if(localStorage.getItem('isSoundMuted') == 0 || !localStorage.getItem('isSoundMuted')) { 
         audioWheee.play();
-        sleep(1000);
+        sleep(2000);
       }
       $scope.changeJoinedStatus();
     };
 
     $scope.playOooh = function () {
-      if (localStorage.getItem('isSoundMuted') == 0) {
+
+      if(localStorage.getItem('isSoundMuted') == 0 || !localStorage.getItem('isSoundMuted')) {
         audioOooh.play();
         sleep(3000);
       }
@@ -1654,7 +1690,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
 
     $scope.playSave = function () {
-      if (localStorage.getItem('isSoundMuted') == 0) {
+
+      if(localStorage.getItem('isSoundMuted') == 0 || !localStorage.getItem('isSoundMuted')) {
         audioSave.play();
         sleep(1000);
       }
@@ -1662,7 +1699,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
 
     $scope.playDelete = function () {
-      if (localStorage.getItem('isSoundMuted') == 0) {
+      if(localStorage.getItem('isSoundMuted') == 0 || !localStorage.getItem('isSoundMuted')) {
         audioDelete.play();
         sleep(1000);
       }
