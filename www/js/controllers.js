@@ -47,28 +47,28 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   })
 
   .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state, $q, $ionicLoading, $ionicSideMenuDelegate, $ionicPlatform) {
-    if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+    if (window.Connection) {
+      if (navigator.connection.type == Connection.NONE) {
 
-                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-                      //scope: $scope,
-                      animation: 'slide-in-up'
-                    }).then(function (modal) {
-                      //$scope.modal = modal;
-                      modal.show();
-                    });
+        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+          //scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function (modal) {
+          //$scope.modal = modal;
+          modal.show();
+        });
 
-                    // $ionicPopup.confirm({
-                    //     title: "No Internet Connection",
-                    //     content: "Please enable your internet connection!"
-                    // })
-                    // .then(function(result) {
-                    //     if(!result) {
-                    //         ionic.Platform.exitApp();
-                    //     }
-                    // });
-                }
-            }
+        // $ionicPopup.confirm({
+        //     title: "No Internet Connection",
+        //     content: "Please enable your internet connection!"
+        // })
+        // .then(function(result) {
+        //     if(!result) {
+        //         ionic.Platform.exitApp();
+        //     }
+        // });
+      }
+    }
     $scope.logged = localStorage.getItem("logged");
     $scope.isSoundMuted = localStorage.getItem("isSoundMuted");
 
@@ -77,7 +77,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         template: 'Saving...'
       });
 
-      if($scope.isSoundMuted == 1) {
+      if ($scope.isSoundMuted == 1) {
         localStorage.setItem('isSoundMuted', 0);
       }
       else {
@@ -424,28 +424,28 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   //MyApplications
 
   .controller('MyApplicationsCtrl', function ($scope, $http) {
-    if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+    if (window.Connection) {
+      if (navigator.connection.type == Connection.NONE) {
 
-                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-                      //scope: $scope,
-                      animation: 'slide-in-up'
-                    }).then(function (modal) {
-                      //$scope.modal = modal;
-                      modal.show();
-                    });
+        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+          //scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function (modal) {
+          //$scope.modal = modal;
+          modal.show();
+        });
 
-                    // $ionicPopup.confirm({
-                    //     title: "No Internet Connection",
-                    //     content: "Please enable your internet connection!"
-                    // })
-                    // .then(function(result) {
-                    //     if(!result) {
-                    //         ionic.Platform.exitApp();
-                    //     }
-                    // });
-                }
-            }
+        // $ionicPopup.confirm({
+        //     title: "No Internet Connection",
+        //     content: "Please enable your internet connection!"
+        // })
+        // .then(function(result) {
+        //     if(!result) {
+        //         ionic.Platform.exitApp();
+        //     }
+        // });
+      }
+    }
     $scope.getMyApplications = function () {
 
       $scope.myApplications = [];
@@ -474,28 +474,28 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   //MyBookmarks
 
   .controller('MyBookmarksCtrl', function ($scope, $http) {
-    if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+    if (window.Connection) {
+      if (navigator.connection.type == Connection.NONE) {
 
-                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-                      //scope: $scope,
-                      animation: 'slide-in-up'
-                    }).then(function (modal) {
-                      //$scope.modal = modal;
-                      modal.show();
-                    });
+        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+          //scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function (modal) {
+          //$scope.modal = modal;
+          modal.show();
+        });
 
-                    // $ionicPopup.confirm({
-                    //     title: "No Internet Connection",
-                    //     content: "Please enable your internet connection!"
-                    // })
-                    // .then(function(result) {
-                    //     if(!result) {
-                    //         ionic.Platform.exitApp();
-                    //     }
-                    // });
-                }
-            }
+        // $ionicPopup.confirm({
+        //     title: "No Internet Connection",
+        //     content: "Please enable your internet connection!"
+        // })
+        // .then(function(result) {
+        //     if(!result) {
+        //         ionic.Platform.exitApp();
+        //     }
+        // });
+      }
+    }
     $scope.getMyBookmarks = function () {
 
       $scope.myBookmarks = [];
@@ -523,28 +523,28 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   //MyDashboard
 
   .controller('MyDashboardCtrl', function ($scope, $http) {
-if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+    if (window.Connection) {
+      if (navigator.connection.type == Connection.NONE) {
 
-                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-                      //scope: $scope,
-                      animation: 'slide-in-up'
-                    }).then(function (modal) {
-                      //$scope.modal = modal;
-                      modal.show();
-                    });
+        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+          //scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function (modal) {
+          //$scope.modal = modal;
+          modal.show();
+        });
 
-                    // $ionicPopup.confirm({
-                    //     title: "No Internet Connection",
-                    //     content: "Please enable your internet connection!"
-                    // })
-                    // .then(function(result) {
-                    //     if(!result) {
-                    //         ionic.Platform.exitApp();
-                    //     }
-                    // });
-                }
-            }
+        // $ionicPopup.confirm({
+        //     title: "No Internet Connection",
+        //     content: "Please enable your internet connection!"
+        // })
+        // .then(function(result) {
+        //     if(!result) {
+        //         ionic.Platform.exitApp();
+        //     }
+        // });
+      }
+    }
     $scope.getMyDashboard = function () {
 
       $scope.myDashboard = [];
@@ -580,28 +580,28 @@ if(window.Connection) {
   // Company page
 
   .controller('CompanyPageCtrl', function ($scope, $http, $sce) {
-if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+    if (window.Connection) {
+      if (navigator.connection.type == Connection.NONE) {
 
-                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-                      //scope: $scope,
-                      animation: 'slide-in-up'
-                    }).then(function (modal) {
-                      //$scope.modal = modal;
-                      modal.show();
-                    });
+        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+          //scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function (modal) {
+          //$scope.modal = modal;
+          modal.show();
+        });
 
-                    // $ionicPopup.confirm({
-                    //     title: "No Internet Connection",
-                    //     content: "Please enable your internet connection!"
-                    // })
-                    // .then(function(result) {
-                    //     if(!result) {
-                    //         ionic.Platform.exitApp();
-                    //     }
-                    // });
-                }
-            }
+        // $ionicPopup.confirm({
+        //     title: "No Internet Connection",
+        //     content: "Please enable your internet connection!"
+        // })
+        // .then(function(result) {
+        //     if(!result) {
+        //         ionic.Platform.exitApp();
+        //     }
+        // });
+      }
+    }
     $scope.clientId = localStorage.getItem("lastSearchedCompanyId");
 
     $scope.getCompanyData = function () {
@@ -640,28 +640,28 @@ if(window.Connection) {
   // Products
 
   .controller('ProductsCtrl', function ($scope, $http) {
-if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+    if (window.Connection) {
+      if (navigator.connection.type == Connection.NONE) {
 
-                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-                      //scope: $scope,
-                      animation: 'slide-in-up'
-                    }).then(function (modal) {
-                      //$scope.modal = modal;
-                      modal.show();
-                    });
+        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+          //scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function (modal) {
+          //$scope.modal = modal;
+          modal.show();
+        });
 
-                    // $ionicPopup.confirm({
-                    //     title: "No Internet Connection",
-                    //     content: "Please enable your internet connection!"
-                    // })
-                    // .then(function(result) {
-                    //     if(!result) {
-                    //         ionic.Platform.exitApp();
-                    //     }
-                    // });
-                }
-            }
+        // $ionicPopup.confirm({
+        //     title: "No Internet Connection",
+        //     content: "Please enable your internet connection!"
+        // })
+        // .then(function(result) {
+        //     if(!result) {
+        //         ionic.Platform.exitApp();
+        //     }
+        // });
+      }
+    }
     $scope.clientId = localStorage.getItem("lastSearchedCompanyIdForProduct");
     $scope.isLogged = localStorage.getItem("logged");
 
@@ -697,28 +697,28 @@ if(window.Connection) {
   // My Bonus Points
 
   .controller('MyBonusPointsCtrl', function ($scope, $http) {
-if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+    if (window.Connection) {
+      if (navigator.connection.type == Connection.NONE) {
 
-                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-                      //scope: $scope,
-                      animation: 'slide-in-up'
-                    }).then(function (modal) {
-                      //$scope.modal = modal;
-                      modal.show();
-                    });
+        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+          //scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function (modal) {
+          //$scope.modal = modal;
+          modal.show();
+        });
 
-                    // $ionicPopup.confirm({
-                    //     title: "No Internet Connection",
-                    //     content: "Please enable your internet connection!"
-                    // })
-                    // .then(function(result) {
-                    //     if(!result) {
-                    //         ionic.Platform.exitApp();
-                    //     }
-                    // });
-                }
-            }
+        // $ionicPopup.confirm({
+        //     title: "No Internet Connection",
+        //     content: "Please enable your internet connection!"
+        // })
+        // .then(function(result) {
+        //     if(!result) {
+        //         ionic.Platform.exitApp();
+        //     }
+        // });
+      }
+    }
     $scope.isLogged = localStorage.getItem("logged");
 
     $scope.getBonusPoints = function () {
@@ -745,28 +745,28 @@ if(window.Connection) {
 
   //Profile
   .controller('ProfileCtrl', function ($scope, $http) {
-if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+    if (window.Connection) {
+      if (navigator.connection.type == Connection.NONE) {
 
-                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-                      //scope: $scope,
-                      animation: 'slide-in-up'
-                    }).then(function (modal) {
-                      //$scope.modal = modal;
-                      modal.show();
-                    });
+        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+          //scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function (modal) {
+          //$scope.modal = modal;
+          modal.show();
+        });
 
-                    // $ionicPopup.confirm({
-                    //     title: "No Internet Connection",
-                    //     content: "Please enable your internet connection!"
-                    // })
-                    // .then(function(result) {
-                    //     if(!result) {
-                    //         ionic.Platform.exitApp();
-                    //     }
-                    // });
-                }
-            }
+        // $ionicPopup.confirm({
+        //     title: "No Internet Connection",
+        //     content: "Please enable your internet connection!"
+        // })
+        // .then(function(result) {
+        //     if(!result) {
+        //         ionic.Platform.exitApp();
+        //     }
+        // });
+      }
+    }
     $scope.saveData = function (user) {
 
       $http.post('http://www.wheee.eu/api/user/save_profile_datas.php?user_id=' + localStorage.getItem("logged")
@@ -802,28 +802,28 @@ if(window.Connection) {
 
 
   .controller('TopEvents', function ($scope, $http) {
-if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+    if (window.Connection) {
+      if (navigator.connection.type == Connection.NONE) {
 
-                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-                      //scope: $scope,
-                      animation: 'slide-in-up'
-                    }).then(function (modal) {
-                      //$scope.modal = modal;
-                      modal.show();
-                    });
+        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+          //scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function (modal) {
+          //$scope.modal = modal;
+          modal.show();
+        });
 
-                    // $ionicPopup.confirm({
-                    //     title: "No Internet Connection",
-                    //     content: "Please enable your internet connection!"
-                    // })
-                    // .then(function(result) {
-                    //     if(!result) {
-                    //         ionic.Platform.exitApp();
-                    //     }
-                    // });
-                }
-            }
+        // $ionicPopup.confirm({
+        //     title: "No Internet Connection",
+        //     content: "Please enable your internet connection!"
+        // })
+        // .then(function(result) {
+        //     if(!result) {
+        //         ionic.Platform.exitApp();
+        //     }
+        // });
+      }
+    }
     $scope.page = 0;
     $scope.total = 1;
     $scope.topEvents = [];
@@ -1006,7 +1006,7 @@ if(window.Connection) {
       $http.get(link)
         .success(function (response) {
           if (response.response.length == 0) {
-
+            localStorage.setItem('SearchPage', 'past');
             location.href = '#/app/event_detail';
 
           } else {
@@ -1023,6 +1023,7 @@ if(window.Connection) {
       City = "";
       Event_PlaceName = "";
       localStorage.setItem('last_searchedEventId', eventId);
+      localStorage.setItem('SearchPage', 'past');
       location.href = '#/app/event_detail';
 
 
@@ -1188,6 +1189,7 @@ if(window.Connection) {
         $http.get(link)
           .success(function (response) {
             if (response.response.length == 0) {
+              localStorage.setItem('SearchPage', 'future');
               location.href = '#/app/event_detail';
             } else {
 
@@ -1220,7 +1222,8 @@ if(window.Connection) {
         .success(function (response) {
           if (response.response.length == 0) {
             //localStorage.setItem('last_searchedEventId', eventId);
-            $log.info(response.response);
+            //$log.info(response.response);
+            localStorage.setItem('SearchPage', 'future');
             location.href = '#/app/event_detail';
           } else {
             EventDetailFuture.setEvObject(response.response);
@@ -1238,6 +1241,7 @@ if(window.Connection) {
       City = "";
       Event_PlaceName = "";
       localStorage.setItem('last_searchedEventId', eventId);
+      localStorage.setItem('SearchPage', 'future');
       location.href = '#/app/event_detail';
 
     }
@@ -1282,30 +1286,30 @@ if(window.Connection) {
 
   .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal,
     $state, $cordovaCamera, $cordovaFile, $cordovaFileTransfer,
-    $cordovaDevice, $ionicLoading, $cordovaActionSheet, $cordovaSocialSharing, 
+    $cordovaDevice, $ionicLoading, $cordovaActionSheet, $cordovaSocialSharing,
     $ionicPlatform, $timeout, $cordovaNativeAudio) {
-if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+    if (window.Connection) {
+      if (navigator.connection.type == Connection.NONE) {
 
-                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-                      //scope: $scope,
-                      animation: 'slide-in-up'
-                    }).then(function (modal) {
-                      //$scope.modal = modal;
-                      modal.show();
-                    });
+        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+          //scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function (modal) {
+          //$scope.modal = modal;
+          modal.show();
+        });
 
-                    // $ionicPopup.confirm({
-                    //     title: "No Internet Connection",
-                    //     content: "Please enable your internet connection!"
-                    // })
-                    // .then(function(result) {
-                    //     if(!result) {
-                    //         ionic.Platform.exitApp();
-                    //     }
-                    // });
-                }
-            }
+        // $ionicPopup.confirm({
+        //     title: "No Internet Connection",
+        //     content: "Please enable your internet connection!"
+        // })
+        // .then(function(result) {
+        //     if(!result) {
+        //         ionic.Platform.exitApp();
+        //     }
+        // });
+      }
+    }
     //var EventDetails = EventDetail.getEvObject();
 
     //$log.info(EventDetails);
@@ -1326,7 +1330,11 @@ if(window.Connection) {
       var eventID = localStorage.getItem('last_searchedEventId');
     }
     else {
-      location.href = '#/app/future_events';
+      if (localStorage.getItem('SearchPage') == 'future') {
+        location.href = '#/app/future_events';
+      } else if (localStorage.getItem('SearchPage') == 'past') {
+        location.href = '#/app/past_events';
+      }
     }
 
     // IMAGE upload
@@ -1622,15 +1630,15 @@ if(window.Connection) {
       }
     }
 
-    if(localStorage.getItem('isSoundMuted') == 0) {
+    if (localStorage.getItem('isSoundMuted') == 0) {
       var audioWheee = new Audio('sound/wheee.wav');
       var audioOooh = new Audio('sound/oooh.wav');
       var audioDelete = new Audio('sound/delete.wav');
       var audioSave = new Audio('sound/save.wav');
     }
-    
+
     $scope.playWheee = function () {
-      if(localStorage.getItem('isSoundMuted') == 0) { 
+      if (localStorage.getItem('isSoundMuted') == 0) {
         audioWheee.play();
         sleep(1000);
       }
@@ -1638,7 +1646,7 @@ if(window.Connection) {
     };
 
     $scope.playOooh = function () {
-      if(localStorage.getItem('isSoundMuted') == 0) {
+      if (localStorage.getItem('isSoundMuted') == 0) {
         audioOooh.play();
         sleep(3000);
       }
@@ -1646,7 +1654,7 @@ if(window.Connection) {
     };
 
     $scope.playSave = function () {
-      if(localStorage.getItem('isSoundMuted') == 0) {
+      if (localStorage.getItem('isSoundMuted') == 0) {
         audioSave.play();
         sleep(1000);
       }
@@ -1654,7 +1662,7 @@ if(window.Connection) {
     };
 
     $scope.playDelete = function () {
-      if(localStorage.getItem('isSoundMuted') == 0) {
+      if (localStorage.getItem('isSoundMuted') == 0) {
         audioDelete.play();
         sleep(1000);
       }
@@ -1665,7 +1673,7 @@ if(window.Connection) {
 
       if ($scope.isLogged > 0) {
         $ionicLoading.show({
-            template: 'Saving...'
+          template: 'Saving...'
         });
         $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?joined=1&event_id=' + eventID + '&user_id=' + localStorage.getItem("logged"))
           .success(function (response) {
@@ -1681,7 +1689,7 @@ if(window.Connection) {
 
       if ($scope.isLogged > 0) {
         $ionicLoading.show({
-            template: 'Saving...'
+          template: 'Saving...'
         });
         $http.post('http://www.wheee.eu/api/event_search/save_event_status.php?bookmark=1&event_id=' + eventID + '&user_id=' + localStorage.getItem("logged"))
           .success(function (response) {
