@@ -48,28 +48,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB, $http, $state, $q, $ionicLoading, $ionicSideMenuDelegate, $ionicPlatform) {
 
-    if (window.Connection) {
-      if (navigator.connection.type == Connection.NONE) {
-
-        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-          //scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function (modal) {
-          //$scope.modal = modal;
-          modal.show();
-        });
-
-        // $ionicPopup.confirm({
-        //     title: "No Internet Connection",
-        //     content: "Please enable your internet connection!"
-        // })
-        // .then(function(result) {
-        //     if(!result) {
-        //         ionic.Platform.exitApp();
-        //     }
-        // });
-      }
-    }
 
     $scope.logged = localStorage.getItem("logged");
     $scope.isSoundMuted = localStorage.getItem("isSoundMuted");
@@ -427,29 +405,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   .controller('MyApplicationsCtrl', function ($scope, $http) {
 
-    if (window.Connection) {
-      if (navigator.connection.type == Connection.NONE) {
-
-        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-          //scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function (modal) {
-          //$scope.modal = modal;
-          modal.show();
-        });
-
-        // $ionicPopup.confirm({
-        //     title: "No Internet Connection",
-        //     content: "Please enable your internet connection!"
-        // })
-        // .then(function(result) {
-        //     if(!result) {
-        //         ionic.Platform.exitApp();
-        //     }
-        // });
-      }
-    }
-
     $scope.getMyApplications = function () {
 
       $scope.myApplications = [];
@@ -479,29 +434,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   .controller('MyBookmarksCtrl', function ($scope, $http) {
 
-    if (window.Connection) {
-      if (navigator.connection.type == Connection.NONE) {
-
-        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-          //scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function (modal) {
-          //$scope.modal = modal;
-          modal.show();
-        });
-
-        // $ionicPopup.confirm({
-        //     title: "No Internet Connection",
-        //     content: "Please enable your internet connection!"
-        // })
-        // .then(function(result) {
-        //     if(!result) {
-        //         ionic.Platform.exitApp();
-        //     }
-        // });
-      }
-    }
-
     $scope.getMyBookmarks = function () {
 
       $scope.myBookmarks = [];
@@ -529,29 +461,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   //MyDashboard
 
   .controller('MyDashboardCtrl', function ($scope, $http) {
-
-    if (window.Connection) {
-      if (navigator.connection.type == Connection.NONE) {
-
-        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-          //scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function (modal) {
-          //$scope.modal = modal;
-          modal.show();
-        });
-
-        // $ionicPopup.confirm({
-        //     title: "No Internet Connection",
-        //     content: "Please enable your internet connection!"
-        // })
-        // .then(function(result) {
-        //     if(!result) {
-        //         ionic.Platform.exitApp();
-        //     }
-        // });
-      }
-    }
 
     $scope.getMyDashboard = function () {
 
@@ -588,29 +497,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   // Company page
 
   .controller('CompanyPageCtrl', function ($scope, $http, $sce) {
-
-    if (window.Connection) {
-      if (navigator.connection.type == Connection.NONE) {
-
-        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-          //scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function (modal) {
-          //$scope.modal = modal;
-          modal.show();
-        });
-
-        // $ionicPopup.confirm({
-        //     title: "No Internet Connection",
-        //     content: "Please enable your internet connection!"
-        // })
-        // .then(function(result) {
-        //     if(!result) {
-        //         ionic.Platform.exitApp();
-        //     }
-        // });
-      }
-    }
 
     $scope.clientId = localStorage.getItem("lastSearchedCompanyId");
 
@@ -656,29 +542,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   .controller('ProductsCtrl', function ($scope, $http) {
 
-    if (window.Connection) {
-      if (navigator.connection.type == Connection.NONE) {
-
-        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-          //scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function (modal) {
-          //$scope.modal = modal;
-          modal.show();
-        });
-
-        // $ionicPopup.confirm({
-        //     title: "No Internet Connection",
-        //     content: "Please enable your internet connection!"
-        // })
-        // .then(function(result) {
-        //     if(!result) {
-        //         ionic.Platform.exitApp();
-        //     }
-        // });
-      }
-    }
-
     $scope.clientId = localStorage.getItem("lastSearchedCompanyIdForProduct");
     $scope.isLogged = localStorage.getItem("logged");
 
@@ -715,29 +578,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   .controller('MyBonusPointsCtrl', function ($scope, $http) {
 
-    if (window.Connection) {
-      if (navigator.connection.type == Connection.NONE) {
-
-        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-          //scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function (modal) {
-          //$scope.modal = modal;
-          modal.show();
-        });
-
-        // $ionicPopup.confirm({
-        //     title: "No Internet Connection",
-        //     content: "Please enable your internet connection!"
-        // })
-        // .then(function(result) {
-        //     if(!result) {
-        //         ionic.Platform.exitApp();
-        //     }
-        // });
-      }
-    }
-
     $scope.isLogged = localStorage.getItem("logged");
 
     $scope.getBonusPoints = function () {
@@ -764,29 +604,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
   //Profile
   .controller('ProfileCtrl', function ($scope, $http) {
-
-    if (window.Connection) {
-      if (navigator.connection.type == Connection.NONE) {
-
-        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-          //scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function (modal) {
-          //$scope.modal = modal;
-          modal.show();
-        });
-
-        // $ionicPopup.confirm({
-        //     title: "No Internet Connection",
-        //     content: "Please enable your internet connection!"
-        // })
-        // .then(function(result) {
-        //     if(!result) {
-        //         ionic.Platform.exitApp();
-        //     }
-        // });
-      }
-    }
 
     $scope.saveData = function (user) {
 
@@ -823,29 +640,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
 
   .controller('TopEvents', function ($scope, $http) {
-
-    if (window.Connection) {
-      if (navigator.connection.type == Connection.NONE) {
-
-        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-          //scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function (modal) {
-          //$scope.modal = modal;
-          modal.show();
-        });
-
-        // $ionicPopup.confirm({
-        //     title: "No Internet Connection",
-        //     content: "Please enable your internet connection!"
-        // })
-        // .then(function(result) {
-        //     if(!result) {
-        //         ionic.Platform.exitApp();
-        //     }
-        // });
-      }
-    }
 
     $scope.page = 0;
     $scope.total = 1;
@@ -1319,29 +1113,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $state, $cordovaCamera, $cordovaFile, $cordovaFileTransfer,
     $cordovaDevice, $ionicLoading, $cordovaActionSheet, $cordovaSocialSharing,
     $ionicPlatform, $timeout, $cordovaNativeAudio) {
-
-    if (window.Connection) {
-      if (navigator.connection.type == Connection.NONE) {
-
-        $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-          //scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function (modal) {
-          //$scope.modal = modal;
-          modal.show();
-        });
-
-        // $ionicPopup.confirm({
-        //     title: "No Internet Connection",
-        //     content: "Please enable your internet connection!"
-        // })
-        // .then(function(result) {
-        //     if(!result) {
-        //         ionic.Platform.exitApp();
-        //     }
-        // });
-      }
-    }
 
     //var EventDetails = EventDetail.getEvObject();
 
