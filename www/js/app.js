@@ -4,11 +4,33 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', 'ngOpenFB' ])
+angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', 'ngOpenFB', 'ngCordova', 'services', 'ion-gallery'])
 
-.run(function($ionicPlatform,ngFB) {
+.run(function($ionicPlatform, ngFB, $ionicPopup, $ionicModal) {
   ngFB.init({appId: '599219800249231'});
   $ionicPlatform.ready(function() {
+    if(window.Connection) {
+                if(navigator.connection.type == Connection.NONE) {
+
+                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+                      //scope: $scope,
+                      animation: 'slide-in-up'
+                    }).then(function (modal) {
+                      //$scope.modal = modal;
+                      modal.show();
+                    });
+
+                    // $ionicPopup.confirm({
+                    //     title: "No Internet Connection",
+                    //     content: "Please enable your internet connection!"
+                    // })
+                    // .then(function(result) {
+                    //     if(!result) {
+                    //         ionic.Platform.exitApp();
+                    //     }
+                    // });
+                }
+            }
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -22,7 +44,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
     }
   });
 })
-
+/* $ionicPlatform.ready(function() {
+            if(window.Connection) {
+                if(navigator.connection.type == Connection.NONE) {
+                    $ionicPopup.confirm({
+                        title: "Internet Disconnected",
+                        content: "The internet is disconnected on your device."
+                    })
+                    .then(function(result) {
+                        if(!result) {
+                            ionic.Platform.exitApp();
+                        }
+                    });
+                }
+            }
+        });
+        */
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
@@ -33,6 +70,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
     controller: 'AppCtrl'
   })
 
+  .state('app.welcome', {
+    url: '/welcome',
+    views: {
+        'menuContent': {
+          templateUrl: 'templates/welcome.html'
+        }
+      }
+  })
+
   .state('app.home', {
       url: '/home',
       views: {
@@ -40,6 +86,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
           templateUrl: 'templates/home.html',
           //controller: 'TopEvents',
           //controller: 'NewEvents'
+        }
+      }
+    })
+
+    .state('app.event_detail', {
+      url: '/event_detail',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/event_detail.html',
+          controller: "DetailPage"
         }
       }
     })
@@ -90,7 +146,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       url: '/my_applications',
       views: {
         'menuContent': {
-          templateUrl: 'templates/my_applications.html'
+          templateUrl: 'templates/my_applications.html',
+          controller: "MyApplicationsCtrl"
         }
       }
     })
@@ -98,7 +155,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       url: '/my_bookmarks',
       views: {
         'menuContent': {
-          templateUrl: 'templates/my_bookmarks.html'
+          templateUrl: 'templates/my_bookmarks.html',
+          controller: "MyBookmarksCtrl"
         }
       }
     })
@@ -106,7 +164,38 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       url: '/my_dashboard',
       views: {
         'menuContent': {
-          templateUrl: 'templates/my_dashboard.html'
+          templateUrl: 'templates/my_dashboard.html',
+          controller: "MyDashboardCtrl"
+        }
+      }
+    })
+
+    .state('app.my_bonus_points', {
+      url: '/my_bonus_points',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/my_bonus_points.html',
+          controller: "MyBonusPointsCtrl"
+        }
+      }
+    })
+
+    .state('app.company_page', {
+      url: '/company_page',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/company_page.html',
+          controller: "CompanyPageCtrl"
+        }
+      }
+    })
+
+    .state('app.products', {
+      url: '/products',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/products.html',
+          controller: "ProductsCtrl"
         }
       }
     })
@@ -120,17 +209,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       }
     })
 
-    .state('app.login', {
-      url: '/login',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/login.html'
-        }
-      }
-    })
-
 
 ;
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/home');
+  $urlRouterProvider.otherwise('/app/welcome');
+})
+
+.config(function(ionGalleryConfigProvider) {
+  ionGalleryConfigProvider.setGalleryConfig({
+                          action_label: 'Close',
+                          template_gallery: '../templates/gallery.html',
+                          template_slider: '../templates/slider.html',
+                          toggle: false,
+                          row_size: 3,
+                          fixed_row_size: false,
+                          zoom_events: false
+  });
 });
+
+;

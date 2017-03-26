@@ -1,0 +1,29 @@
+<ion-modal-view class="ion-nifty-modal">
+  <div class="ion-modal-content-custom">
+    <ion-content class="padding">
+      <div class="align-center">
+        <h3 class="float-left">Social Share</h3>
+        <i class="ion-close-round float-right" ng-click="closeModal()"> </i>
+        <div class="clearer"></div>
+        <hr />
+        <h4>Share This Event With Your Friends!</h4>
+        <i class="ion-android-share-alt" style="font-size: 100px;"> </i>
+
+        <a class="facebook-sign-in button button-block" ng-click="shareViaFacebook()">
+            Share via Facebook
+        </a>
+        <a class="twitter-share button button-block" ng-click="shareViaTwitter()">
+            Share via Twitter
+        </a>
+        <a class="whatsapp-share button button-block" ng-click="shareViaWhatsApp()">
+            Share via WhatsApp
+        </a>
+        <p>OR</p>
+        <a class="external-share button button-block" ng-click="shareViaExternalOptions()">
+            External Share Options<br /><span>(eg. Messenger, Instagram, E-mail, SMS, Skype)</span>
+        </a>
+        
+      </div>
+    </ion-content>
+  </div>
+</ion-modal-view>

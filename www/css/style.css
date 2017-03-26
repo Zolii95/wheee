@@ -1,9 +1,4 @@
 /* Empty. Add your own CSS if you like */
-
-.body {
-    background-color: #E0E0E0 !important;
-}
-
 #home h1{
     padding-top: 50px;
     text-align: center;
@@ -14,54 +9,66 @@ h2 {
     text-align: center;
 }
 
-#topEvents img{
+#topEvents {
     height: 250px;
     position: relative;
-}
-
-.newEvents img {
-    width: 100%;   
-    position: relative;
+    background-size: cover;
+    background-position: top center;
 }
 
 
-@media (max-width: 300px) {
- .newEvents img {
-     height: 19.824vh;
- }
-}
-@media (min-width: 301px) and (max-width: 350px) {
-  .newEvents img{  height: 23.216vh;
-  }
-}
-@media (min-width: 351px) and (max-width: 400px) {
-    .newEvents img{ height: 26.43vh;
-  } 
-}
-@media (min-width: 401px) and (max-width: 450px) {
-    .newEvents img{ height: 29.822vh;
-  }
-}
-@media (min-width: 451px) {
-    .newEvents img{  height: 39.643vh;
-  } 
+.eventHeader {
+    width: 100%;
+    border-bottom: 1px solid #CCC;
+    margin: 0;
+    padding: 0;
 }
 
+.action-line {
+    width: 100%;
+    height: 75px;
+    /*background: #0AC7B4;*/
+    margin-top: -5px;
+    color: #0AC7B4;
+}
+
+.action-line i {
+    font-size: 47px;
+}
+
+.action-line p {
+    color: #333;
+}
+
+.action-button {
+    width: 25%;
+    height: 75px;
+    float: left;
+}
 
 #search {
     padding-top: 20px;
-    padding-bottom: 20px;
-    background-color: #E0E0E0 !important;
-    
+    padding-bottom: 20px; 
+    background: #f4f4f4;
 }
 
-
-.myButton {
-    background-color: #19D19A;
+.sliderButton {
+    background-color: #0AC7B4;
     color: white;
     margin-left: 10px;
-   
     width: 50% !important;
+}
+
+.searchButton {
+    background-color: #0AC7B4;
+    color: white;
+    margin: 10px 8px;
+}
+
+.dashButton {
+    background-color: #0AC7B4;
+    color: white;
+    width: 100%;
 }
 
 .menu-navbar{
@@ -75,12 +82,16 @@ h2 {
 }
 
 .menu-button{
-    color:black !important;
-    background-color:white !important;
+    color:#FFF !important;
     width: 45px;
-    height: 35px;
-    margin-top: 3px;
-    
+    height: 34px;    
+}
+
+.back-button i {
+    color: #fff;
+    margin-left: 20px;
+    line-height: 44px;
+    font-size: 26px;
 }
 
 .title{
@@ -99,14 +110,6 @@ h2 {
 
 .item {
     padding: 15px 0 15px 0 !important;
-}
-
-.newEvents{
-    width: 100%;
-}
-
-.newEvents img {
-    width: 100%;
 }
 
 .title-container{
@@ -145,10 +148,10 @@ h2 {
 
 .text_t {
     position: absolute;
-    top: 0px;
+    top: 22%;
     color:white;
     font-size: 1.5em;
-    left: 5%;
+    left: 2.5%;
     font-weight: bold;
     background-color: black;
     padding: 5px;
@@ -168,7 +171,7 @@ h2 {
     opacity: 0.60;
 }
 
-#topEvents button{
+#topEvents button, a.sliderButton{
     bottom: 4%;
     position: absolute;
     z-index: 100;
@@ -176,4 +179,847 @@ h2 {
 
 input {
     padding-left: 20px !important;
+}
+
+.container-padding {
+    padding: 15px;
+}
+
+.event-list-cont {
+    padding: 5px 10px 0 10px;
+}
+
+.mt-40 {
+    margin-top: 40px;
+}
+
+.padt-55 {
+    padding-top: 55px;
+}
+
+.form-input {
+    border: 1px solid #f1f1f1 !important;
+    width: 100%;
+    padding: 10px;
+    padding-top: 10px !important;
+    padding-left: 10px !important;
+    height: auto;
+}
+
+.img-thumbnail {
+    padding: 4px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid #f6f6f6;
+    height: auto;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right, .float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}
+
+span.newsletter {
+    float: left;
+}
+
+.form-check-input {
+    margin-top: 12px !important;
+}
+
+.check {
+    float: left;
+    width: 26px;
+    margin: 13px !important;
+}
+
+.header .col {
+    border-bottom: 2px solid #ccc;
+}
+
+.col {
+    border-bottom: solid 1px grey;
+}
+
+.coming {
+    color: #19D19A;
+}
+
+.now {
+    color: #FFD20A;
+}
+
+.past {
+    color: #ccc;
+}
+
+.button-100 {
+    width: 94% !important;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-25 {
+    margin-top: 25px !important;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.mb-20 {
+    margin-bottom: 20px !important;
+}
+
+.padt-10 {
+    padding-top: 10px;
+}
+
+.padt-13 {
+    padding-top: 13px;
+}
+
+.padt-15 {
+    padding-top: 15px;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.account-status-list div {
+    width: 100%;
+    height: 25px;
+}
+
+.action-button img {
+    margin-top: 10px;
+}
+
+.data-line {
+    height: 70px;
+    display: block;
+    position: relative;
+}
+
+.data-line .time {
+    border-top: 1px solid #F4F4F4;
+    border-bottom: 1px solid #F4F4F4;
+    background: #F4F4F4;
+}
+
+.data-line i {
+    float: left;
+    color: #000;
+    font-size: 22px;
+    margin-top: 2px;
+}
+
+.data-block{
+    width: 33.33%;
+    float: left;
+    padding: 22px 10px;
+    display: block;
+    position: relative;
+}
+
+.data-block.time.two-lines {
+    padding: 4px 13px 6px 13px;
+    line-height: 26px;
+}
+
+.data-block.time.bonus-points {
+    padding: 11.5px 8px
+}
+
+.data-block.time.bonus-points i {
+    float: initial;
+}
+
+.data-block img {
+    width: 15px;
+    margin-top: 10px;
+    float: left;
+}
+
+.data-block.back {
+    height: 70px;
+    background-color: #F4F4F4;
+    background-image: url('../img/arrow.png');
+    background-repeat: no-repeat;
+    background-position: left; 
+    border-right: 3px solid #fff;
+}
+
+.data-block.back p {
+    margin-left: 30px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.data-block p {
+    color: #000;
+    float: left;
+    font-size: 12px;
+    margin: 3px 0 0 7px;
+}
+
+p.detail-local {
+    color: #CCC;
+    margin-bottom: 0;
+}
+
+h1.event-title {
+    margin: -5px 0 4px 0;
+    font-size: 30px;
+}
+
+.loc-block, .stat-block {
+    height: 20px;
+    margin-bottom: 15px;
+}
+
+.loc-block {
+    width: 100%;   
+}
+
+.loc-block i {
+    float: left;
+    font-size: 25px;
+}
+
+.stat-block i {
+    width: 30px;
+    text-align: center;
+    float: left;
+    font-size: 30px;
+    color: #333;
+}
+
+.stat-block span {
+    color: #333;
+    margin-left: 15px;
+    line-height: 30px;
+    font-size: 16px;
+}
+
+.application-block {
+    width: 100%;
+}
+
+.application-block i {
+    width: 20px;
+    text-align: center;
+    float: left;
+    font-size: 20px;
+    color: #333;
+    margin-top: 4px;
+}
+
+.application-block span {
+    color: #333;
+    margin-left: 10px;
+    line-height: 30px;
+    font-size: 14px;
+}
+
+.application-block.bb {
+    border-bottom: 1px solid #fff;
+}
+
+.dash-general-stat {
+    width: 100%;
+    height: 20px;
+    margin-bottom: 15px;
+}
+
+.dash-general-stat i {
+    font-size: 40px;
+    line-height: 55px;
+    float: left;
+    margin-left: 15px;
+}
+
+.dash-location-stat i {
+    font-size: 30px;
+    line-height: 50px;
+    float: left;
+    margin-left: 15px;
+}
+
+.dash-general-stat b {
+    line-height: 30px;
+    font-size: 20px;
+}
+
+span.dash-general-stat-text {
+    font-weight: bold;
+    color: #b7b7b7;
+}
+
+span.dash-location-stat-text {
+    line-height: 50px;
+    color: #333;
+}
+
+.stat-lines {
+    border-bottom: 2px solid #e6e6e6;
+}
+
+.stat-lines.bonus {
+    background: #f4f4f4;
+}
+
+.stat-lines .font-16 {
+    color: #333;
+}
+
+img.location-icon {
+    float: left;
+}
+
+.font-16 {
+    font-size: 16px !important;
+}
+
+span.location-spec {
+    float: left;
+    margin-left: 5px;
+    margin-top: 3px;
+    font-weight: bold;
+    color: #CCC;
+}
+
+.comment {
+    height: auto;
+    padding: 15px;
+    width: 99%;
+    border-bottom: 1px solid #F4F4F4;
+}
+
+.comment img, .comment p {
+    float: left;
+}
+
+.comment img {
+    border: 1px solid #CCC;
+    width: 15%;
+    border-radius: 50%;
+}
+
+.comment comment-title-row p {
+    margin: 5px 15px;
+    width: 80%;
+}
+
+.comment .comment-title-row p {
+    margin-top: 13px;
+    margin-left: 15px;
+}
+
+.comment .comment-description, .comment .comment-date {
+    width: 80%;
+    float: right;
+}
+
+.comment .comment-date small {
+    font-size: 11px;
+    color: #777777;
+    float: left;
+}
+
+.message-input {
+    background: #f9f9f9;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.submit-100 {
+    width: 100% !important;
+    margin-left: 0;
+}
+
+.image .img-details {
+    height: auto;
+    margin: -5px 0 20px 0;
+    background: #f9f9f9;
+    border: 1px solid #CCC;
+    border-top: none;
+    padding: 5px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.image img{
+    width: 100%;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.link {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+.welcome-view {
+    background-image: url('../img/welcome_background.jpg');
+    background-size: cover;
+
+    color: #fff;
+}
+
+.app-logo {
+    margin-top: 25px;
+}
+
+.white {
+    color: #fff;
+}
+
+.no-border {
+    border: none !important;
+}
+
+.facebook-sign-in {
+    background: #3b5998;
+    color: #fff !important;
+}
+
+.twitter-share {
+    background: #00aced;
+    color: #fff !important;
+}
+
+.whatsapp-share {
+    background: #4dc247;
+    color: #fff !important;
+}
+
+.external-share {
+    background: #ff6600;
+    color: #fff !important;
+    line-height: normal;
+}
+
+.external-share span {
+    font-size: 13px;
+}
+
+.bottom-content {
+    margin-top: 30% !important;
+}
+
+.skip {
+    text-decoration: none;
+    color: #CCC;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.float-button-image {
+  width: 30px;
+  padding: 30px;
+  font-size: 40px;
+  background-image: url('../img/circle.png');
+  position: fixed;
+  bottom: 20px; /* Adjust to where you want it */
+  right: 20px; /* Adjust to where you want it */
+  z-index: 9999;
+}
+
+.float-button-image .height_fix {
+  margin-top: 100%;
+}
+
+.float-button-image .content {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  margin-top: -20px; /* Note, this must be half the font size */
+  color: #0AC7B4;
+}
+
+.float-button-comment {
+  width: 30px;
+  padding: 30px;
+  font-size: 40px;
+  background-image: url('../img/circle.png');
+  position: fixed;
+  bottom: 20px; /* Adjust to where you want it */
+  left: 20px; /* Adjust to where you want it */
+  z-index: 9999;
+}
+
+.float-button-comment .height_fix {
+  margin-top: 100%;
+}
+
+.float-button-comment .content {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  margin-top: -20px; /* Note, this must be half the font size */
+  color: #0AC7B4;
+}
+
+.photo-upload-btn {
+    background-color: #0AC7B4;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #FFF;
+}
+
+#menu {
+    padding: 25px 0 25px 0;
+    background-image: url('../img/menu-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#menu img {
+    border-radius: 50%;
+    width: 100px;
+}
+
+.ion-plus, .ion-minus {
+    float: right;
+}
+
+.item-stable {
+    background-color: transparent !important;
+}
+
+.item-stable a, .item, .item-complex .item-content {
+    background-color: transparent !important;
+    color: #FFF !important;
+}
+
+.item {
+    border-color: #FFF !important;
+    padding: 5px 0 5px 0 !important;
+}
+
+.list {
+    padding-top: 25px !important;
+}
+
+.item-accordion.child {
+    padding-left: 25px !important;
+}
+
+#menu .menu-logo {
+    width: 100px;
+    border-radius: 0;
+}
+
+.profile-picture {
+    width: 100px;
+}
+
+.header-logo {
+    height: 41px;
+    float: left;
+    position: relative;
+    z-index: 100;
+    margin: 7px 0 7px 15px;
+}
+
+.delete-box {
+    margin-top: 10px;
+    width: 5%;
+    float: right;
+}
+
+.delete-box i {
+    font-size: 25px;
+}
+
+.clearer {
+    clear: both;
+}
+
+.imageView .gallery-slide-view {
+    border: none !important;
+    width: 100% !important;
+}
+
+.imageView i.close, .imageView i.share {
+    font-size: 33px;
+    color: #FFF;
+    border-radius: 0;
+    border: none;
+    padding-left: 92%;
+}
+
+.imageView .image-subtitle {
+    height: 5% !important;
+    text-align: left;
+}
+
+.imageView .ng-binding {
+    font-size: 11px !important; 
+    color: #f4f4f4;
+}
+
+.image-delete, .image-share, .image-close {
+    width: 33.33%;
+    float: left;
+}
+
+.bar.bar-header {
+  background-color: rgba(0, 0, 0, .25) !important; /* or transparent, or background:none */
+}
+
+.has-header {
+    top: 0 !important;
+}
+
+#add-comment {
+    height: 40px;
+}
+
+.share-event {
+    color: #FFF;
+    font-size: 28px;
+}
+
+.bar .title + .buttons {
+    right: 15px;
+    top: 11px;
+}
+
+#overflowingContent{
+  padding: 5px 10px;
+}
+
+#ionScrollRegion {
+    height: 330px;
+}
+
+.scroll-item{
+  display: block;
+  float: left;
+  width: 300px;
+  height: 300px;
+  border-radius: 6px;
+  margin-right: 10px;
+  background: #f7f7f7 !important;
+  padding: 0 !important;
+  box-shadow: 1px 4px 2px -2px grey;
+}
+
+.list-item {
+  display: block;
+  float: left;
+  width: 100%;
+  height: 300px;
+  border-radius: 6px;
+  margin-right: 10px;
+  background: #f7f7f7 !important;
+  padding: 0 !important;
+  box-shadow: 1px 4px 2px -2px grey;
+  margin-bottom: 15px;
+}
+
+.newEvents .hslide-imgbg {
+    height: 180px;
+    background-size: cover;
+    background-position: top center;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.newEvents .hscroll-content h3 {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.newEvents .hscroll-content {
+    padding: 10px;
+}
+
+p.subtitle {
+    margin: 0;
+    padding: 0 10px;
+    text-transform: uppercase;
+    font-size: 16px;
+    color: #0AC7B4;
+}
+
+p.iconed-text {
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+.subtitle i.align-right {
+    margin-right: 5px;
+}
+
+md-content.md-default-theme, md-content {
+    background-color: transparent;
+}
+
+.dash-img {
+    padding: 30px 0 0 0;
+}
+
+.dash-img i.ion-android-settings {
+    color: #333;
+    position: absolute;
+    font-size: 30px;
+    margin: 6px 0 0 12px;
+    padding: 9px 14px;
+    background: #fff;
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border: 2px solid #e6e6e6;
+}
+
+.general-line {
+    margin-top: 20px;
+}
+
+.general-line, .general-line-bottom {
+    height: 55px; 
+    width: 100%; 
+    background: #e6e6e6;
+}
+
+.general-line .align-center {
+    width: 50%; 
+    height: 55px;
+}
+
+.general-line-bottom .align-center {
+    width: 33.33%;
+    height: 55px;
+}
+
+.dash-img img {
+    border-radius: 50%;
+    border: 3px solid rgb(230, 230, 230);
+}
+
+.bar .buttons span {
+    color: transparent !important;
+}
+
+i.img-del {
+    z-index: 100;
+    position: absolute;
+    font-size: 20px;
+    padding: 4px 6px;
+    margin: -5px;
+    background: #fff;
+    border-bottom-right-radius: 6px;
+    opacity: 0.75;
+}
+
+i.img-del:hover {
+    opacity: 1;
+}
+
+.loc-block.green i, .loc-block.green span {
+    color: #0AC7B4 !important;
+}
+
+.attention i, .attention span {
+    color: #fbaf51 !important;
+}
+
+.attention span {
+    margin-top: 3px;
+}
+
+.green {
+    color: #0AC7B4 !important;
+}
+
+.bg-green {
+    background: #0AC7B4;
+}
+
+.ion-nifty-modal .ion-close-round {
+    font-size: 22px;
+    margin: 6px;
+    opacity: 0.3;
+}
+
+.comp-bg-img {
+    background-size: cover;
+    background-position: center center;
+}
+
+#company-container {
+    background-image: url('../img/white-bg.png');
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.myapp-div {
+    width: 100%;
+    height: 170px;
+    background: #f7f7f7;
+    box-shadow: 1px 4px 2px -2px grey;
+    border-radius: 6px;
+    margin: 25px 0;
+    background-size: cover;
+    background-position: top center;
+}
+
+.myapp-div .title-column {
+    width: 40%;
+    float: left;
+    background-image: url('../img/white-bg.png');
+    padding: 10px;
+}
+.myapp-div .content-column {
+    width: 60%;
+    float: left;
+    background-image: url('../img/white-bg.png');
+    padding: 10px;
+    border-left: 2px solid #FFF;
+}
+
+table.product-table {
+    width: 100%;
+}
+
+.md-autocomplete-suggestions li span.subtitle {
+    color: #000;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.disable-sound {
+    font-size: 17px;
+    color: white;
+    float: right;
+    margin-right: 20px;
+    margin-top:35px;
+}
+
+.disable-sound span {
+    margin-left: 10px;
 }

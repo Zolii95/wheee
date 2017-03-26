@@ -1,0 +1,189 @@
+<ion-view cache-view="false">
+
+		<!--<ion-nav-bar class="bar-stable menu-navbar">
+			<ion-nav-back-button class="button-clear back-button">
+				<i class="ion-ios-arrow-back"></i>
+			</ion-nav-back-button>
+			<ion-nav-buttons side="right">	
+				<button class="button button-icon button-clear ion-navicon menu-button" menu-toggle="right"></button>
+			</ion-nav-buttons>
+		</ion-nav-bar>-->
+
+  <ion-content delegate-handle="EventDetail" overflow-scroll="false">
+    <img ng-src="{{eventData[0].header_image}}" class="eventHeader"/>
+    <div class="action-line">
+      <div class="action-button align-center" ng-if="!isLogged || isLogged == 0" ng-click="openLoginModal()">
+        <i class="ion-android-checkbox-outline-blank"> </i>
+        <p>Join! Wheee!</p>
+      </div>
+      <div class="action-button align-center" ng-if="isLogged > 0 && !eventStatus[0].is_joined" ng-click="playWheee()">
+        <i class="ion-android-checkbox-outline-blank"> </i>
+        <p>Join! Wheee!</p>
+      </div>
+      <div class="action-button align-center" ng-if="isLogged > 0 && eventStatus[0].is_joined" ng-click="playOooh()">
+        <i class="ion-android-checkbox-outline"> </i>
+        <p>Leave</p>
+      </div>
+      <div class="action-button align-center" ng-if="!isLogged || isLogged == 0" ng-click="openLoginModal()">
+        <i class="ion-ios-star-outline"> </i>
+        <p>Bookmark</p>
+      </div>
+      <div class="action-button align-center" ng-if="isLogged > 0 && !eventStatus[0].is_bookmarked" ng-click="playSave()">
+        <i class="ion-ios-star-outline"> </i>
+        <p>Bookmark</p>
+      </div>
+      <div class="action-button align-center" ng-if="isLogged > 0 && eventStatus[0].is_bookmarked" ng-click="playDelete()">
+        <i class="ion-ios-star"> </i>
+        <p>Unbookmark</p>
+      </div>
+      <div class="action-button align-center" data-ng-click="GoToCompanyPage(eventData[0].client_id)">
+        <i class="ion-ios-information-outline"> </i>
+        <p>Place Info</p>
+      </div>
+      <div class="action-button align-center" ng-click="openShareModal()">
+        <i class="ion-android-share-alt"> </i>
+        <p>Share</p>
+      </div>
+    </div>
+
+    <div class="data-line" ng-if="(!isLogged || isLogged == 0) || (isLogged && eventData[0].bonus_points < 1)">
+      <a ng-href="{{backLink}}">
+        <div class="data-block back" >
+          <p>Back</p>
+        </div>
+      </a>
+      <div class="data-block time">
+        <i class="ion-ios-calendar-outline"> </i>
+        <p>{{eventData[0].event_start_date}}</p>
+      </div>
+      <div class="data-block time">
+        <i class="ion-android-time"> </i>
+        <p>{{eventData[0].event_start_hour}}</p>
+      </div>
+    </div>
+    <div class="data-line" ng-if="isLogged > 0 && eventData[0].bonus_points > 0">
+      <a ng-href="{{backLink}}">
+        <div class="data-block back" >
+          <p>Back</p>
+        </div>
+      </a>
+      <div class="data-block time two-lines">
+        <i class="ion-ios-calendar-outline"> </i>
+        <p>{{eventData[0].event_start_date}}</p>
+        <div class="clearer"></div>
+        <i class="ion-android-time"> </i>
+        <p>{{eventData[0].event_start_hour}}</p>
+      </div>
+      <div class="data-block time bonus-points align-center" data-ng-click="GoToCompanyProducts(eventData[0].client_id)">
+        <i class="ion-ios-cart green"> </i>
+        <div class="clearer"></div>
+        <b class="green font-16">{{eventData[0].bonus_points}}</b><span class="dash-general-stat-text"> bonus points</span>
+      </div>
+    </div>
+
+    <div style="height: 1px; width: 100%;"></div>
+    <div class="clearer"></div>
+
+    <div class="container-padding">
+
+    <p class="detail-local"><b>{{eventData[0].local_name}}</b></p>  
+    <h1 class="event-title">{{eventData[0].event_title}}</h1>
+    <div class="loc-block">
+      <i class="ion-ios-location-outline"> </i>
+      <span class="location-spec">{{eventData[0].location}}, {{eventData[0].county}}</span>
+    </div>
+
+    <div class="loc-block green" ng-if="isLogged > 0 && eventStatus[0].is_joined">
+      <i class="ion-android-done-all"> </i>
+      <span class="location-spec">You'll be there! Wheee!</span>
+    </div>
+
+    <div class="attention loc-block" ng-if="isPastEvent == 1">
+      <i class="ion-android-alert"> </i>
+      <span class="location-spec">This event is past!</span>
+    </div>
+
+    <div class="attention loc-block" ng-if="eventData[0].is_active == 0">
+      <i class="ion-android-alert"> </i>
+      <span class="location-spec">This event is inactive!</span>
+    </div>
+
+    <div class="clearer"></div>
+
+    <div ng-bind-html="eventDescription"></div>
+
+    <div id="add-comment"></div>
+    <h3>Leave a comment!</h3>
+    <div ng-if="!isLogged || isLogged == 0" class="align-center">
+      <p>To add a comment for this event, please log in!</p>
+      <a class="facebook-sign-in button button-block" ng-click="facebookSignIn()">
+          Log in with Facebook
+        </a>
+    </div>
+    <div ng-if="isLogged > 0">
+      <div class="add-comment">
+        <form name="commentForm" ng-submit="saveComment(commentForm)">
+          <textarea type="text" class="form-input message-input" placeholder="Message" ng-model="message" name="message"></textarea>
+
+          <button class="button icon-left dashButton submit-100 mb-20 ion-chatbox-working" type="submit">Add comment</button>
+        </form>
+      </div>
+    </div>
+    <div ng-repeat="comment in comments" class="comment">
+
+        <div class="comment-title-row">
+          <img ng-src="{{comment.image}}" />
+          <p><b>{{comment.firstname}} {{comment.lastname}}</b></p>
+          <div class="delete-box" ng-if="isLogged > 0 && isLogged == comment.commenter_id">
+            <i class="ion-trash-a" data-ng-init="commentID=comment.comment_id;" data-ng-attr-id="commentID" data-ng-click="deleteComment(commentID)"> </i>
+          </div>
+        </div>
+        <div class="clearer"></div>
+        
+        <div class="comment-description">
+          <p>{{comment.comment}}</p>
+        </div>
+        <div class="clearer"></div>
+
+        <div class="comment-date">
+          <small>Added on: {{comment.comment_date}}</small>
+        </div>
+        <div class="clearer"></div>
+      
+    </div>
+
+
+    <h3>Upload a photo!</h3>
+    <div ng-if="!isLogged || isLogged == 0" class="align-center">
+      <p>To add a comment for this event, please log in!</p>
+      <a class="facebook-sign-in button button-block" ng-click="facebookSignIn()">
+          Log in with Facebook
+        </a>
+    </div>
+    <div ng-if="isLogged > 0">
+      <button class="button icon-left ion-images photo-upload-btn" ng-click="loadImage()">Upload / Take a Photo</button>
+    </div>
+
+    <div ng-if="images">
+      <ion-gallery ion-gallery-items="images" ion-gallery-row="3" ion-gallery-toggle="false"></ion-gallery>
+    </div>
+
+    </div>
+
+  </ion-content>
+  <div class="float-button-image" ng-click="loadImage()" ng-if="isLogged > 0">
+    <span class="height-fix">
+      <a class="content">
+        <i class="ion-images"> </i>
+      </a>
+    </span>
+  </div>
+  <div class="float-button-comment" ng-click="scrollTo('add-comment')" ng-if="isLogged > 0">
+    <span class="height-fix">
+      <a class="content">
+        <i class="ion-chatbox-working"> </i>
+      </a>
+    </span>
+  </div>
+  
+</ion-view>

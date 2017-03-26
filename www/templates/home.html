@@ -1,20 +1,24 @@
-<ion-view view-title="Home">
+<ion-view cache-view="false">
+    <ion-nav-bar class="bar-stable menu-navbar">
+        <ion-nav-buttons side="right">	
+            <button class="button button-icon button-clear ion-navicon menu-button" menu-toggle="right"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
     <ion-content>
         <div ng-controller="TopEvents" class="body">
             <ion-slide-box show-pager="false" ng-if="default!='None'">
                 <ion-slide>
-                    <div id="topEvents">
-                        <img ng-src={{default}} />
-                        <h1></h1>
+                    <div id="topEvents" style="background-image: url(http://www.wheee.eu/upload/headers/default.jpg)">
+                    <a ng-href="#/app/future_events" class="button button-block sliderButton">Search! Wheee!</a>
+                    <h2 class="text_t">Find Your Best Events!</h2>
                     </div>
                 </ion-slide>
             </ion-slide-box>
-            <ion-slide-box show-pager="false" ng-if="default=='None' ">
+            <ion-slide-box show-pager="false" ng-if="default=='None'" does-continue="true" slide-interval="2500" auto-play="true">
                 <ion-slide ng-repeat="event in topEvents">
-                    <div id="topEvents">
-                        <button class="button button-block myButton">{{event.button_text}}
+                    <div id="topEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)" style="background-image: url(http://www.wheee.eu/upload/headers/{{event.header_image}});">
+                        <button class="button button-block sliderButton">{{event.button_text}}
             			</button>
-                        <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
                         <h2 class="text_t">{{event.title}}</h2>
                         <h2 class="text_l">{{event.local_name}}</h2>
                     </div>
@@ -22,16 +26,21 @@
             </ion-slide-box>
         </div>
 
-
-
         <div id="search">
-            <h2>Find Your Events</h2>
+
+            <p class="subtitle white">
+                <i class="ion-search"> </i>
+                <span>Find your best events</span>
+            </p>
+
             <div ng-controller="autoCompleteController as ctrl" layout="column" ng-cloak>
                 <md-content class="md-padding">
-                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCountryItem" 
-                        md-search-text="ctrl.searchCountryText" md-search-text-change="ctrl.searchTextChangeCountry(ctrl.searchText)" md-selected-item-change="ctrl.countryChange(item)" md-items="item in ctrl.queryCountrySearch(ctrl.searchCountryText)"
-                        md-item-text="item.display" md-min-length="0" placeholder="Country?">
+                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCountryValue" md-search-text="ctrl.searchCountryText"
+                        md-search-text-change="ctrl.searchTextChangeCountry(ctrl.searchText)" md-selected-item-change="ctrl.countryChange(item)"
+                        md-items="item in ctrl.queryCountrySearch(ctrl.searchCountryText)" md-item-text="item.display" md-min-length="0"
+                        placeholder="Country?">
                         <md-item-template>
+                            <!--ng-init="message='test'"-->
                             <span md-highlight-text="ctrl.searchCountryText" md-highlight-flags="^i">{{item.display}}</span>
                         </md-item-template>
                         <md-not-found>
@@ -40,54 +49,71 @@
                     </md-autocomplete>
                 </md-content>
                 <md-content class="md-padding" ng-show="ctrl.showCity">
-                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCityItem"
-                        md-search-text="ctrl.searchCityText" md-search-text-change="ctrl.searchTextChangeCity(ctrl.searchText)" md-selected-item-change="ctrl.cityChange(item)" md-items="item in ctrl.queryCitySearch(ctrl.searchCityText)"
-                        md-item-text="item.display" md-min-length="0" placeholder="Location?">
+                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCityValue" md-search-text="ctrl.searchCityText"
+                        md-search-text-change="ctrl.searchTextChangeCity(ctrl.searchText)" md-selected-item-change="ctrl.cityChange(item)"
+                        md-items="item in ctrl.queryCitySearch(ctrl.searchCityText)" md-item-text="item.display" md-min-length="0"
+                        placeholder="Location?">
                         <md-item-template>
                             <span md-highlight-text="ctrl.searchCityText" md-highlight-flags="^i">{{item.display}}</span>
                         </md-item-template>
                         <md-not-found>
-                            No countries matching "{{ctrl.searchCityText}}" were found.
+                            No counties matching "{{ctrl.searchCityText}}" were found.
                         </md-not-found>
                     </md-autocomplete>
                 </md-content>
                 <md-content class="md-padding" ng-show="ctrl.showEvent">
-                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedEventItem"
-                        md-search-text="ctrl.searchEventText" md-selected-item-change="ctrl.eventChange(item)" md-items="item in ctrl.queryEventSearch(ctrl.searchEventText)"
+                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedEventValue" md-search-text="ctrl.searchEventText"
+                        md-selected-item-change="ctrl.eventChange(item)" md-items="item in ctrl.queryEventSearch(ctrl.searchEventText)"
                         md-item-text="item.display" md-min-length="0" placeholder="Event / Event place?">
                         <md-item-template>
-                            <span md-highlight-text="ctrl.searchEventText" md-highlight-flags="^i">{{item.display}}</span>
+                            <span md-highlight-text="ctrl.searchEventText" md-highlight-flags="^i" class="{{item.class}}">{{item.display}}</span>
                         </md-item-template>
                         <md-not-found>
-                            No countries matching "{{ctrl.searchEventText}}" were found.
+                            No events / event places matching "{{ctrl.searchEventText}}" were found.
                         </md-not-found>
                     </md-autocomplete>
                 </md-content>
-                
+                 <button ng-click="search()" class="button searchButton" >
+                    <span id="searchButton" >Wheee! SEARCH!</span>
+                </button>
             </div>
-
-    
-            <button class="button button-block myButton">
-            <span id="searchButton">Wheee! SEARCH!</span>
-          </button>
+            
+ 
         </div>
-
-
 
         <div class="list newEvents body" ng-controller="NewEvents">
-            <h2>Newest Events</h2>
-            <div class="item body" ng-repeat="event in newEvents">
-                <img ng-src="http://www.wheee.eu/upload/headers/{{event.header_image}}" />
-                <div class="title-container">
-                    <h1>{{event.title}}</h1>
+            <p class="subtitle" ng-if="newEvents">
+                <i class="ion-arrow-up-b"> </i>
+                <span>Newest Events</span>
+
+                <a href="#/app/future_events" class="link">
+                    <span class="align-right">Search all</span>
+                    <i class="ion-search align-right"> </i>
+                </a>
+            </p>
+
+            <div class="clearer"></div>
+
+            <ion-scroll id="ionScrollRegion" direction="x" overflow-scroll="false">
+                <div id="overflowingContent" style="width: {{newNr}}">
+                    <div class="scroll-item" ng-repeat="event in newEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
+                        <div class="hslide-imgbg" style="background-image: url(http://www.wheee.eu/upload/headers/{{event.header_image}});">
+                        </div>
+                        <div class="clearer"></div>
+                        <div class="hscroll-content">
+                            <h3>{{event.title}}</h3>
+                            <p>
+                                <i class="ion-ios-location-outline"> </i>
+                                <span><b>{{event.local_name}}</b> - <i>{{event.location}}, {{event.county}}</i></span>
+                            </p>
+                            <p>
+                                <i class="ion-ios-calendar-outline"> </i>
+                                <span>{{event.event_start}}</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </ion-scroll>
         </div>
-
-        <div class="contactsLink">
-            <a href="#/app/contacts">Contuct Us</a>
-        </div>
-
-
     </ion-content>
 </ion-view>
