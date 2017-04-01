@@ -1393,6 +1393,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             is_active: response.response[1].is_active,
             is_past_event: response.response[1].is_past_event,
             bonus_points: response.response[1].bonus_points,
+            total_visualizations: response.response[1].total_visualizations,
             new_visualizations: response.response[1].new_visualizations
           });
           if ($scope.eventData[0].is_past_event == 1) {
