@@ -163,11 +163,14 @@
     <div ng-if="isLogged > 0">
       <button class="button icon-left ion-images photo-upload-btn" ng-click="loadImage()">Upload / Take a Photo</button>
     </div>
-
-    <div ng-if="images">
+    
+    <div ng-if="images != ''">
       <ion-gallery ion-gallery-items="images" ion-gallery-row="3" ion-gallery-toggle="false"></ion-gallery>
     </div>
 
+    <p ng-if="eventData[0].new_visualizations > 0">This event was viewed <b>{{eventData[0].new_visualizations}}</b> times.</p>
+
+    
     </div>
 
   </ion-content>

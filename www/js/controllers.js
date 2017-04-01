@@ -1114,6 +1114,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $cordovaDevice, $ionicLoading, $cordovaActionSheet, $cordovaSocialSharing,
     $ionicPlatform, $timeout, $cordovaNativeAudio) {
 
+    localStorage.setItem('isVisualizationAdded', 0);
+
     //var EventDetails = EventDetail.getEvObject();
 
     //$log.info(EventDetails);
@@ -1390,7 +1392,8 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             header_image: 'http://www.wheee.eu/upload/headers/' + response.response[1].header_image,
             is_active: response.response[1].is_active,
             is_past_event: response.response[1].is_past_event,
-            bonus_points: response.response[1].bonus_points
+            bonus_points: response.response[1].bonus_points,
+            new_visualizations: response.response[1].new_visualizations
           });
           if ($scope.eventData[0].is_past_event == 1) {
             $scope.backLink = '#/app/past_events';
@@ -1400,6 +1403,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             $scope.backLink = '#/app/future_events';
           }
           $scope.eventDescription = $sce.trustAsHtml(response.response[1].description);
+
+          if (!localStorage.getItem('isVisualizationAdded') || localStorage.getItem('isVisualizationAdded') == 0) {
+            $http.get('http://www.wheee.eu/api/event_search/increase_visualization.php?event_id=' + eventID + '&new_visualizations=' + $scope.eventData[0].new_visualizations);
+            localStorage.setItem('isVisualizationAdded', 1);
+          }
         });
 
       $scope.comments = [];
