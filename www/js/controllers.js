@@ -1405,6 +1405,31 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           }
           $scope.eventDescription = $sce.trustAsHtml(response.response[1].description);
 
+          $scope.totals = [];
+          $http.get('http://www.wheee.eu/api/event_detail/get_applicants.php?event_id=' + eventID + '&type=count')
+            .success(function (response) {
+              $scope.totals.push({
+                joined: response.response.total_joined,
+                bookmarked: response.response.total_bookmark
+              });        
+            });
+
+          $scope.applicantList = [];
+          $http.get('http://www.wheee.eu/api/event_detail/get_applicants.php?event_id=' + eventID + '&type=limited')
+            .success(function (response) {
+              angular.forEach(response.response, function (applicants) {
+                $scope.applicantList.push(applicants);
+              });
+            });
+
+          $scope.applicantListNoLimit = [];
+          $http.get('http://www.wheee.eu/api/event_detail/get_applicants.php?event_id=' + eventID + '&type=unlimited')
+            .success(function (response) {
+              angular.forEach(response.response, function (applicants) {
+                $scope.applicantListNoLimit.push(applicants);
+              });
+            });
+
           if (!localStorage.getItem('isVisualizationAdded') || localStorage.getItem('isVisualizationAdded') == 0) {
             $http.get('http://www.wheee.eu/api/event_search/increase_visualization.php?event_id=' + eventID + '&new_visualizations=' + $scope.eventData[0].new_visualizations);
             localStorage.setItem('isVisualizationAdded', 1);
@@ -1578,6 +1603,16 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.openShareModal = function () {
       $ionicModal.fromTemplateUrl('share-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function (modal) {
+        $scope.modal = modal;
+        $scope.modal.show();
+      });
+    }
+
+    $scope.openApplicantsModal = function () {
+      $ionicModal.fromTemplateUrl('applicants-modal.html', {
         scope: $scope,
         animation: 'slide-in-up'
       }).then(function (modal) {

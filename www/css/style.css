@@ -265,7 +265,7 @@ span.newsletter {
 }
 
 .mt-10 {
-    margin-top: 10px;
+    margin-top: 10px !important;
 }
 
 .mt-25 {
@@ -276,8 +276,16 @@ span.newsletter {
     margin-bottom: 0;
 }
 
+.mb-10 {
+    margin-bottom: 10px !important;
+}
+
 .mb-20 {
     margin-bottom: 20px !important;
+}
+
+.mr-10 {
+    margin-right: 10px !important;
 }
 
 .padt-10 {
@@ -1026,4 +1034,10 @@ table.product-table {
 
 span._47od {
     height: 21px !important;
+}
+
+p.joined-sub {
+    margin: 0;
+    font-size: 16px;
+    color: #000;
 }

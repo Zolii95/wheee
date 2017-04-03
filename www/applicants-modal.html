@@ -1,0 +1,36 @@
+<ion-modal-view class="ion-nifty-modal">
+  <div class="ion-modal-content-custom">
+    <ion-content class="padding">
+      <div class="align-center">
+        <h3 class="float-left">People Interested</h3>
+        <i class="ion-close-round float-right" ng-click="closeModal()"> </i>
+        <div class="clearer"></div>
+        <hr />
+
+        <p class="joined-sub white mb-10 mt-10" ng-click="openApplicantsModal()">
+            <i class="ion-android-done-all green" ng-if="totals[0].joined > 0"> </i>
+            <span ng-if="totals[0].joined > 0" class="mr-10">{{totals[0].joined}} people joined</span> 
+
+            <i class="ion-bookmark green" ng-if="totals[0].bookmarked > 0"> </i>
+            <span ng-if="totals[0].bookmarked > 0">{{totals[0].bookmarked}} people interested</span>
+        </p>
+
+        <i class="ion-android-walk" style="font-size: 100px;"> </i>
+      
+        <div ng-repeat="list in applicantListNoLimit" style="height: 70px;">
+          <div style="width: 50%; float: left">
+            <img ng-src="http://www.wheee.eu/assets/images/joined_small.png" ng-if="list.type == 1" style="position: absolute; z-index: 100; margin: 1px;"/>
+            <img ng-src="http://www.wheee.eu/assets/images/bookmarked_small.png" ng-if="list.type == 2" style="position: absolute; z-index: 100; margin: 1px;"/>
+            <img ng-src="{{list.fb_picture}}" style="border-radius: 6px;width: 60px;height: 60px;"/>
+          </div>
+          <div style="width: 50%; float: left; line-height: 60px; text-align: left">
+            {{list.firstname}} {{list.lastname}}
+          </div>
+          <div class="clearer"></div>
+          <div style="height: 1px; width: 100%; background: #ddd;">
+        </div>
+      </div>
+
+    </ion-content>
+  </div>
+</ion-modal-view>
