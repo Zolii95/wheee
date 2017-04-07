@@ -27,6 +27,23 @@
         </p>
 
         <div ng-bind-html="companyDescription"></div>
+
+        <div ng-if="companyOpenHours != ''">
+            <p><b>Open hours</b></p>
+            <div ng-repeat="hours in companyOpenHours">
+                <div style="width: 30%; float: left;">
+                    <p>{{hours.day}}</p>
+                </div>
+                <div style="width: 40%; float: left;">
+                    <p>{{hours.open}} - {{hours.close}}</p>
+                </div>
+                <div style="width: 30%; float: left;" ng-if="hours.today == 1">
+                    <p class="{{hours.now_class}}">{{hours.now_text}}</p>
+                </div>
+                <div class="clearer"></div>
+            </div>
+            <div class="clearer"></div>
+        </div>
     </div>
   </ion-content>
 </ion-view>

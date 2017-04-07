@@ -119,6 +119,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             '&age=' + profileInfo.age_range.min +
             '&link=' + profileInfo.link +
             '&picture=http://graph.facebook.com/' + authResponse.userID + '/picture?type=large' +
+            '&player_id=' + localStorage.getItem("player_id") +
             '&updated=' + profileInfo.updated_time)
             .success(function (response) {
               angular.forEach(response.response, function (user) {
@@ -184,7 +185,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     //This method is executed when the user press the "Login with facebook" button
     $scope.facebookSignIn = function () {
-      console.log($state.current.name);
+
       // FOR BROWSER LOGIN
 
       // localStorage.setItem("logged", 26);
@@ -211,6 +212,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             getFacebookProfileInfo(success.authResponse)
               .then(function (profileInfo) {
 
+                // ONE SIGNAL
+                window.plugins.OneSignal.getIds(function(ids) {
+                    //document.getElementById("OneSignalUserID").innerHTML = "UserID: " + ids.userId;
+                    //document.getElementById("OneSignalPushToken").innerHTML = "PushToken: " + ids.pushToken;
+                    localStorage.setItem("player_id", JSON.stringify(ids.userId));
+                });
+                // ONE SIGNAL
+
                 $http.get('http://www.wheee.eu/api/user/get_user_id.php?email=' + profileInfo.email +
                   '&first_name=' + profileInfo.first_name +
                   '&last_name=' + profileInfo.last_name +
@@ -218,6 +227,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
                   '&age=' + profileInfo.age_range.min +
                   '&link=' + profileInfo.link +
                   '&picture=http://graph.facebook.com/' + success.authResponse.userID + '/picture?type=large' +
+                  '&player_id=' + localStorage.getItem("player_id") +
                   '&updated=' + profileInfo.updated_time)
                   .success(function (response) {
                     angular.forEach(response.response, function (user) {
@@ -503,6 +513,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.getCompanyData = function () {
 
       $scope.companyData = [];
+      $scope.companyOpenHours = [];
       $http.get('http://www.wheee.eu/api/event_company/get_company.php?client_id=' + $scope.clientId)
         .success(function (response) {
           $scope.companyData.push({
@@ -530,6 +541,10 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             $scope.companyData[0].premium_header = 'default.jpg';
           }
           $scope.companyDescription = $sce.trustAsHtml(response.response[0].description);
+
+          angular.forEach(response.response[0].days, function (days) {
+            $scope.companyOpenHours.push(days);
+          });
         })
     };
     $scope.getCompanyData();
@@ -585,7 +600,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       $scope.userBonusPoints = [];
       $http.get('http://www.wheee.eu/api/user/get_bonus_points.php?user_id=' + $scope.isLogged)
         .success(function (response) {
-          console.log(response.response);
           angular.forEach(response.response, function (points) {
             $scope.userBonusPoints.push(points);
           });
@@ -1119,13 +1133,6 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     //var EventDetails = EventDetail.getEvObject();
 
     //$log.info(EventDetails);
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
-
-    $ionicPlatform.ready(function () {
-      $ionicLoading.hide();
-    });
 
     $scope.isLogged = localStorage.getItem("logged");
 

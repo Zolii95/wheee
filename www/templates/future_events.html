@@ -66,11 +66,12 @@
                 </div>
                 
                 <div class="list-item" ng-repeat="event in ctrl.newEvents" data-ng-init="eventId=event.id;" data-ng-attr-id="eventId" data-ng-click="GoToDetails(eventId)">
+                    <div style="width: auto; height: auto; background: #0AC7B4; color: #fff; position: absolute; z-index: 100;padding: 10px 10px 0 10px;border-top-left-radius: 5px;border-bottom-right-radius: 5px;"><p>{{event.event_start_list_presc}}</p></div>
                     <div class="hslide-imgbg" style="background-image: url(http://www.wheee.eu/upload/headers/{{event.header_image}});">
                     </div>
                     <div class="clearer"></div>
                     <div class="hscroll-content">
-                        <h3>{{event.event_title}}</h3>
+                        <h3 class="list-title">{{event.event_title}}</h3>
                         <p>
                             <i class="ion-ios-location-outline"> </i>
                             <span><b>{{event.local_name}}</b> - <i>{{event.location}}, {{event.county}}</i></span>
@@ -78,6 +79,28 @@
                         <p>
                             <i class="ion-ios-calendar-outline"> </i>
                             <span>{{event.event_start_date}}</span>
+
+                            <i class="ion-android-time ml-10"> </i>
+                            <span>{{event.event_start_hour}}</span>
+                        </p>
+
+                        <div style="width:100%; height: 1px; background: #ccc; margin-bottom: 9px;"></div>
+
+                        <p>
+                            <i class="ion-android-done-all green" ng-if="event.joined_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.joined_count > 0">{{event.joined_count}}</span>
+
+                            <i class="ion-bookmark green" ng-if="event.bookmark_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.bookmark_count > 0">{{event.bookmark_count}}</span>
+
+                            <i class="ion-chatbox-working green" ng-if="event.comment_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.comment_count > 0">{{event.comment_count}}</span>
+
+                            <i class="ion-image green" ng-if="event.image_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.image_count > 0">{{event.image_count}}</span>
+
+                            <i class="ion-eye green" ng-if="event.visualization_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.visualization_count > 0">{{event.visualization_count}}</span>
                         </p>
                     </div>
                 </div>
@@ -87,7 +110,7 @@
                     </div>
                     <div class="clearer"></div>
                     <div class="hscroll-content">
-                        <h3>{{event.event_title}}</h3>
+                        <h3 class="list-title">{{event.event_title}}</h3>
                         <p>
                             <i class="ion-ios-location-outline"> </i>
                             <span><b>{{event.local_name}}</b> - <i>{{event.location}}, {{event.county}}</i></span>
@@ -96,6 +119,26 @@
                             <i class="ion-ios-calendar-outline"> </i>
                             <span>{{event.event_start_date}}</span>
                         </p>
+
+                        <div style="width:100%; height: 1px; background: #ccc; margin-bottom: 9px;"></div>
+
+                        <p>
+                            <i class="ion-android-done-all green" ng-if="event.joined_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.joined_count > 0">{{event.joined_count}}</span>
+
+                            <i class="ion-bookmark green" ng-if="event.bookmark_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.bookmark_count > 0">{{event.bookmark_count}}</span>
+
+                            <i class="ion-chatbox-working green" ng-if="event.comment_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.comment_count > 0">{{event.comment_count}}</span>
+
+                            <i class="ion-image green" ng-if="event.image_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.image_count > 0">{{event.image_count}}</span>
+
+                            <i class="ion-eye green" ng-if="event.visualization_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.visualization_count > 0">{{event.visualization_count}}</span>
+                        </p>
+
                     </div>
                 </div>
 

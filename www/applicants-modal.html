@@ -7,7 +7,7 @@
         <div class="clearer"></div>
         <hr />
 
-        <p class="joined-sub white mb-10 mt-10" ng-click="openApplicantsModal()">
+        <p class="joined-sub white mb-10 mt-10">
             <i class="ion-android-done-all green" ng-if="totals[0].joined > 0"> </i>
             <span ng-if="totals[0].joined > 0" class="mr-10">{{totals[0].joined}} people joined</span> 
 
@@ -17,13 +17,13 @@
 
         <i class="ion-android-walk" style="font-size: 100px;"> </i>
       
-        <div ng-repeat="list in applicantListNoLimit" style="height: 70px;">
-          <div style="width: 50%; float: left">
-            <img ng-src="http://www.wheee.eu/assets/images/joined_small.png" ng-if="list.type == 1" style="position: absolute; z-index: 100; margin: 1px;"/>
-            <img ng-src="http://www.wheee.eu/assets/images/bookmarked_small.png" ng-if="list.type == 2" style="position: absolute; z-index: 100; margin: 1px;"/>
-            <img ng-src="{{list.fb_picture}}" style="border-radius: 6px;width: 60px;height: 60px;"/>
+        <div ng-repeat="list in applicantListNoLimit" class="applicants-popup">
+          <div class="left-content" >
+            <img ng-src="http://www.wheee.eu/assets/images/joined_small.png" class="status-pic" ng-if="list.type == 1"/>
+            <img ng-src="http://www.wheee.eu/assets/images/bookmarked_small.png" class="status-pic" ng-if="list.type == 2"/>
+            <img ng-src="{{list.fb_picture}}" class="fb-pic"/>
           </div>
-          <div style="width: 50%; float: left; line-height: 60px; text-align: left">
+          <div class="right-content">
             {{list.firstname}} {{list.lastname}}
           </div>
           <div class="clearer"></div>

@@ -6,31 +6,31 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', 'ngOpenFB', 'ngCordova', 'services', 'ion-gallery'])
 
-.run(function($ionicPlatform, ngFB, $ionicPopup, $ionicModal) {
+.run(function($ionicPlatform, ngFB, $ionicPopup, $ionicModal, $ionicLoading) {
   ngFB.init({appId: '599219800249231'});
   $ionicPlatform.ready(function() {
     if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+          if(navigator.connection.type == Connection.NONE) {
 
-                    $ionicModal.fromTemplateUrl('no-internet-modal.html', {
-                      //scope: $scope,
-                      animation: 'slide-in-up'
-                    }).then(function (modal) {
-                      //$scope.modal = modal;
-                      modal.show();
-                    });
+              $ionicModal.fromTemplateUrl('no-internet-modal.html', {
+                //scope: $scope,
+                animation: 'slide-in-up'
+              }).then(function (modal) {
+                //$scope.modal = modal;
+                modal.show();
+              });
 
-                    // $ionicPopup.confirm({
-                    //     title: "No Internet Connection",
-                    //     content: "Please enable your internet connection!"
-                    // })
-                    // .then(function(result) {
-                    //     if(!result) {
-                    //         ionic.Platform.exitApp();
-                    //     }
-                    // });
-                }
-            }
+              // $ionicPopup.confirm({
+              //     title: "No Internet Connection",
+              //     content: "Please enable your internet connection!"
+              // })
+              // .then(function(result) {
+              //     if(!result) {
+              //         ionic.Platform.exitApp();
+              //     }
+              // });
+          }
+      }
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -42,6 +42,29 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+
+    // One Signal Push Notification Setup
+    // Enable to debug issues.
+    // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+    var notificationOpenedCallback = function(jsonData) {
+      console.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
+    };
+
+    window.plugins.OneSignal
+      .startInit("3b44f95e-1f74-49d6-b078-35d97b28fd6c")
+      .handleNotificationOpened(notificationOpenedCallback)
+      .endInit();
+
+    window.plugins.OneSignal.getIds(function(ids) {
+      //document.getElementById("OneSignalUserID").innerHTML = "UserID: " + ids.userId;
+      //document.getElementById("OneSignalPushToken").innerHTML = "PushToken: " + ids.pushToken;
+      localStorage.setItem("player_id", JSON.stringify(ids.userId));
+    });
+
+    // Show an alert box if a notification comes in when the user is in your app.
+    window.plugins.OneSignal.enableInAppAlertNotification(true);
+
   });
 })
 /* $ionicPlatform.ready(function() {
