@@ -84,7 +84,7 @@
                             <span>{{event.event_start_hour}}</span>
                         </p>
 
-                        <div style="width:100%; height: 1px; background: #ccc; margin-bottom: 9px;"></div>
+                        <div ng-if="event.joined_count > 0 || event.bookmark_count > 0 || event.comment_count > 0 || event.image_count > 0 || event.visualization_count > 0" style="width:100%; height: 1px; background: #ccc; margin-bottom: 9px;"></div>
 
                         <p>
                             <i class="ion-android-done-all green" ng-if="event.joined_count > 0"> </i>

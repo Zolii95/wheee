@@ -68,7 +68,7 @@
                     </div>
                     <div class="clearer"></div>
                     <div class="hscroll-content">
-                        <h3>{{event.event_title}}</h3>
+                        <h3 class="list-title">{{event.event_title}}</h3>
                         <p>
                             <i class="ion-ios-location-outline"> </i>
                             <span><b>{{event.local_name}}</b> - <i>{{event.location}}, {{event.county}}</i></span>
@@ -76,6 +76,28 @@
                         <p>
                             <i class="ion-ios-calendar-outline"> </i>
                             <span>{{event.event_start_date}}</span>
+
+                            <i class="ion-android-time ml-10"> </i>
+                            <span>{{event.event_start_hour}}</span>
+                        </p>
+
+                        <div ng-if="event.joined_count > 0 || event.bookmark_count > 0 || event.comment_count > 0 || event.image_count > 0 || event.visualization_count > 0" style="width:100%; height: 1px; background: #ccc; margin-bottom: 9px;"></div>
+
+                        <p>
+                            <i class="ion-android-done-all green" ng-if="event.joined_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.joined_count > 0">{{event.joined_count}}</span>
+
+                            <i class="ion-bookmark green" ng-if="event.bookmark_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.bookmark_count > 0">{{event.bookmark_count}}</span>
+
+                            <i class="ion-chatbox-working green" ng-if="event.comment_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.comment_count > 0">{{event.comment_count}}</span>
+
+                            <i class="ion-image green" ng-if="event.image_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.image_count > 0">{{event.image_count}}</span>
+
+                            <i class="ion-eye green" ng-if="event.visualization_count > 0"> </i>
+                            <span class="mr-10" ng-if="event.visualization_count > 0">{{event.visualization_count}}</span>
                         </p>
                     </div>
                 </div>
