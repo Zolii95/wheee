@@ -188,14 +188,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
       // FOR BROWSER LOGIN
 
-      // localStorage.setItem("logged", 26);
-      // $scope.logged = localStorage.getItem("logged");
-      // if ($state.current.name != 'app.event_detail') {
-      //   $state.go('app.home');
-      // }
-      // else {
-      //   location.reload();
-      // }
+      localStorage.setItem("logged", 26);
+      $scope.logged = localStorage.getItem("logged");
+      if ($state.current.name != 'app.event_detail') {
+        $state.go('app.home');
+      }
+      else {
+        location.reload();
+      }
 
       // FOR BROWSER LOGIN
 
@@ -617,23 +617,22 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   // My Bonus Points
 
   //Profile
-  .controller('ProfileCtrl', function ($scope, $http) {
+  .controller('ProfileCtrl', function ($scope, $http, $ionicLoading) {
 
-    $scope.saveData = function (user) {
-
+    $scope.saveNotification = function (notificationType, nextStatus) {
+      
+      $ionicLoading.show({
+        template: 'Updating profile...'
+      });
       $http.post('http://www.wheee.eu/api/user/save_profile_datas.php?user_id=' + localStorage.getItem("logged")
-        + '&firstname=' + user.firstname.$modelValue
-        + '&lastname=' + user.lastname.$modelValue
-        + '&gender=' + user.gender.$modelValue
-        + '&newsletter=' + user.newsletter.$viewValue)
+        + '&notification_type=' + notificationType
+        + '&next_status=' + nextStatus)
         .success(function (response) {
           window.location.reload();
         });
     };
 
-    $scope.signIn = function (form) {
 
-    };
     $scope.userData = [];
     $scope.getUser = function () {
       $http.get('http://www.wheee.eu/api/user/profile_datas.php?id=' + localStorage.getItem("logged"))
@@ -645,7 +644,11 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             lastname: response.response[0].lastname,
             gender: response.response[0].gender,
             fb_picture: response.response[0].fb_picture,
-            newsletter: response.response[0].newsletter
+            newsletter: response.response[0].newsletter,
+            push_weekly_general: response.response[0].push_weekly_general,
+            push_daily_interesting: response.response[0].push_daily_interesting,
+            push_daily_bookmarked: response.response[0].push_daily_bookmarked,
+            push_daily_joined: response.response[0].push_daily_joined
           });
         });
     };
@@ -1315,6 +1318,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       .success(function (response) {
         angular.forEach(response.response, function (image) {
           $scope.images.push(image);
+        });
+      });
+
+    $scope.photographer_images = [];
+    $http.get('http://www.wheee.eu/api/event_detail/get_images.php?event_id=' + eventID + '&photographer_images=1&image_limit=10')
+      .success(function (response) {
+        angular.forEach(response.response, function (image) {
+          $scope.photographer_images.push(image);
         });
       });
 

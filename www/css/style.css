@@ -228,6 +228,8 @@ input {
 
 span.newsletter {
     float: left;
+    line-height: 15px;
+    margin: 10px;
 }
 
 .form-check-input {
@@ -632,9 +634,8 @@ span.location-spec {
 }
 
 .external-share {
-    background: #ff6600;
+    background: #00aced;
     color: #fff !important;
-    line-height: normal;
 }
 
 .external-share span {
@@ -738,7 +739,10 @@ span.location-spec {
 
 .item {
     border-color: #FFF !important;
-    padding: 5px 0 5px 0 !important;
+}
+
+.item.item-toggle {
+    padding: 25px 0 25px 0 !important;
 }
 
 .list {
@@ -1090,4 +1094,8 @@ p.joined-sub {
     overflow: hidden;
     text-overflow: ellipsis;
     height: 21px;
+}
+
+.input-label {
+    width: 50% !important;
 }

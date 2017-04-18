@@ -191,6 +191,11 @@
       <ion-gallery ion-gallery-items="images" ion-gallery-row="3" ion-gallery-toggle="false"></ion-gallery>
     </div>
 
+    <div ng-if="photographer_images != ''">
+      <h3>Our photographer's images</h3>
+      <ion-gallery ion-gallery-items="photographer_images" ion-gallery-row="3" ion-gallery-toggle="false"></ion-gallery>
+    </div>
+
     <p ng-if="eventData[0].total_visualizations > 0">This event was viewed <b>{{eventData[0].total_visualizations}}</b> times.</p>
 
     
