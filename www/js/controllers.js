@@ -433,6 +433,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       City = "";
       Event_PlaceName = "";
       localStorage.setItem('last_searchedEventId', eventId);
+      localStorage.setItem('userImagesLimit', 9);
+      localStorage.setItem('photographerImagesLimit', 9);
+      
       location.href = '#/app/event_detail';
 
 
@@ -462,6 +465,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       City = "";
       Event_PlaceName = "";
       localStorage.setItem('last_searchedEventId', eventId);
+      localStorage.setItem('userImagesLimit', 9);
+      localStorage.setItem('photographerImagesLimit', 9);
+
       location.href = '#/app/event_detail';
 
     }
@@ -689,6 +695,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       City = "";
       Event_PlaceName = "";
       localStorage.setItem('last_searchedEventId', eventId);
+      localStorage.setItem('userImagesLimit', 9);
+      localStorage.setItem('photographerImagesLimit', 9);
+
       location.href = '#/app/event_detail';
 
 
@@ -849,6 +858,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         .success(function (response) {
           if (response.response.length == 0) {
             localStorage.setItem('SearchPage', 'past');
+            localStorage.setItem('userImagesLimit', 9);
+            localStorage.setItem('photographerImagesLimit', 9);
+
             location.href = '#/app/event_detail';
 
           } else {
@@ -866,6 +878,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       Event_PlaceName = "";
       localStorage.setItem('last_searchedEventId', eventId);
       localStorage.setItem('SearchPage', 'past');
+      localStorage.setItem('userImagesLimit', 9);
+      localStorage.setItem('photographerImagesLimit', 9);
+
       location.href = '#/app/event_detail';
 
 
@@ -1032,6 +1047,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
           .success(function (response) {
             if (response.response.length == 0) {
               localStorage.setItem('SearchPage', 'future');
+              localStorage.setItem('userImagesLimit', 9);
+              localStorage.setItem('photographerImagesLimit', 9);
+
               location.href = '#/app/event_detail';
             } else {
 
@@ -1066,6 +1084,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             //localStorage.setItem('last_searchedEventId', eventId);
             //$log.info(response.response);
             localStorage.setItem('SearchPage', 'future');
+            localStorage.setItem('userImagesLimit', 9);
+            localStorage.setItem('photographerImagesLimit', 9);
+
             location.href = '#/app/event_detail';
           } else {
             EventDetailFuture.setEvObject(response.response);
@@ -1084,6 +1105,9 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       Event_PlaceName = "";
       localStorage.setItem('last_searchedEventId', eventId);
       localStorage.setItem('SearchPage', 'future');
+      localStorage.setItem('userImagesLimit', 9);
+      localStorage.setItem('photographerImagesLimit', 9);
+
       location.href = '#/app/event_detail';
 
     }
@@ -1357,20 +1381,46 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     // IMAGE Gallery
 
     $scope.images = [];
-    $http.get('http://www.wheee.eu/api/event_detail/get_images.php?event_id=' + eventID + '&image_limit=10')
+    $http.get('http://www.wheee.eu/api/event_detail/get_images.php?event_id=' + eventID + '&image_limit=' + localStorage.getItem('userImagesLimit'))
       .success(function (response) {
+        $scope.user_images_nr = response.total_images;
+        $scope.user_image_limit = localStorage.getItem('userImagesLimit');
         angular.forEach(response.response, function (image) {
           $scope.images.push(image);
         });
       });
 
     $scope.photographer_images = [];
-    $http.get('http://www.wheee.eu/api/event_detail/get_images.php?event_id=' + eventID + '&photographer_images=1&image_limit=10')
+    $http.get('http://www.wheee.eu/api/event_detail/get_images.php?event_id=' + eventID + '&photographer_images=1&image_limit=' + localStorage.getItem('photographerImagesLimit'))
       .success(function (response) {
+        $scope.photographer_images_nr = response.total_images;
+        $scope.photographer_image_limit = localStorage.getItem('photographerImagesLimit');
         angular.forEach(response.response, function (image) {
           $scope.photographer_images.push(image);
         });
       });
+
+    $scope.loadMoreUserImages = function() {
+      $ionicLoading.show({
+        template: 'Loading more images...'
+      });
+
+      new_limit = 18 + localStorage.getItem('userImagesLimit');
+
+      localStorage.setItem('userImagesLimit', new_limit);
+      location.reload();
+    }
+
+    $scope.loadMorePhotographerImages = function() {
+      $ionicLoading.show({
+        template: 'Loading more images...'
+      });
+
+      new_ph_limit = 18 + localStorage.getItem('photographerImagesLimit');
+
+      localStorage.setItem('photographerImagesLimit', new_ph_limit);
+      location.reload();
+    }
 
     // IMAGE gallery
 
@@ -1766,6 +1816,10 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       City = "";
       Event_PlaceName = "";
       localStorage.setItem('last_searchedEventId', eventId);
+
+      localStorage.setItem('userImagesLimit', 9);
+      localStorage.setItem('photographerImagesLimit', 9);
+
       location.href = '#/app/event_detail';
 
     }

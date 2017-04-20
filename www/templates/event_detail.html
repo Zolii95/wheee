@@ -191,10 +191,20 @@
       <ion-gallery ion-gallery-items="images" ion-gallery-row="3" ion-gallery-toggle="false"></ion-gallery>
     </div>
 
+    <p ng-if="user_images_nr > user_image_limit" class="subtitle white mt-10 mb-20" ng-click="loadMoreUserImages()">
+        <i class="ion-load-a"> </i>
+        <span>Load more images</span>
+    </p>
+
     <div ng-if="photographer_images != ''">
       <h3>Our photographer's images</h3>
       <ion-gallery ion-gallery-items="photographer_images" ion-gallery-row="3" ion-gallery-toggle="false"></ion-gallery>
     </div>
+
+    <p ng-if="photographer_images_nr > photographer_image_limit" class="subtitle white mt-10 mb-20" ng-click="loadMorePhotographerImages()">
+        <i class="ion-load-a"> </i>
+        <span>Load more images</span>
+    </p>
 
     <p ng-if="eventData[0].total_visualizations > 0">This event was viewed <b>{{eventData[0].total_visualizations}}</b> times.</p>
 
