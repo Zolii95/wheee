@@ -1,0 +1,36 @@
+<ion-modal-view class="ion-nifty-modal">
+  <div class="ion-modal-content-custom">
+    <ion-content class="padding">
+      <div class="align-center">
+        <h3 class="float-left">Image Actions</h3>
+        <i class="ion-close-round float-right" ng-click="closeModal()"> </i>
+        <div class="clearer"></div>
+        <hr />
+        <p>{{uploaded_by}}</p>
+        <img ng-src="{{image_src}}" class="image-action-preview"/>
+
+        <div class="clearer"></div>
+
+        <a class="image-download button button-block mb-0" ng-click="downloadImage(image_src, justImageName)">
+            <i class="ion-android-download"> </i>
+            <span><b>Download image</b></span>
+        </a>
+        <div class="clearer"></div>
+        <a class="image-share button button-block mb-20" ng-click="imageShareViaFacebook(isPhotographerImage, orderInGallery, image_src)">
+            <i class="ion-share"> </i>
+            <span><b>Share on Facebook</b></span>
+        </a>
+        <div class="clearer"></div>
+        <a ng-if="uploadedById == isLogged && isPhotographerImage == 0" class="delete-button button button-block mb-10" data-ng-init="photoId=photoId;" data-ng-attr-id="photoId" data-ng-click="deleteImage(photoId)">
+            Delete
+        </a>
+        <div class="clearer"></div>
+        <a class="cancel-button button button-block mb-10" ng-click="closeModal()">
+            Cancel
+        </a>
+        <div class="clearer"></div>
+
+      </div>
+    </ion-content>
+  </div>
+</ion-modal-view>

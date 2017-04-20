@@ -288,7 +288,7 @@ span.newsletter {
 }
 
 .mb-0 {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
 }
 
 .mb-10 {
@@ -1098,4 +1098,38 @@ p.joined-sub {
 
 .input-label {
     width: 50% !important;
+}
+
+.image-action-preview {
+    max-height: 250px;
+    max-width: 100%;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+
+.cancel-button {
+    background: #fff;
+    color: #000 !important;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.image-share, .image-download {
+    background: #ededed;
+    color: #0AC7B4 !important;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.delete-button {
+    background: #ededed;
+    color: #ff3b30 !important;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.image-share i, .image-download i {
+    float: left;
+    font-size: 23px;
 }

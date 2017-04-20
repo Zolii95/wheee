@@ -188,14 +188,14 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
       // FOR BROWSER LOGIN
 
-      localStorage.setItem("logged", 26);
-      $scope.logged = localStorage.getItem("logged");
-      if ($state.current.name != 'app.event_detail') {
-        $state.go('app.home');
-      }
-      else {
-        location.reload();
-      }
+      // localStorage.setItem("logged", 26);
+      // $scope.logged = localStorage.getItem("logged");
+      // if ($state.current.name != 'app.event_detail') {
+      //   $state.go('app.home');
+      // }
+      // else {
+      //   location.reload();
+      // }
 
       // FOR BROWSER LOGIN
 
@@ -1129,7 +1129,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
   .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal,
     $state, $cordovaCamera, $cordovaFile, $cordovaFileTransfer,
     $cordovaDevice, $ionicLoading, $cordovaActionSheet, $cordovaSocialSharing,
-    $ionicPlatform, $timeout, $cordovaNativeAudio) {
+    $ionicPlatform, $timeout, $cordovaNativeAudio, $ionicPopup) {
 
     localStorage.setItem('isVisualizationAdded', 0);
 
@@ -1310,6 +1310,49 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
 
     // IMAGE DELETE
+
+    // IMAGE DOWNLOAD
+
+    $scope.downloadImage = function (image_src, justImageName) {
+      $ionicLoading.show({
+        template: 'Downloading image...'
+      });
+
+        var url = image_src;
+        var targetPath = cordova.file.externalRootDirectory + "/DCIM/Wheee/" + justImageName;
+        var trustHosts = true;
+        var options = {};
+
+        $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+          .then(function(result) {
+            // Success!
+            $ionicLoading.hide();
+
+            $ionicPopup.alert({
+                title: "Success!",
+                content: "Image downloaded!"
+            })
+            .then(function(result) {
+                // Action
+            });
+          }, function(err) {
+            // Error
+            $ionicPopup.alert({
+                title: "Error!",
+                content: "Unfortunatelly this image cannot be downloaded!"
+            })
+            .then(function(result) {
+                // Action
+            });
+          }, function (progress) {
+            $timeout(function () {
+              $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+            });
+          });
+
+    }
+
+    // IMAGE DOWNLOAD
 
     // IMAGE Gallery
 
@@ -1603,6 +1646,30 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       });
     }
 
+    $scope.imageShareViaFacebook = function (isPhotographerImage, orderInGallery, image) {
+
+      message = "Wheee!";
+      subject = "Wheee!";
+      
+      if(isPhotographerImage == 1) {
+        if($scope.images == '') {
+          link = 'http://www.wheee.eu/event.php?event_id=' + eventID + '#&gid=1&pid=' + orderInGallery;
+        }
+        else {
+          link = 'http://www.wheee.eu/event.php?event_id=' + eventID + '#&gid=2&pid=' + orderInGallery;
+        }
+      }
+      else {
+        link = 'http://www.wheee.eu/event.php?event_id=' + eventID + '#&gid=1&pid=' + orderInGallery;
+      }
+
+      $cordovaSocialSharing.canShareVia("facebook", message, image, link).then(function (result) {
+        $cordovaSocialSharing.shareViaFacebook(message, image, link);
+      }, function (error) {
+        alert("Cannot share on Facebook, because there is no account attached to this device!");
+      });
+    }
+
     // SOCIAL SHARING
 
     $scope.openLoginModal = function () {
@@ -1631,6 +1698,22 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.openApplicantsModal = function () {
       $ionicModal.fromTemplateUrl('applicants-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function (modal) {
+        $scope.modal = modal;
+        $scope.modal.show();
+      });
+    }
+
+    $scope.openImageSettings = function (image_src, photoId, uploadedById, isPhotographerImage, orderInGallery, justImageName) {
+      $scope.image_src = image_src;
+      $scope.photoId = photoId;
+      $scope.uploadedById = uploadedById;
+      $scope.isPhotographerImage = isPhotographerImage;
+      $scope.orderInGallery = orderInGallery;
+      $scope.justImageName = justImageName;
+      $ionicModal.fromTemplateUrl('image-settings-modal.html', {
         scope: $scope,
         animation: 'slide-in-up'
       }).then(function (modal) {
