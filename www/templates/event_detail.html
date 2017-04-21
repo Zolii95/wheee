@@ -175,6 +175,11 @@
       
     </div>
 
+    <p ng-if="comment_nr > comment_limit" class="subtitle white mt-10 mb-20" ng-click="loadMoreComments()">
+        <i class="ion-load-a"> </i>
+        <span>Load more comments</span>
+    </p>
+
 
     <h3>Upload a photo!</h3>
     <div ng-if="!isLogged || isLogged == 0" class="align-center">

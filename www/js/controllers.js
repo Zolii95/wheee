@@ -435,6 +435,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       localStorage.setItem('last_searchedEventId', eventId);
       localStorage.setItem('userImagesLimit', 9);
       localStorage.setItem('photographerImagesLimit', 9);
+      localStorage.setItem('commentLimit', 5);
       
       location.href = '#/app/event_detail';
 
@@ -467,6 +468,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       localStorage.setItem('last_searchedEventId', eventId);
       localStorage.setItem('userImagesLimit', 9);
       localStorage.setItem('photographerImagesLimit', 9);
+      localStorage.setItem('commentLimit', 5);
 
       location.href = '#/app/event_detail';
 
@@ -697,6 +699,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       localStorage.setItem('last_searchedEventId', eventId);
       localStorage.setItem('userImagesLimit', 9);
       localStorage.setItem('photographerImagesLimit', 9);
+      localStorage.setItem('commentLimit', 5);
 
       location.href = '#/app/event_detail';
 
@@ -860,6 +863,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             localStorage.setItem('SearchPage', 'past');
             localStorage.setItem('userImagesLimit', 9);
             localStorage.setItem('photographerImagesLimit', 9);
+            localStorage.setItem('commentLimit', 5);
 
             location.href = '#/app/event_detail';
 
@@ -880,6 +884,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       localStorage.setItem('SearchPage', 'past');
       localStorage.setItem('userImagesLimit', 9);
       localStorage.setItem('photographerImagesLimit', 9);
+      localStorage.setItem('commentLimit', 5);
 
       location.href = '#/app/event_detail';
 
@@ -1049,6 +1054,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
               localStorage.setItem('SearchPage', 'future');
               localStorage.setItem('userImagesLimit', 9);
               localStorage.setItem('photographerImagesLimit', 9);
+              localStorage.setItem('commentLimit', 5);
 
               location.href = '#/app/event_detail';
             } else {
@@ -1086,6 +1092,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
             localStorage.setItem('SearchPage', 'future');
             localStorage.setItem('userImagesLimit', 9);
             localStorage.setItem('photographerImagesLimit', 9);
+            localStorage.setItem('commentLimit', 5);
 
             location.href = '#/app/event_detail';
           } else {
@@ -1107,6 +1114,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       localStorage.setItem('SearchPage', 'future');
       localStorage.setItem('userImagesLimit', 9);
       localStorage.setItem('photographerImagesLimit', 9);
+      localStorage.setItem('commentLimit', 5);
 
       location.href = '#/app/event_detail';
 
@@ -1435,13 +1443,24 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
     $scope.deleteComment = function (commentID) {
       $ionicLoading.show({
-        template: 'Deleteing comment...'
+        template: 'Deleting comment...'
       });
       $http.get('http://www.wheee.eu/api/event_detail/delete_comment.php?comment_id=' + commentID)
         .success(function (response) {
           location.reload();
           $ionicLoading.hide();
         });
+    }
+
+    $scope.loadMoreComments = function() {
+      $ionicLoading.show({
+        template: 'Loading more comments...'
+      });
+
+      new_comment_limit = 10 + localStorage.getItem('photographerImagesLimit');
+
+      localStorage.setItem('commentLimit', new_comment_limit);
+      location.reload();
     }
 
     // DELETE COMMENT
@@ -1548,8 +1567,10 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
         });
 
       $scope.comments = [];
-      $http.get('http://www.wheee.eu/api/event_detail/get_comments.php?event_id=' + eventID + '&comment_limit=10')
+      $http.get('http://www.wheee.eu/api/event_detail/get_comments.php?event_id=' + eventID + '&comment_limit=' + localStorage.getItem('commentLimit'))
         .success(function (response) {
+          $scope.comment_nr = response.total_comments;
+          $scope.comment_limit = localStorage.getItem('commentLimit');
           angular.forEach(response.response, function (comment) {
             $scope.comments.push(comment);
           });
@@ -1819,6 +1840,7 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
       localStorage.setItem('userImagesLimit', 9);
       localStorage.setItem('photographerImagesLimit', 9);
+      localStorage.setItem('commentLimit', 5);
 
       location.href = '#/app/event_detail';
 
