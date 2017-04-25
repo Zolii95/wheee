@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.wheee" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.wheee" version="1.1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Wheee!</name>
     <description>Find your best events in your town!</description>
-    <author email="zolicsaba@yahoo.com" href="http://wheee.eu/">
-      Géczi Zoltán Csaba
+    <author email="info@wheee.eu" href="http://www.wheee.eu/">
+      Géczi Zoltán Csaba and Bajnok Tamás
     </author>
     <content src="index.html" />
     <access origin="*" />
