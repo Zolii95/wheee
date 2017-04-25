@@ -50,6 +50,17 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
 
 
     $scope.logged = localStorage.getItem("logged");
+
+    if ($scope.logged && $scope.logged > 0) {
+      $http.get('http://www.wheee.eu/api/user/get_location.php?user_id=' + $scope.logged)
+        .success(function (response) {
+          if(response.response == null) {
+              location.href = '#/app/complete_location';
+          }
+        });
+
+    }
+
     $scope.isSoundMuted = localStorage.getItem("isSoundMuted");
 
     $scope.changeSoundStatus = function () {
@@ -131,6 +142,16 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
                 localStorage.setItem("logged", user);
                 $scope.logged = localStorage.getItem("logged");
                 $scope.populateMenuDatas();
+
+                if ($scope.logged && $scope.logged > 0) {
+                  $http.get('http://www.wheee.eu/api/user/get_location.php?user_id=' + $scope.logged)
+                    .success(function (response) {
+                      if(response.response == null) {
+                          location.href = '#/app/complete_location';
+                      }
+                    });
+
+                }
 
                 $ionicLoading.hide();
                 if ($state.current.name != 'app.event_detail') {
@@ -239,6 +260,16 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
                       localStorage.setItem("logged", user);
                       $scope.logged = localStorage.getItem("logged");
                       $scope.populateMenuDatas();
+
+                      if ($scope.logged && $scope.logged > 0) {
+                        $http.get('http://www.wheee.eu/api/user/get_location.php?user_id=' + $scope.logged)
+                          .success(function (response) {
+                            if(response.response == null) {
+                                location.href = '#/app/complete_location';
+                            }
+                          });
+
+                      }
 
                       $ionicLoading.hide();
                       if ($state.current.name != 'app.event_detail') {
@@ -1131,32 +1162,177 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     }
   })
 
-  /*.controller('SoundController', function ($ionicPlatform, $timeout, $cordovaNativeAudio) {
+  .controller('completeLocationController', function ($scope, $timeout, $log, $http, $q, EventDetailFuture, $sce, $cordovaDatePicker, $ionicLoading) {
+    
+    var self = this;
 
-    var audioWheee = new Audio('sound/wheee.wav');
-    this.playWheee = function () {
-      audioWheee.play();
-    };
+    self.showCounty = false;
+    self.showCity = false;
+    self.birthDay = '';
+    self.simulateQuery = true;
+    self.errorMessage = false;
+    self.isDisabled = false;
 
-    var vm = this;
-  
-    $ionicPlatform.ready(function () {
-  
-      // all calls to $cordovaNativeAudio return promises
-  
-      $cordovaNativeAudio.preloadSimple('snare', 'audio/snare.mp3');
-      $cordovaNativeAudio.preloadSimple('hi-hat', 'audio/highhat.mp3');
-      $cordovaNativeAudio.preloadSimple('bass', 'audio/bass.mp3');
-      $cordovaNativeAudio.preloadSimple('bongo', 'audio/bongo.mp3');
-    });
-  
-    vm.play = function (sound) {
-      audio.play();
-    };
-  
-    return vm;
 
-  })*/
+    self.queryCountrySearch = function (query) {
+      return $http.get("http://www.wheee.eu/api/event_autocomplete/countries.php?all=1")
+        .then(function (response) {
+          var tmp = response.data.response.map(function (state) {
+            return {
+              id: state.id,
+              value: state.name.toLowerCase(),
+              display: state.name
+            }
+          });
+          return query ? tmp.filter(createFilterFor(query)) : tmp;
+        })
+    }
+
+    self.queryCountySearch = function (query) {
+      return $http.get("http://www.wheee.eu/api/event_autocomplete/counties.php?country_id=" + Country)
+        .then(function (response) {
+          var tmp = response.data.response.map(function (state) {
+            return {
+              id: state.id,
+              value: state.name.toLowerCase(),
+              display: state.name
+            }
+          });
+          return query ? tmp.filter(createFilterFor(query)) : tmp;
+        })
+    }
+
+    self.queryCitySearch = function (query) {
+      return $http.get("http://www.wheee.eu/api/event_autocomplete/cities.php?county_id=" + County)
+        .then(function (response) {
+          var tmp = response.data.response.map(function (state) {
+            return {
+              id: state.id,
+              value: state.name.toLowerCase(),
+              display: state.name
+            }
+          });
+          return query ? tmp.filter(createFilterFor(query)) : tmp;
+        })
+    }
+
+    self.searchTextChangeCountry = searchTextChangeCountry;
+
+    self.searchTextChangeCity = searchTextChangeCity;
+    self.countryChange = countryChange;
+    self.countyChange = countyChange;
+    self.cityChange = cityChange;
+  
+
+    function searchTextChangeCity(text) {
+      self.showEvent = false;
+    }
+    function searchTextChangeCountry(text) {
+      self.showCity = false;
+      self.showCounty = false;
+    }
+
+    function countryChange(item) {
+      $log.info('Item changed to ' + JSON.stringify(item));
+      if(!item) {
+        self.showCounty = false;
+        self.showCity = false;
+        CountryName = '';
+        CountyName = '';
+        CityName = '';
+      }
+      else {
+        Country = item.id;
+        CountryName = item.display;
+        self.showCounty = true;
+      }
+    }
+
+    function countyChange(item) {
+      $log.info('Item changed to ' + JSON.stringify(item));
+      if(!item) {
+        self.showCity = false;
+        CountyName = '';
+        CityName = '';
+      }
+      else {
+        County = item.id;
+        CountyName = item.display;
+        self.showCity = true;
+      }
+    }
+
+    function cityChange(item) {
+      $log.info('Item changed to ' + JSON.stringify(item));
+      if(!item) {
+        CityName = '';
+      }
+      else {
+        City = item.id;
+        CityName = item.display;
+      }
+    }
+
+    //filter function for search query
+    function createFilterFor(query) {
+      var lowercaseQuery = angular.lowercase(query);
+      return function filterFn(state) {
+        return (state.value.indexOf(lowercaseQuery) === 0);
+      };
+    }
+
+    $scope.saveLocation = function() {
+      if(CountryName != '' && CountyName != '' && CityName != '' && self.birthDay && CountryName && CountyName && CityName) {
+        self.errorMessage = false;
+        $ionicLoading.show({
+          template: 'Saving...'
+        });
+        $http.get('http://www.wheee.eu/api/user/save_location.php?user_id=' + $scope.logged +'&country_id=' + Country + '&county_id=' + County + '&location_id=' + City + '&birthday=' + self.birthDay)
+          .success(function (response) {
+            if(response.response > 0) {
+              localStorage.setItem("last_searchedCountryId", Country);
+              localStorage.setItem("last_searchedCountryName", CountryName);
+              localStorage.setItem("last_searchedCityId", City);
+              localStorage.setItem("last_searchedCityName", CityName);
+            }
+            $ionicLoading.hide();
+            location.href = '#/app/home';
+          });
+      }
+      else {
+        self.errorMessage = true;
+      }
+    }
+
+    $scope.openDatePicker = function() {
+
+
+
+      var options = {
+        date: new Date(),
+        mode: 'date', // or 'time'
+        minDate: new Date(),
+        allowOldDates: true,
+        // allowFutureDates: false,
+        cancelButton: false,
+        // doneButtonLabel: 'DONE',
+        // doneButtonColor: '#F2F3F4',
+        // cancelButtonLabel: 'CANCEL',
+        // cancelButtonColor: '#000000',
+        windowTitle: 'Set your birthday'
+      };
+
+
+      $cordovaDatePicker.show(options).then(function(date){
+          $http.get('http://www.wheee.eu/api/user/format_date.php?date=' + date)
+            .success(function (response) {
+              self.birthDay = response.response;
+            });
+      });
+    }
+
+
+  })
 
   .controller('DetailPage', function ($scope, $ionicScrollDelegate, $location, $log, $http, $sce, $ionicModal,
     $state, $cordovaCamera, $cordovaFile, $cordovaFileTransfer,

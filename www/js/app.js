@@ -113,6 +113,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
       }
     })
 
+
+    .state('app.complete_location', {
+    url: '/complete_location',
+    views: {
+        'menuContent': {
+          templateUrl: 'templates/complete_location.html',
+          controller: "completeLocationController"
+        }
+      }
+  })
+
     .state('app.event_detail', {
       url: '/event_detail',
       views: {

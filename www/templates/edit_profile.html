@@ -38,41 +38,61 @@
                     <span>Notification settings</span>
                 </p>
 
-                <span class="input-label newsletter">Newsletter</span>
-                <ion-toggle name="newsletter" ng-model="user.newsletter" ng-if="user.newsletter == 1" ng-checked="true" ng-true-value="1" ng-false-value="0" ng-click="saveNotification('newsletter', 0)">
-                </ion-toggle>
-                <ion-toggle name="newsletter" ng-model="user.newsletter" ng-if="user.newsletter == 0" ng-checked="false" ng-true-value="1" ng-false-value="0" ng-change="saveNotification('newsletter', 1)">
-                </ion-toggle>
+                <div class="width-50">
+                    <span class="input-label newsletter">Newsletter</span>
+                </div>
+                <div class="width-50">
+                    <ion-toggle name="newsletter" ng-model="user.newsletter" ng-if="user.newsletter == 1" ng-checked="true" ng-true-value="1" ng-false-value="0" ng-click="saveNotification('newsletter', 0)">
+                    </ion-toggle>
+                    <ion-toggle name="newsletter" ng-model="user.newsletter" ng-if="user.newsletter == 0" ng-checked="false" ng-true-value="1" ng-false-value="0" ng-change="saveNotification('newsletter', 1)">
+                    </ion-toggle>
+                </div>
 
-                <span class="input-label newsletter">Weekly general event notification</span>
-                <ion-toggle name="push_weekly_general" ng-model="user.push_weekly_general" ng-if="user.push_weekly_general == 1" ng-checked="true" ng-true-value="1" ng-false-value="0" ng-click="saveNotification('push_weekly_general', 0)">
-                </ion-toggle>
-                <ion-toggle name="push_weekly_general" ng-model="user.push_weekly_general" ng-if="user.push_weekly_general == 0" ng-checked="false" ng-true-value="1" ng-false-value="0" ng-change="saveNotification('push_weekly_general', 1)">
-                </ion-toggle>
-
-                <div class="clearer"></div>
-
-                <span class="input-label newsletter">Daily interesting event notification</span>
-                <ion-toggle name="push_daily_interesting" ng-model="user.push_daily_interesting" ng-if="user.push_daily_interesting == 1" ng-checked="true" ng-true-value="1" ng-false-value="0" ng-click="saveNotification('push_daily_interesting', 0)">
-                </ion-toggle>
-                <ion-toggle name="push_daily_interesting" ng-model="user.push_daily_interesting" ng-if="user.push_daily_interesting == 0" ng-checked="false" ng-true-value="1" ng-false-value="0" ng-change="saveNotification('push_daily_interesting', 1)">
-                </ion-toggle>
-
-                <div class="clearer"></div>
-
-                <span class="input-label newsletter">Bookmarked events notification</span>
-                <ion-toggle name="push_daily_bookmarked" ng-model="user.push_daily_bookmarked" ng-if="user.push_daily_bookmarked == 1" ng-checked="true" ng-true-value="1" ng-false-value="0" ng-click="saveNotification('push_daily_bookmarked', 0)">
-                </ion-toggle>
-                <ion-toggle name="push_daily_bookmarked" ng-model="user.push_daily_bookmarked" ng-if="user.push_daily_bookmarked == 0" ng-checked="false" ng-true-value="1" ng-false-value="0" ng-change="saveNotification('push_daily_bookmarked', 1)">
-                </ion-toggle>
+                <div class="width-50">
+                    <span class="input-label newsletter">Weekly general event notification</span>
+                </div>
+                <div class="width-50">
+                    <ion-toggle name="push_weekly_general" ng-model="user.push_weekly_general" ng-if="user.push_weekly_general == 1" ng-checked="true" ng-true-value="1" ng-false-value="0" ng-click="saveNotification('push_weekly_general', 0)">
+                    </ion-toggle>
+                    <ion-toggle name="push_weekly_general" ng-model="user.push_weekly_general" ng-if="user.push_weekly_general == 0" ng-checked="false" ng-true-value="1" ng-false-value="0" ng-change="saveNotification('push_weekly_general', 1)">
+                    </ion-toggle>
+                </div>
 
                 <div class="clearer"></div>
 
-                <span class="input-label newsletter">Joined events notification</span>
-                <ion-toggle name="push_daily_joined" ng-model="user.push_daily_joined" ng-if="user.push_daily_joined == 1" ng-checked="true" ng-true-value="1" ng-false-value="0" ng-click="saveNotification('push_daily_joined', 0)">
-                </ion-toggle>
-                <ion-toggle name="push_daily_joined" ng-model="user.push_daily_joined" ng-if="user.push_daily_joined == 0" ng-checked="false" ng-true-value="1" ng-false-value="0" ng-change="saveNotification('push_daily_joined', 1)">
-                </ion-toggle>
+                <div class="width-50">
+                    <span class="input-label newsletter">Daily interesting event notification</span>
+                </div>
+                <div class="width-50">
+                    <ion-toggle name="push_daily_interesting" ng-model="user.push_daily_interesting" ng-if="user.push_daily_interesting == 1" ng-checked="true" ng-true-value="1" ng-false-value="0" ng-click="saveNotification('push_daily_interesting', 0)">
+                    </ion-toggle>
+                    <ion-toggle name="push_daily_interesting" ng-model="user.push_daily_interesting" ng-if="user.push_daily_interesting == 0" ng-checked="false" ng-true-value="1" ng-false-value="0" ng-change="saveNotification('push_daily_interesting', 1)">
+                    </ion-toggle>
+                </div>
+
+                <div class="clearer"></div>
+
+                <div class="width-50">
+                    <span class="input-label newsletter">Bookmarked events notification</span>
+                </div>
+                <div class="width-50">
+                    <ion-toggle name="push_daily_bookmarked" ng-model="user.push_daily_bookmarked" ng-if="user.push_daily_bookmarked == 1" ng-checked="true" ng-true-value="1" ng-false-value="0" ng-click="saveNotification('push_daily_bookmarked', 0)">
+                    </ion-toggle>
+                    <ion-toggle name="push_daily_bookmarked" ng-model="user.push_daily_bookmarked" ng-if="user.push_daily_bookmarked == 0" ng-checked="false" ng-true-value="1" ng-false-value="0" ng-change="saveNotification('push_daily_bookmarked', 1)">
+                    </ion-toggle>
+                </div>
+
+                <div class="clearer"></div>
+
+                <div class="width-50">
+                    <span class="input-label newsletter">Joined events notification</span>
+                </div>
+                <div class="width-50">
+                    <ion-toggle name="push_daily_joined" ng-model="user.push_daily_joined" ng-if="user.push_daily_joined == 1" ng-checked="true" ng-true-value="1" ng-false-value="0" ng-click="saveNotification('push_daily_joined', 0)">
+                    </ion-toggle>
+                    <ion-toggle name="push_daily_joined" ng-model="user.push_daily_joined" ng-if="user.push_daily_joined == 0" ng-checked="false" ng-true-value="1" ng-false-value="0" ng-change="saveNotification('push_daily_joined', 1)">
+                    </ion-toggle>
+                </div>
 
 
 

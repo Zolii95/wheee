@@ -42,14 +42,16 @@
       </div>
     </a>
 
-    <div class="container-padding stat-lines">
-      <div class="stat-block float-left mb-0">
-        <i class="ion-ios-cart"> </i>
-        <span>Total Redeemable Points</span>
+    <a ng-href="#/app/my_bonus_points">
+      <div class="container-padding stat-lines">
+        <div class="stat-block float-left mb-0">
+          <i class="ion-ios-cart"> </i>
+          <span>Total Redeemable Points</span>
+        </div>
+        <p class="float-right font-16 mb-0" style="line-height: 30px;">{{dashStat[0].points_nr}}</p>
+        <div class="clearer"></div>
       </div>
-      <p class="float-right font-16 mb-0" style="line-height: 30px;">{{dashStat[0].points_nr}}</p>
-      <div class="clearer"></div>
-    </div>
+    </a>
 
     <div class="general-line-bottom" ng-if="myDashboard[0].country && myDashboard[0].county && myDashboard[0].location">
       <div class="float-left align-center">

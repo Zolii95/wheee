@@ -1,0 +1,69 @@
+<ion-view cache-view="false" hide-nav-bar="true">
+  <ion-content class="complete-location-content">
+        <div class="padding">
+            <h3 class="float-left">Complete the fields below!</h3>
+            <div class="clearer"></div>
+            <hr />
+            <div class="text-center">
+                <i class="ion-compose" style="font-size: 100px;"> </i>
+            </div>
+        </div>
+
+        <div id="search" class="padding">
+            <p class="mb-0"><b>Please choose your location!</b></p>
+
+            <div ng-controller="completeLocationController as ctrl" layout="column" ng-cloak>
+                    <md-content class="md-padding complete-location">
+                        <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCountryValue" md-search-text="ctrl.searchCountryText"
+                            md-search-text-change="ctrl.searchTextChangeCountry(ctrl.searchText)" md-selected-item-change="ctrl.countryChange(item)"
+                            md-items="item in ctrl.queryCountrySearch(ctrl.searchCountryText)" md-item-text="item.display" md-min-length="0"
+                            placeholder="Choose your country...">
+                            <md-item-template>
+                                
+                                <span md-highlight-text="ctrl.searchCountryText" md-highlight-flags="^i">{{item.display}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                No countries matching "{{ctrl.searchCountryText}}" were found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </md-content>
+                    <md-content class="md-padding complete-location" ng-show="ctrl.showCounty">
+                        <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCountyValue" md-search-text="ctrl.searchCountyText"
+                            md-search-text-change="ctrl.searchTextChangeCounty(ctrl.searchText)" md-selected-item-change="ctrl.countyChange(item)"
+                            md-items="item in ctrl.queryCountySearch(ctrl.searchCountyText)" md-item-text="item.display" md-min-length="0"
+                            placeholder="Choose your region...">
+                            <md-item-template>
+                                <span md-highlight-text="ctrl.searchCountyText" md-highlight-flags="^i">{{item.display}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                No regions matching "{{ctrl.searchCountyText}}" were found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </md-content>
+                    <md-content class="md-padding complete-location" ng-show="ctrl.showCity">
+                        <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedCityValue" md-search-text="ctrl.searchCityText"
+                            md-search-text-change="ctrl.searchTextChangeCity(ctrl.searchText)" md-selected-item-change="ctrl.cityChange(item)"
+                            md-items="item in ctrl.queryCitySearch(ctrl.searchCityText)" md-item-text="item.display" md-min-length="0"
+                            placeholder="Choose your location...">
+                            <md-item-template>
+                                <span md-highlight-text="ctrl.searchCityText" md-highlight-flags="^i">{{item.display}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                No counties matching "{{ctrl.searchCityText}}" were found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </md-content>
+
+                    <p class="mt-10"><b>Please choose your birthday!</b></p>
+                    <input type="text" value="{{ctrl.birthDay}}" ng-click="openDatePicker()" class="birthday-input">
+                    
+                    <p ng-show="ctrl.errorMessage" class="error-message">Please complete all the fields!</p>
+
+                    <button ng-click="saveLocation()" class="button searchButton" style="margin: 15px 0;">
+                        <span id="searchButton" >Save datas</span>
+                    </button>
+                </div>
+            </div>
+        
+    </ion-content>
+</ion-view>
