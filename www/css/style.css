@@ -1163,3 +1163,22 @@ p.joined-sub {
     background: #ffb4b4;
     border-radius: 2px;
 }
+
+.danger {
+    padding: 15px;
+    background: #ffb4b4;
+    border-radius: 2px;
+    margin-top: 25px;
+}
+
+.success {
+    padding: 15px;
+    background: #c2ffbb;
+    border-radius: 2px;
+    margin-top: 25px;
+}
+
+.restrict-text {
+    font-style: italic;
+    font-size: 11px;
+}

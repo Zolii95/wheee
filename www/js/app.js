@@ -114,12 +114,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ion-autocomplete', '
     })
 
 
-    .state('app.complete_location', {
+  .state('app.complete_location', {
     url: '/complete_location',
     views: {
         'menuContent': {
           templateUrl: 'templates/complete_location.html',
           controller: "completeLocationController"
+        }
+      }
+  })
+
+
+  .state('app.scan', {
+    url: '/scan',
+    views: {
+        'menuContent': {
+          templateUrl: 'templates/scan.html',
+          controller: "scanController"
         }
       }
   })

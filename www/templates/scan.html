@@ -1,0 +1,26 @@
+<ion-view>
+  <ion-content class="container-padding padt-55">
+    
+    <p class="subtitle white mt-25">
+        <i class="ion-qr-scanner"> </i>
+        <span>QR Code Scan</span>
+    </p>
+    <div class="text-center">
+        <img ng-src="http://www.wheee.eu/assets/images/qr-code-scan.png" ng-click="startScan()"/>
+    </div>
+
+    <p ng-show="message" class="{{response_class}}">{{response}}<span ng-if="points != 0"><br />{{points}}</span></p>
+    <a ng-click="startScan()" class="button dashButton mb-10 mt-10">Start QR Code Scan</a>
+
+    <div class="text-center">
+        <p class="restrict-text">This QR code scanner is compatible only with codes emitted by Wheee!</p>
+    </div>
+    
+    <hr />
+    <div class="text-center">
+        <p class="mt-10">Participate on events with Wheee! and collect points!</p>
+    </div>
+    <a ng-href="#/app/future_events" class="button dashButton mb-20">Start Searching Now!</a>
+
+  </ion-content>
+</ion-view>

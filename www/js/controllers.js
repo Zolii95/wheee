@@ -382,6 +382,13 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     };
 
     $scope.groupLI[3] = {
+      name: "Scan QR Code",
+      items: [],
+      link: "#/app/scan",
+      icon: 'ion-qr-scanner'
+    };
+
+    $scope.groupLI[4] = {
       name: "Log Out",
       items: [],
       link: "#/app/logout",
@@ -1159,6 +1166,52 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
       return function filterFn(state) {
         return (state.value.indexOf(lowercaseQuery) === 0);
       };
+    }
+  })
+
+  .controller('scanController', function ($scope, $http, $cordovaBarcodeScanner, $ionicLoading) {
+
+    $scope.message = false;
+
+    $scope.startScan = function() {
+
+      cordova.plugins.barcodeScanner.scan(
+          function (result) {
+              $ionicLoading.show({
+                template: 'Verifying...'
+              });
+              link = result.text + '&uid=' + localStorage.getItem('logged') + '&from_app=1';
+              $http.get(link)
+              .success(function (response) {
+                $scope.response = response.response.text;
+                $scope.response_class = response.response.class;
+                $scope.points = response.response.points;
+                $scope.message = true;
+                $ionicLoading.hide();
+              }).error(function (err) {
+                $scope.response = "The scanned QR code does not belong to any of Wheee! partner locals!";
+                $scope.response_class = "danger";
+                $scope.points = 0;
+                $scope.message = true;
+                $ionicLoading.hide();
+              });
+          },
+          function (error) {
+              alert("Scanning failed: " + error);
+          },
+          {
+              preferFrontCamera : false, // iOS and Android
+              showFlipCameraButton : true, // iOS and Android
+              showTorchButton : true, // iOS and Android
+              torchOn: false, // Android, launch with the torch switched on (if available)
+              prompt : "Place a QR Code inside the scan area!", // Android
+              resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+              formats : "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+              orientation : "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
+              disableAnimations : true, // iOS
+              disableSuccessBeep: false // iOS
+          }
+      );
     }
   })
 
