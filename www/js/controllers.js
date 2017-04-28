@@ -52,6 +52,12 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.logged = localStorage.getItem("logged");
 
     if ($scope.logged && $scope.logged > 0) {
+
+      $http.get('http://www.wheee.eu/api/user/verify_if_scannable.php?user_id=' + $scope.logged)
+        .success(function (response) {
+          $scope.showscanner = response.response;
+        });
+
       $http.get('http://www.wheee.eu/api/user/get_location.php?user_id=' + $scope.logged)
         .success(function (response) {
           if(response.response == null) {
@@ -1174,13 +1180,31 @@ angular.module('starter.controllers', ['ngOpenFB', 'ngMaterial', 'ngCordova'])
     $scope.message = false;
 
     $scope.startScan = function() {
+      // GET GEO POSITION
+        // onSuccess Callback
+        // This method accepts a Position object, which contains the
+        // current GPS coordinates
+        //
+        var onSuccess = function(position) {
+            $scope.latitude = position.coords.latitude;
+            $scope.longitude = position.coords.longitude;
+        };
+
+        // onError Callback receives a PositionError object
+        //
+        function onError(error) {
+            alert(error.message);
+        }
+
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+      // GET GEO POSITION
 
       cordova.plugins.barcodeScanner.scan(
           function (result) {
               $ionicLoading.show({
                 template: 'Verifying...'
               });
-              link = result.text + '&uid=' + localStorage.getItem('logged') + '&from_app=1';
+              link = result.text + '&latitude=' + $scope.latitude + '&longitude=' + $scope.longitude + '&uid=' + localStorage.getItem('logged') + '&from_app=1';
               $http.get(link)
               .success(function (response) {
                 $scope.response = response.response.text;
